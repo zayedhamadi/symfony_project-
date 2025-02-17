@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Enum\EtatCompte;
 use App\Entity\Enum\Genre;
 use App\Repository\UserRepository;
@@ -13,36 +15,59 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_PhoneNumber', fields: ['num_tel'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $image = null;
 
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+    #[Assert\NotBlank(message: "L'email est obligatoire.")]
+    #[Assert\Email(message: "L'email '{{ value }}' n'est pas valide.")]
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 180,nullable: true)]
+    #[Assert\NotBlank(message: "Le nom est obligatoire.")]
+    #[Assert\Regex(pattern: "/^[^\d]+$/", message: "Le nom ne doit pas contenir de chiffres.")]
+    #[ORM\Column(length: 180, nullable: true)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 180,nullable: true)]
-    private ?string $prenom = null;
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
 
-    #[ORM\Column(length: 180,nullable: true)]
-    private ?string $adresse = null;
+    public function setNom(?string $nom): void
+    {
+        $this->nom = $nom;
+    }
 
-    #[ORM\Column(length: 300,nullable: true)]
-    private ?string $description = null;
-    #[ORM\Column(nullable: true)]
-    private ?int $num_tel = null;
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
 
-    #[ORM\Column(type: 'string', nullable: true, enumType: Genre::class)]
-    private Genre $genre ;
+    public function setAdresse(?string $adresse): void
+    {
+        $this->adresse = $adresse;
+    }
 
-    #[ORM\Column(type: 'string', nullable: true, enumType: EtatCompte::class)]
-    private EtatCompte $etatCompte;
+    public function getNumTel(): ?int
+    {
+        return $this->num_tel;
+    }
 
+    public function setNumTel(?int $num_tel): void
+    {
+        $this->num_tel = $num_tel;
+    }
 
     public function getGenre(): ?Genre
     {
@@ -64,27 +89,58 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->etatCompte = $etatCompte;
     }
 
-    public function getNumTel(): ?int
-    {
-        return $this->num_tel;
-    }
-
-    public function setNumTel(?int $num_tel): void
-    {
-        $this->num_tel = $num_tel;
-    }
-
-    public function getDateNaissance(): ?\DateTimeInterface
+    public function getDateNaissance(): ?DateTimeInterface
     {
         return $this->dateNaissance;
     }
 
-    public function setDateNaissance(?\DateTimeInterface $dateNaissance): void
+    public function setDateNaissance(?DateTimeInterface $dateNaissance): void
     {
         $this->dateNaissance = $dateNaissance;
     }
+
+    #[Assert\NotBlank(message: "Le prénom est obligatoire.")]
+    #[Assert\Regex(pattern: "/^[^\d]+$/", message: "Le prénom ne doit pas contenir de chiffres.")]
+    #[ORM\Column(length: 180, nullable: true)]
+    private ?string $prenom = null;
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "L'adresse ne doit pas dépasser 255 caractères."
+    )]
+    #[Assert\Regex(
+        pattern: "/^[A-Za-z0-9\s,.'\-]+$/",
+        message: "L'adresse contient des caractères non autorisés."
+    )]
+    #[ORM\Column(length: 180, nullable: true)]
+    private ?string $adresse = null;
+
+    #[ORM\Column(length: 300, nullable: true)]
+    private ?string $description = null;
+
+    #[Assert\NotBlank(message: "Le numéro de téléphone est obligatoire.")]
+    #[Assert\Regex(pattern: "/^(9|2|5)\d{7}$/", message: "Le numéro doit contenir 8 chiffres et commencer par 9, 2 ou 5.")]
+    #[ORM\Column(nullable: true)]
+    private ?int $num_tel = null;
+
+    #[ORM\Column(type: 'string', nullable: true, enumType: Genre::class)]
+    private ?Genre $genre = null;
+
+    #[ORM\Column(type: 'string', nullable: true, enumType: EtatCompte::class)]
+    private ?EtatCompte $etatCompte = null;
+
+
+    #[Assert\NotBlank(message: "La date de naissance est obligatoire.")]
+    #[Assert\LessThan(
+        value: "today",
+        message: "La date de naissance ne peut pas être dans le futur."
+    )]
     #[ORM\Column(type: 'date', nullable: true)]
-    private ?\DateTimeInterface $dateNaissance = null;
+    private ?DateTimeInterface $dateNaissance = null;
     /**
      * @var list<string> The user roles
      */
@@ -95,6 +151,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le mot de passe est obligatoire.")]
+    #[Assert\Length(
+        min: 8,
+        minMessage: "Le mot de passe doit contenir au moins 8 caractères."
+    )]
+    #[Assert\Regex(
+        pattern: "/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/",
+        message: "Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial."
+    )]
     private ?string $password = null;
 
     /**
@@ -119,9 +184,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Matiere::class, mappedBy: 'idEnsg')]
     private Collection $matieres;
 
-    #[ORM\ManyToOne(inversedBy: 'IdUser')]
-    private ?Cours $cours = null;
-
+//    #[ORM\ManyToOne(inversedBy: 'IdUser')]
+//    private ?Cours $cours = null;
 
 
     public function __construct()
@@ -137,35 +201,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
 
-    public function setNom(?string $nom): void
-    {
-        $this->nom = $nom;
-    }
-
-    public function getPrenom(): ?string
-    {
-        return $this->prenom;
-    }
 
     public function setPrenom(?string $prenom): void
     {
         $this->prenom = $prenom;
     }
 
-    public function getAdresse(): ?string
-    {
-        return $this->adresse;
-    }
 
-    public function setAdresse(?string $adresse): void
-    {
-        $this->adresse = $adresse;
-    }
 
     public function getDescription(): ?string
     {
@@ -196,20 +239,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
+     * @return list<string>
      * @see UserInterface
      *
-     * @return list<string>
      */
     public function getRoles(): array
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
+         $roles[] ='';
+#ROLE_USER
         return array_unique($roles);
     }
 
@@ -274,6 +317,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+        return $this;
+    }
+
     public function getReclamation(): ?Reclamation
     {
         return $this->reclamation;
@@ -286,35 +336,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Evenement>
-     */
-    public function getEvenements(): Collection
-    {
-        return $this->evenements;
-    }
-
-    public function addEvenement(Evenement $evenement): static
-    {
-        if (!$this->evenements->contains($evenement)) {
-            $this->evenements->add($evenement);
-            $evenement->setIdOrganisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEvenement(Evenement $evenement): static
-    {
-        if ($this->evenements->removeElement($evenement)) {
-            // set the owning side to null (unless already changed)
-            if ($evenement->getIdOrganisateur() === $this) {
-                $evenement->setIdOrganisateur(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Eleve>
@@ -376,17 +397,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCours(): ?Cours
-    {
-        return $this->cours;
-    }
-
-    public function setCours(?Cours $cours): static
-    {
-        $this->cours = $cours;
-
-        return $this;
-    }
+//    public function getCours(): ?Cours
+//    {
+//        return $this->cours;
+//    }
+//
+//    public function setCours(?Cours $cours): static
+//    {
+//        $this->cours = $cours;
+//
+//        return $this;
+//    }
 
 
 }

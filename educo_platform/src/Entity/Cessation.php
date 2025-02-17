@@ -17,7 +17,7 @@ class Cessation
     #[ORM\Column(length: 255)]
     private ?string $motif = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE,nullable: true)]
     private ?\DateTimeInterface $dateMotif = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]

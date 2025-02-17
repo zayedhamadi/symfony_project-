@@ -1,0 +1,37 @@
+{% extends 'side-bar.html.twig' %}
+
+{% block title %}TestEntity index{% endblock %}
+
+{% block body %}
+    <h1>TestEntity index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for test_entity in test_entities %}
+            <tr>
+                <td>{{ test_entity.id }}</td>
+                <td>{{ test_entity.name }}</td>
+                <td>{{ test_entity.age }}</td>
+                <td>
+                    <a href="{{ path('app_test_entity_show', {'id': test_entity.id}) }}">show</a>
+                    <a href="{{ path('app_test_entity_edit', {'id': test_entity.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_test_entity_new') }}">Create new</a>
+{% endblock %}

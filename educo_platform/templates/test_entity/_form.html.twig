@@ -1,0 +1,31 @@
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+
+    <div class="mb-3">
+        {{ form_label(form.name, 'Name', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.name, {
+            'attr': {
+                'class': 'form-control' ~ (form.name.vars.errors|length > 0 ? ' is-invalid' : ''),
+                'placeholder': 'Enter name'
+            }
+        }) }}
+        <div class="invalid-feedback">
+            {{ form_errors(form.name) }}
+        </div>
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.age, 'Age', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.age, {
+            'attr': {
+                'class': 'form-control' ~ (form.age.vars.errors|length > 0 ? ' is-invalid' : ''),
+                'placeholder': 'Enter age'
+            }
+        }) }}
+        <div class="invalid-feedback">
+            {{ form_errors(form.age) }}
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+
+{{ form_end(form) }}

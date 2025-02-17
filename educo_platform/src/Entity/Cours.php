@@ -18,16 +18,24 @@ class Cours
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Matiere $IdMatiere = null;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'cours')]
-    private Collection $IdUser;
+    #[ORM\OneToMany(targetEntity: Quiz::class, mappedBy: 'cours')]
+    private Collection $quizzes;
 
     public function __construct()
     {
-        $this->IdUser = new ArrayCollection();
+        $this->quizzes = new ArrayCollection();
     }
+    /**
+     * @var Collection<int, Classe>
+     */
+    #[ORM\OneToMany(mappedBy: 'cours', targetEntity: Classe::class)]
+    private Collection $classes;
+
+    public function __constructt()
+    {
+        $this->classes = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -46,33 +54,5 @@ class Cours
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getIdUser(): Collection
-    {
-        return $this->IdUser;
-    }
-
-    public function addIdUser(User $idUser): static
-    {
-        if (!$this->IdUser->contains($idUser)) {
-            $this->IdUser->add($idUser);
-            $idUser->setCours($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIdUser(User $idUser): static
-    {
-        if ($this->IdUser->removeElement($idUser)) {
-            // set the owning side to null (unless already changed)
-            if ($idUser->getCours() === $this) {
-                $idUser->setCours(null);
-            }
-        }
-
-        return $this;
-    }
+  
 }

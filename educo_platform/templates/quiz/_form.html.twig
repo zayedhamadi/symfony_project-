@@ -1,0 +1,49 @@
+{% block form %}
+    <div class="container">
+        <form method="post" novalidate> <!-- Ajout de novalidate ici -->
+            {{ form_start(form) }}
+            
+            <div class="mb-3">
+                {{ form_label(form.titre, 'Titre', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.titre, {
+                    'attr': {
+                        'class': 'form-control' ~ (form.titre.vars.errors|length > 0 ? ' is-invalid' : ''),
+                        'placeholder': 'Entrez le titre du quiz'
+                    }
+                }) }}
+                <div class="invalid-feedback d-block text-danger">
+                    {{ form_errors(form.titre) }}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.description, {
+                    'attr': {
+                        'class': 'form-control' ~ (form.description.vars.errors|length > 0 ? ' is-invalid' : ''),
+                        'placeholder': 'Entrez la description du quiz'
+                    }
+                }) }}
+                <div class="invalid-feedback">
+                    {{ form_errors(form.description) }}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.cours, 'Cours', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.cours, {
+                    'attr': {
+                        'class': 'form-control' ~ (form.cours.vars.errors|length > 0 ? ' is-invalid' : '')
+                    }
+                }) }}
+                <div class="invalid-feedback">
+                    {{ form_errors(form.cours) }}
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            
+            {{ form_end(form) }}
+        </form>
+    </div>
+{% endblock %}

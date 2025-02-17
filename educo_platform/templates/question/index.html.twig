@@ -1,0 +1,53 @@
+{% extends 'side-bar.html.twig' %}
+
+{% block title %}Liste des Questions{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Liste des Questions</h1>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Question</th>
+                    <th scope="col">Options</th>
+                    <th scope="col">Bonne Réponse</th>
+                    <th scope="col">Quiz</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for question in questions %}
+                <tr>
+                    <th scope="row">{{ question.id }}</th>
+                    <td>{{ question.texte }}</td>
+                    <td>{{ question.options|join(', ') }}</td>
+                    <td>{{ question.reponse }}</td>
+                    <td>
+                        {% if question.quiz %}
+                            {{ question.quiz.titre }}
+                        {% else %}
+                            Non assigné
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('question_show', {'id': question.id}) }}" class="btn btn-info btn-sm">Voir</a>
+                        <a href="{{ path('question_edit', {'id': question.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6" class="text-center">Aucune question trouvée</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{{ path('question_new') }}" class="btn btn-success">Créer une nouvelle question</a>
+    </div>
+</div>
+{% endblock %}

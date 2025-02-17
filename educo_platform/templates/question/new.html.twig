@@ -1,0 +1,17 @@
+{% extends 'side-bar.html.twig' %}
+
+{% block title %}Créer une Question{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Créer une Question</h1>
+
+        <div class="card p-4 shadow-sm">
+            {{ include('question/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+        </div>
+
+        <a href="{{ path('question_index') }}" class="btn btn-secondary mt-3">
+            Retour à la liste
+        </a>
+    </div>
+{% endblock %}

@@ -47,6 +47,13 @@ class Eleve
     {
         $this->matieres = new ArrayCollection();
     }
+    #[ORM\OneToMany(targetEntity: Note::class, mappedBy: 'ideleve')]
+    private Collection $notes;
+
+    public function __constructt()
+    {
+        $this->notes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -163,4 +170,32 @@ class Eleve
 
         return $this;
     }
+        /**
+     * @return Collection|Note[]
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->setEleve($this);
+        }
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->removeElement($note)) {
+            if ($note->getEleve() === $this) {
+                $note->setEleve(null);
+            }
+        }
+        return $this;
+    }
+
+
 }

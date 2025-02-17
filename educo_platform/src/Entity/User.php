@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use DateTimeInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Enum\EtatCompte;
 use App\Entity\Enum\Genre;
 use App\Repository\UserRepository;
@@ -25,105 +24,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $image = null;
 
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-    #[Assert\NotBlank(message: "L'email est obligatoire.")]
-    #[Assert\Email(message: "L'email '{{ value }}' n'est pas valide.")]
+
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
-    #[Assert\NotBlank(message: "Le nom est obligatoire.")]
-    #[Assert\Regex(pattern: "/^[^\d]+$/", message: "Le nom ne doit pas contenir de chiffres.")]
+
     #[ORM\Column(length: 180, nullable: true)]
     private ?string $nom = null;
 
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
 
-    public function setNom(?string $nom): void
-    {
-        $this->nom = $nom;
-    }
-
-    public function getAdresse(): ?string
-    {
-        return $this->adresse;
-    }
-
-    public function setAdresse(?string $adresse): void
-    {
-        $this->adresse = $adresse;
-    }
-
-    public function getNumTel(): ?int
-    {
-        return $this->num_tel;
-    }
-
-    public function setNumTel(?int $num_tel): void
-    {
-        $this->num_tel = $num_tel;
-    }
-
-    public function getGenre(): ?Genre
-    {
-        return $this->genre;
-    }
-
-    public function setGenre(?Genre $genre): void
-    {
-        $this->genre = $genre;
-    }
-
-    public function getEtatCompte(): ?EtatCompte
-    {
-        return $this->etatCompte;
-    }
-
-    public function setEtatCompte(?EtatCompte $etatCompte): void
-    {
-        $this->etatCompte = $etatCompte;
-    }
-
-    public function getDateNaissance(): ?DateTimeInterface
-    {
-        return $this->dateNaissance;
-    }
-
-    public function setDateNaissance(?DateTimeInterface $dateNaissance): void
-    {
-        $this->dateNaissance = $dateNaissance;
-    }
-
-    #[Assert\NotBlank(message: "Le prénom est obligatoire.")]
-    #[Assert\Regex(pattern: "/^[^\d]+$/", message: "Le prénom ne doit pas contenir de chiffres.")]
     #[ORM\Column(length: 180, nullable: true)]
     private ?string $prenom = null;
 
-    public function getPrenom(): ?string
-    {
-        return $this->prenom;
-    }
-    #[Assert\Length(
-        max: 255,
-        maxMessage: "L'adresse ne doit pas dépasser 255 caractères."
-    )]
-    #[Assert\Regex(
-        pattern: "/^[A-Za-z0-9\s,.'\-]+$/",
-        message: "L'adresse contient des caractères non autorisés."
-    )]
+
     #[ORM\Column(length: 180, nullable: true)]
     private ?string $adresse = null;
 
     #[ORM\Column(length: 300, nullable: true)]
     private ?string $description = null;
 
-    #[Assert\NotBlank(message: "Le numéro de téléphone est obligatoire.")]
-    #[Assert\Regex(pattern: "/^(9|2|5)\d{7}$/", message: "Le numéro doit contenir 8 chiffres et commencer par 9, 2 ou 5.")]
+
     #[ORM\Column(nullable: true)]
     private ?int $num_tel = null;
 
@@ -134,11 +54,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?EtatCompte $etatCompte = null;
 
 
-    #[Assert\NotBlank(message: "La date de naissance est obligatoire.")]
-    #[Assert\LessThan(
-        value: "today",
-        message: "La date de naissance ne peut pas être dans le futur."
-    )]
     #[ORM\Column(type: 'date', nullable: true)]
     private ?DateTimeInterface $dateNaissance = null;
     /**
@@ -146,47 +61,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private array $roles = [];
-
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\NotBlank(message: "Le mot de passe est obligatoire.")]
-    #[Assert\Length(
-        min: 8,
-        minMessage: "Le mot de passe doit contenir au moins 8 caractères."
-    )]
-    #[Assert\Regex(
-        pattern: "/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/",
-        message: "Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial."
-    )]
     private ?string $password = null;
-
     /**
      * @var Collection<int, Classe>
      */
     #[ORM\ManyToMany(targetEntity: Classe::class, mappedBy: 'id_user')]
     private Collection $classes;
-
     #[ORM\ManyToOne(inversedBy: 'idUser')]
     private ?Reclamation $reclamation = null;
-
-
     /**
      * @var Collection<int, Eleve>
      */
     #[ORM\OneToMany(targetEntity: Eleve::class, mappedBy: 'IdParent')]
     private Collection $eleves;
-
     /**
      * @var Collection<int, Matiere>
      */
     #[ORM\OneToMany(targetEntity: Matiere::class, mappedBy: 'idEnsg')]
     private Collection $matieres;
-
-//    #[ORM\ManyToOne(inversedBy: 'IdUser')]
-//    private ?Cours $cours = null;
-
 
     public function __construct()
     {
@@ -196,19 +92,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     }
 
-    public function getId(): ?int
+    public function getPrenom(): ?string
     {
-        return $this->id;
+        return $this->prenom;
     }
 
-
+//    #[ORM\ManyToOne(inversedBy: 'IdUser')]
+//    private ?Cours $cours = null;
 
     public function setPrenom(?string $prenom): void
     {
         $this->prenom = $prenom;
     }
 
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
 
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+        return $this;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     public function getDescription(): ?string
     {
@@ -251,7 +162,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-         $roles[] ='';
+        $roles[] = '';
 #ROLE_USER
         return array_unique($roles);
     }
@@ -272,6 +183,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getPassword(): ?string
     {
         return $this->password;
+    }
+
+    public function getFullName(): string
+    {
+        return $this->nom . ' ' . $this->prenom;
     }
 
     public function setPassword(string $password): static
@@ -314,13 +230,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $class->removeIdUser($this);
         }
 
-        return $this;
-    }
-
-
-    public function setImage(?string $image): self
-    {
-        $this->image = $image;
         return $this;
     }
 
@@ -408,6 +317,64 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 //
 //        return $this;
 //    }
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
 
+    public function setNom(?string $nom): void
+    {
+        $this->nom = $nom;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(?string $adresse): void
+    {
+        $this->adresse = $adresse;
+    }
+
+    public function getNumTel(): ?int
+    {
+        return $this->num_tel;
+    }
+
+    public function setNumTel(?int $num_tel): void
+    {
+        $this->num_tel = $num_tel;
+    }
+
+    public function getGenre(): ?Genre
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(?Genre $genre): void
+    {
+        $this->genre = $genre;
+    }
+
+    public function getEtatCompte(): ?EtatCompte
+    {
+        return $this->etatCompte;
+    }
+
+    public function setEtatCompte(?EtatCompte $etatCompte): void
+    {
+        $this->etatCompte = $etatCompte;
+    }
+
+    public function getDateNaissance(): ?DateTimeInterface
+    {
+        return $this->dateNaissance;
+    }
+
+    public function setDateNaissance(?DateTimeInterface $dateNaissance): void
+    {
+        $this->dateNaissance = $dateNaissance;
+    }
 
 }

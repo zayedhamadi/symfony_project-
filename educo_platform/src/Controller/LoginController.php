@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Enum\EtatCompte;
 use App\Entity\User;
 use DateTime;
 use LogicException;
@@ -31,10 +32,6 @@ class LoginController extends AbstractController
     {
         if ($this->getUser()) {
             $user = $this->getUser();
-            if ($user instanceof User && $user->getEtatCompte() !== 'active') {
-                $this->addFlash('error', 'Votre compte est inactif. Veuillez contacter l\'administrateur.');
-                return $this->redirectToRoute('app_login');
-            }
             $token = $jwtManager->create($user);
             $userId = $user->getId();
 
@@ -47,8 +44,10 @@ class LoginController extends AbstractController
             $session->set('jwt_token', $token);
             $session->set('user_id', $userId);
             $session->set('refresh_token', $refreshToken->getRefreshToken());
+
             return $this->redirectToRoute('app_testing_login');
         }
+
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastEmail = $authenticationUtils->getLastUsername() ?: '';
 
@@ -57,6 +56,7 @@ class LoginController extends AbstractController
             'error' => $error,
         ]);
     }
+
 
     #[Route('/logout', name: 'app_logout', methods: ['GET'])]
     public function logout(): void

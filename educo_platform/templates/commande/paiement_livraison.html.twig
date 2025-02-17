@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement à l'Administration{% endblock %}
+
+{% block body %}
+    <h1 class="text-center my-4">Confirmation de Commande</h1>
+
+    <p class="text-center">Vous avez choisi de payer à l'administration.</p>
+    <p class="text-center">Veuillez vous rendre à l'école pour effectuer le paiement et récupérer votre commande.</p>
+
+    <div class="text-center">
+        <a href="{{ path('app_commande_valider', {mode: 'livraison'}) }}" class="btn btn-success">Confirmer la Commande</a>
+    </div>
+{% endblock %}

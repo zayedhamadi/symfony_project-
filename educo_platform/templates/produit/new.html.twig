@@ -1,0 +1,13 @@
+{% extends 'side-bar.html.twig' %}
+
+{% block title %}New Produit{% endblock %}
+
+{% block body %}
+<div class="container " style="margin-top: 100px !important; padding: 0 15px !important;">
+    <h1 class="mb-4">Create new Produit</h1>
+
+    {{ include('produit/_form.html.twig') }}
+
+    <a href="{{ path('app_produit_index') }}">back to list</a>
+</div>
+{% endblock %}

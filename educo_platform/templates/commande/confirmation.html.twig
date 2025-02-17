@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation de Commande{% endblock %}
+
+{% block body %}
+    <h1 class="text-center my-4">Confirmation de Commande</h1>
+
+    <div class="container">
+        <p><strong>Commande N°:</strong> {{ commande.id }}</p>
+        <p><strong>Montant Total:</strong> {{ commande.montantTotal }} dt</p>
+        <p><strong>Mode de Paiement:</strong> {{ commande.modePaiement }}</p>
+        <p><strong>Statut:</strong> {{ commande.statut }}</p>
+
+        <h3>Produits Commandés</h3>
+        <ul>
+            {% for produit in commande.commandeProduits %}
+                <li>{{ produit.nom }} - {{ produit.prix }} dt (Quantité: {{ produit.quantite }})</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{{ path('app_boutique') }}" class="btn btn-primary">Retour à la Boutique</a>
+    </div>
+{% endblock %}

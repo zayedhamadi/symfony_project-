@@ -1,0 +1,110 @@
+{% extends 'side-bar.html.twig' %}
+
+{% block title %}Détails de la Classe{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Détails de la Classe</h1>
+
+    <div class="card p-4">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th scope="row">ID</th>
+                    <td>{{ classe.id }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Nom de la Classe</th>
+                    <td>{{ classe.nomClasse }}</td>
+                </tr>
+             <tr>
+            <th scope="row">Enseignant(s)</th>
+                <td>
+                {% for user in classe.getIdUser() %}
+                    <p>{{ user.nom }} {{ user.prenom }}</p> {# Affiche le nom et le prénom #}
+                    {% else %}
+                    <p>Aucun enseignant associé</p>
+                {% endfor %}
+                </td>
+            </tr>
+
+                <tr>
+                    <th scope="row">Numéro de Salle</th>
+                    <td>{{ classe.NumSalle }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Capacité Maximale</th>
+                    <td>{{ classe.capaciteMax }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mt-4">
+    <h2 class="text-center mb-3">Liste des Élèves</h2>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom et Prénom</th> {# Fusion des colonnes Nom et Prénom #}
+            <th>Parent</th> {# Fusion des colonnes Nom et Prénom du parent #}
+            <th>Email du Parent</th>
+            <th>Téléphone du Parent</th>
+            <th>Moyenne</th>
+            <th>Nombre d'Absences</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if classe.getEleves() is not empty %}
+            {% for eleve in classe.getEleves() %}
+                <tr>
+                    <td>{{ eleve.id }}</td>
+                    <td>{{ eleve.nom }} {{ eleve.prenom }}</td>
+                    <td>
+                        {% if eleve.IdParent %}
+                            {{ eleve.IdParent.nom }} {{ eleve.IdParent.prenom }}
+                        {% else %}
+                            Aucun parent
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if eleve.IdParent and eleve.IdParent.email %}
+                            {{ eleve.IdParent.email }}
+                        {% else %}
+                            Non disponible
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if eleve.IdParent and eleve.IdParent.numTel %}
+                            {{ eleve.IdParent.numTel }}
+                        {% else %}
+                            Non disponible
+                        {% endif %}
+                    </td>
+                    <td>{{ eleve.moyenne }}</td>
+                    <td>{{ eleve.NbreAbscence }}</td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="7" class="text-center">Aucun élève inscrit dans cette classe</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+
+
+
+</div>
+
+
+        <div class="mt-4">
+            <a href="{{ path('app_gestion_classe_index') }}" class="btn btn-secondary">Retour à la liste</a>
+            {# <a href="{{ path('app_gestion_classe_edit', {'id': classe.id}) }}" class="btn btn-warning">Modifier</a> #}
+            <div class="d-inline-block">
+                {{ include('gestion_classe/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

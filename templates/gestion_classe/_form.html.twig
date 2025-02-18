@@ -1,0 +1,37 @@
+{# gestion_classe/_form.html.twig #}
+
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+    <div class="mb-3">
+        {{ form_label(form.nom_classe, 'Nom de la classe', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.nom_classe, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le nom de la classe'}}) }}
+        <div class="invalid-feedback d-block text-danger">
+            {{ form_errors(form.nom_classe) }}
+        </div>
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.Num_salle, 'Numéro de salle', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.Num_salle, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le numéro de salle'}}) }}
+        <div class="invalid-feedback d-block text-danger">
+            {{ form_errors(form.Num_salle) }}
+        </div>
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.capacite_max, 'Capacité maximale', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.capacite_max, {'attr': {'class': 'form-control', 'placeholder': 'Entrez la capacité maximale'}}) }}
+        <div class="invalid-feedback d-block text-danger">
+            {{ form_errors(form.capacite_max) }}
+        </div>
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.id_user, 'Enseignant', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.id_user, {'attr': {'class': 'form-control'}}) }}
+        <div class="invalid-feedback d-block text-danger">
+            {{ form_errors(form.id_user) }}
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+{{ form_end(form) }}

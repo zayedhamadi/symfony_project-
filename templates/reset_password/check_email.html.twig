@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Reset Email Sent</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.9/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.9/dist/sweetalert2.min.js"></script>
+</head>
+ <body>
+    <script>
+
+        window.onload = function() {
+            Swal.fire({
+                title: 'Réinitialisation du mot de passe',
+                text: "Si un compte correspondant à votre email existe, un email vient d'être envoyé contenant un lien pour réinitialiser votre mot de passe. Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.",
+                icon: 'success',
+                confirmButtonText: 'OK',
+                timer:10000,
+                showCloseButton: true
+            });
+        };
+    </script>
+</body>
+</html>

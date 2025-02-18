@@ -1,0 +1,21 @@
+{% extends 'side-bar.html.twig' %}
+
+{% block title %}Modifier la Classe{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Modifier la Classe</h1>
+
+    <div class="card p-4">
+        {{ include('gestion_classe/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+    </div>
+
+    <div class="mt-3">
+        <a href="{{ path('app_gestion_classe_index') }}" class="btn btn-secondary">Retour à la liste</a>
+    </div>
+
+    {# <div class="mt-3">
+        {{ include('gestion_classe/_delete_form.html.twig') }}
+    </div> #}
+</div>
+{% endblock %}

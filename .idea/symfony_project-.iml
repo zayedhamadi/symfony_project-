@@ -144,6 +144,18 @@
       <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/twig/extra-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/twig/twig" />
       <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/alcohol/iso4217" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/clue/stream-filter" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/league/uri" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/league/uri-components" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/league/uri-interfaces" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/paypal/rest-api-sdk-php" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/payum/core" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/payum/iso4217" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/payum/payum-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/php-http/message" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/psr/http-message" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/stripe/stripe-php" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

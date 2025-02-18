@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement par Carte{% endblock %}
+
+{% block body %}
+    <h1 class="text-center my-4">Paiement par Carte</h1>
+
+    <form action="{{ path('app_commande_valider', {mode: 'carte'}) }}" method="post" class="text-center">
+        <p>Veuillez entrer vos informations bancaires.</p>
+        <input type="text" placeholder="Numéro de Carte" required class="form-control w-50 mx-auto my-2">
+        <input type="text" placeholder="Nom sur la Carte" required class="form-control w-50 mx-auto my-2">
+        <input type="text" placeholder="Date d'Expiration" required class="form-control w-50 mx-auto my-2">
+        <input type="text" placeholder="CVV" required class="form-control w-50 mx-auto my-2">
+        <button type="submit" class="btn btn-success mt-3">Valider le Paiement</button>
+    </form>
+{% endblock %}

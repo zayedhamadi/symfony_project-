@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation de Commande{% endblock %}
+
+{% block body %}
+    <h1 class="text-center my-4">Votre Commande a été validée !</h1>
+
+    <p>Merci de votre commande, elle est actuellement en cours.</p>
+
+    <h4>Détails de la commande :</h4>
+    <p><strong>Numéro de commande :</strong> {{ commande.id }}</p>
+    <p><strong>Montant Total :</strong> {{ commande.total }} dt</p>
+    <p><strong>Date de la commande :</strong> {{ commande.dateCommande|date('d-m-Y H:i') }}</p>
+
+    <h5>Produits Commandés :</h5>
+    <ul>
+        {% for produit in commande.produits %}
+            <li>{{ produit.nom }} - {{ produit.prix }} dt</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ path('app_boutique') }}" class="btn btn-primary">Retour à la boutique</a>
+{% endblock %}

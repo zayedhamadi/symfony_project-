@@ -1,0 +1,27 @@
+{% block javascripts %}
+    <script src="http://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% endblock %}
+<form method="post" action="{{ path('app_produit_delete', {'id': produit.id}) }}" id="delete-form-{{ produit.id }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ produit.id) }}">
+    <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete({{ produit.id }})">
+        <i class="fas fa-trash-alt"></i>
+    </button>
+</form>
+
+<script>
+    function confirmDelete(produitId) {
+        Swal.fire({
+            title: 'Êtes-vous sûr ?',
+            text: "Cette action est irréversible !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Oui, supprimer!',
+            cancelButtonText: 'Annuler',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form-' + produitId).submit();
+            }
+        });
+    }
+</script>

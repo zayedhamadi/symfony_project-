@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use App\Entity\Enum\EtatCompte;
 use App\Entity\Enum\Genre;
 use App\Repository\UserRepository;
@@ -13,90 +14,58 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_PhoneNumber', fields: ['num_tel'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $image = null;
+
 
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 180,nullable: true)]
+
+    #[ORM\Column(length: 180, nullable: true)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 180,nullable: true)]
+
+    #[ORM\Column(length: 180, nullable: true)]
     private ?string $prenom = null;
 
-    #[ORM\Column(length: 180,nullable: true)]
+
+    #[ORM\Column(length: 180, nullable: true)]
     private ?string $adresse = null;
 
-    #[ORM\Column(length: 300,nullable: true)]
+    #[ORM\Column(length: 300, nullable: true)]
     private ?string $description = null;
+
+
     #[ORM\Column(nullable: true)]
     private ?int $num_tel = null;
 
     #[ORM\Column(type: 'string', nullable: true, enumType: Genre::class)]
-    private Genre $genre ;
+    private ?Genre $genre = null;
 
     #[ORM\Column(type: 'string', nullable: true, enumType: EtatCompte::class)]
-    private EtatCompte $etatCompte;
+    private ?EtatCompte $etatCompte = null;
 
 
-    public function getGenre(): ?Genre
-    {
-        return $this->genre;
-    }
-
-    public function setGenre(?Genre $genre): void
-    {
-        $this->genre = $genre;
-    }
-
-    public function getEtatCompte(): ?EtatCompte
-    {
-        return $this->etatCompte;
-    }
-
-    public function setEtatCompte(?EtatCompte $etatCompte): void
-    {
-        $this->etatCompte = $etatCompte;
-    }
-
-    public function getNumTel(): ?int
-    {
-        return $this->num_tel;
-    }
-
-    public function setNumTel(?int $num_tel): void
-    {
-        $this->num_tel = $num_tel;
-    }
-
-    public function getDateNaissance(): ?\DateTimeInterface
-    {
-        return $this->dateNaissance;
-    }
-
-    public function setDateNaissance(?\DateTimeInterface $dateNaissance): void
-    {
-        $this->dateNaissance = $dateNaissance;
-    }
     #[ORM\Column(type: 'date', nullable: true)]
-    private ?\DateTimeInterface $dateNaissance = null;
+    private ?DateTimeInterface $dateNaissance = null;
     /**
      * @var list<string> The user roles
      */
     #[ORM\Column]
     private array $roles = [];
-
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
     private ?string $password = null;
-
     /**
      * @var Collection<int, Classe>
      */
@@ -113,7 +82,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Eleve::class, mappedBy: 'IdParent')]
     private Collection $eleves;
-
     /**
      * @var Collection<int, Matiere>
      */
@@ -122,6 +90,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
   
 
+    /**
+     * @var Collection<int, Commande>
+     */
+    #[ORM\OneToMany(targetEntity: Commande::class, mappedBy: 'parent')]
+    private Collection $commandes;
+
 
 
     public function __construct()
@@ -129,6 +103,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->classes = new ArrayCollection();
         $this->eleves = new ArrayCollection();
         $this->matieres = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
         $this->reclamations = new ArrayCollection();
 
     }
@@ -153,19 +128,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->prenom;
     }
 
+//    #[ORM\ManyToOne(inversedBy: 'IdUser')]
+//    private ?Cours $cours = null;
+
     public function setPrenom(?string $prenom): void
     {
         $this->prenom = $prenom;
     }
 
-    public function getAdresse(): ?string
+    public function getImage(): ?string
     {
-        return $this->adresse;
+        return $this->image;
     }
 
-    public function setAdresse(?string $adresse): void
+    public function setImage(?string $image): self
     {
-        $this->adresse = $adresse;
+        $this->image = $image;
+        return $this;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getDescription(): ?string
@@ -197,20 +181,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
+     * @return list<string>
      * @see UserInterface
      *
-     * @return list<string>
      */
     public function getRoles(): array
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
+        $roles[] = '';
+#ROLE_USER
         return array_unique($roles);
     }
 
@@ -230,6 +214,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getPassword(): ?string
     {
         return $this->password;
+    }
+
+    public function getFullName(): string
+    {
+        return $this->nom . ' ' . $this->prenom;
     }
 
     public function setPassword(string $password): static
@@ -367,7 +356,108 @@ public function removeReclamation(Reclamation $reclamation): static
         return $this;
     }
 
-  
+//    public function getCours(): ?Cours
+//    {
+//        return $this->cours;
+//    }
+//
+//    public function setCours(?Cours $cours): static
+//    {
+//        $this->cours = $cours;
+//
+//        return $this;
+//    }
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(?string $nom): void
+    {
+        $this->nom = $nom;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(?string $adresse): void
+    {
+        $this->adresse = $adresse;
+    }
+
+    public function getNumTel(): ?int
+    {
+        return $this->num_tel;
+    }
+
+    public function setNumTel(?int $num_tel): void
+    {
+        $this->num_tel = $num_tel;
+    }
+
+    public function getGenre(): ?Genre
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(?Genre $genre): void
+    {
+        $this->genre = $genre;
+    }
+
+    public function getEtatCompte(): ?EtatCompte
+    {
+        return $this->etatCompte;
+
+    }
+
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): static
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes->add($commande);
+            $commande->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): static
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getParent() === $this) {
+                $commande->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function setEtatCompte(?EtatCompte $etatCompte): void
+    {
+        $this->etatCompte = $etatCompte;
+    }
+
+    public function getDateNaissance(): ?DateTimeInterface
+    {
+        return $this->dateNaissance;
+    }
+
+    public function setDateNaissance(?DateTimeInterface $dateNaissance): void
+    {
+        $this->dateNaissance = $dateNaissance;
+    }
+
 
 
 }

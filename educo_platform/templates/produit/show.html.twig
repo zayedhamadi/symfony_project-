@@ -1,0 +1,48 @@
+{% extends 'side-bar.html.twig' %}
+
+
+{% block title %}Produit{% endblock %}
+
+{% block body %}
+<div class="container " style="margin-top: 100px !important; padding: 0 15px !important;">
+
+<h1 class="mb-4">Produit</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ produit.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ produit.nom }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ produit.description }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ produit.prix }}</td>
+            </tr>
+            <tr>
+                <th>Stock</th>
+                <td>{{ produit.stock }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td> <img src="{{ asset('uploads/' ~ produit.image) }}" alt="Image de {{ produit.nom }}" width="50" class="img-thumbnail">
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_produit_index') }}">back to list</a>
+
+    <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
+
+    {{ include('produit/_delete_form.html.twig') }}
+</div>
+{% endblock %}

@@ -35,13 +35,15 @@
             <form method="post" action="{{ path('app_login') }}">
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" name="_username" placeholder="Saisir votre adresse email" value="{{ last_email }}" required>
+                    <input type="email" id="email" name="email" placeholder="Saisir votre adresse email"
+                           value="{{ last_email }}" required>
                 </div>
 
                 <div class="form-group">
                     <label>Mot de passe</label>
                     <div class="password-container">
-                        <input type="password" name="_password" id="password" placeholder="Saisir votre mot de passe" required>
+                        <input type="password" name="password" id="password" placeholder="Saisir votre mot de passe"
+                               required>
                         <i class="bi bi-eye toggle-password" id="togglePassword"></i>
                     </div>
                 </div>
@@ -55,9 +57,13 @@
         </div>
     </div>
 </div>
-
+{% if app.session.get('jwt_token') %}
+    <script>
+        localStorage.setItem("jwt_token", "{{ app.session.get('jwt_token') }}");
+    </script>
+{% endif %}
 <script>
-    document.getElementById("togglePassword").addEventListener("click", function() {
+    document.getElementById("togglePassword").addEventListener("click", function () {
         let passwordField = document.getElementById("password");
         let icon = this;
 

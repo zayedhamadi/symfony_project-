@@ -18,20 +18,29 @@ security:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
 
+
     login:
-      pattern: ^/api/login
-      stateless: true
+      pattern: ^/login$
       provider: app_user_provider
-      json_login:
-        check_path: /api/login_check
-        username_path: email
-        password_path: password
+      form_login:
+        check_path: app_login
+        login_path: app_login
+        username_parameter: email
+        password_parameter: password
+        default_target_path: app_testing_login
+        always_use_default_target_path: true
         success_handler: lexik_jwt_authentication.handler.authentication_success
         failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+      logout:
+        path: app_logout
+        target: app_login
+
 
     api:
       pattern: ^/api
       stateless: true
+      provider: app_user_provider
       jwt: ~
 
     refresh_token:
@@ -44,6 +53,9 @@ security:
     - { path: ^/rest-password, roles: PUBLIC_ACCESS }
     - { path: ^/api/token/refresh, roles: PUBLIC_ACCESS }
     - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+  #  - { path: ^/user, roles: Admin }
+  #   - { path: ^/user/new, roles: Admin }
+
 
 when@test:
   security:

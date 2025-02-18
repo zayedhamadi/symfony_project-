@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription à un événement{% endblock %}
+
+{% block body %}
+    <h1>Inscription à l'événement : {{ evenement.titre }}</h1>
+
+    <p><strong>Description :</strong> {{ evenement.description }}</p>
+    <p><strong>Lieu :</strong> {{ evenement.lieu }}</p>
+    <p><strong>Date :</strong> {{ evenement.dateDebut|date('d/m/Y H:i') }} - {{ evenement.dateFin|date('d/m/Y H:i') }}</p>
+
+    {% if evenement.inscriptionRequise and evenement.nombrePlaces is not null %}
+        <p><strong>Places restantes :</strong> {{ evenement.nombrePlaces - evenement.inscriptions|length }}</p>
+    {% endif %}
+
+    {{ form_start(form) }}
+        {{ form_row(form.enfant) }}
+        <button class="btn btn-success">S'inscrire</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('evenement_index') }}" class="btn btn-secondary">Retour</a>
+{% endblock %}

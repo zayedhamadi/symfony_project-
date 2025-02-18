@@ -1,0 +1,39 @@
+{# templates/evenement/new.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un événement{% endblock %}
+{% block body %}
+    <h1>Créer un événement</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.titre) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.dateDebut) }}
+        {{ form_row(form.dateFin) }}
+        {{ form_row(form.lieu) }}
+        {{ form_row(form.inscriptionRequise) }}
+        {{ form_row(form.nombrePlaces) }}
+        {{ form_row(form.type) }}
+        <button class="btn btn-success">Créer</button>
+    {{ form_end(form) }}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let checkbox = document.getElementById("evenement_inscriptionRequise");
+            let nombrePlacesField = document.getElementById("evenement_nombrePlaces");
+
+            function toggleNombrePlaces() {
+                if (checkbox.checked) {
+                    nombrePlacesField.disabled = false;
+                } else {
+                    nombrePlacesField.disabled = true;
+                    nombrePlacesField.value = ''; // Réinitialiser si décoché
+                }
+            }
+
+            toggleNombrePlaces(); // Exécuter au chargement si déjà coché
+            checkbox.addEventListener("change", toggleNombrePlaces);
+        });
+    </script>
+{% endblock %}

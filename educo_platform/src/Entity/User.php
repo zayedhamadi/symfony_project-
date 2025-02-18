@@ -103,8 +103,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Classe::class, mappedBy: 'id_user')]
     private Collection $classes;
 
-    #[ORM\ManyToOne(inversedBy: 'idUser')]
-    private ?Reclamation $reclamation = null;
+    #[ORM\OneToMany(targetEntity: Reclamation::class, mappedBy: 'user')]
+    private Collection $reclamations;
+
 
 
     /**
@@ -119,8 +120,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Matiere::class, mappedBy: 'idEnsg')]
     private Collection $matieres;
 
-    #[ORM\ManyToOne(inversedBy: 'IdUser')]
-    private ?Cours $cours = null;
+  
 
 
 
@@ -129,6 +129,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->classes = new ArrayCollection();
         $this->eleves = new ArrayCollection();
         $this->matieres = new ArrayCollection();
+        $this->reclamations = new ArrayCollection();
 
     }
 
@@ -274,47 +275,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getReclamation(): ?Reclamation
-    {
-        return $this->reclamation;
-    }
-
-    public function setReclamation(?Reclamation $reclamation): static
-    {
-        $this->reclamation = $reclamation;
-
-        return $this;
-    }
-
     /**
-     * @return Collection<int, Evenement>
-     */
-    public function getEvenements(): Collection
-    {
-        return $this->evenements;
+ * @return Collection<int, Reclamation>
+ */
+public function getReclamations(): Collection
+{
+    return $this->reclamations;
+}
+
+public function addReclamation(Reclamation $reclamation): static
+{
+    if (!$this->reclamations->contains($reclamation)) {
+        $this->reclamations->add($reclamation);
+        $reclamation->setUser($this);
     }
 
-    public function addEvenement(Evenement $evenement): static
-    {
-        if (!$this->evenements->contains($evenement)) {
-            $this->evenements->add($evenement);
-            $evenement->setIdOrganisateur($this);
+    return $this;
+}
+
+public function removeReclamation(Reclamation $reclamation): static
+{
+    if ($this->reclamations->removeElement($reclamation)) {
+        // set the owning side to null (unless already changed)
+        if ($reclamation->getUser() === $this) {
+            $reclamation->setUser(null);
         }
-
-        return $this;
     }
 
-    public function removeEvenement(Evenement $evenement): static
-    {
-        if ($this->evenements->removeElement($evenement)) {
-            // set the owning side to null (unless already changed)
-            if ($evenement->getIdOrganisateur() === $this) {
-                $evenement->setIdOrganisateur(null);
-            }
-        }
+    return $this;
+}
 
-        return $this;
-    }
+
 
     /**
      * @return Collection<int, Eleve>
@@ -376,17 +367,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCours(): ?Cours
-    {
-        return $this->cours;
-    }
-
-    public function setCours(?Cours $cours): static
-    {
-        $this->cours = $cours;
-
-        return $this;
-    }
+  
 
 
 }

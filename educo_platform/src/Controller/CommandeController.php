@@ -11,6 +11,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\UserRepository;
+
 
 final class CommandeController extends AbstractController
 {
@@ -45,13 +47,20 @@ final class CommandeController extends AbstractController
         return $this->render('commande/paiement_livraison.html.twig');
     }
     #[Route('/commande/valider/livraison', name: 'app_commande_valider_livraison')]
-    public function validerCommandeLivraison(Request $request, SessionInterface $session): Response
+    public function validerCommandeLivraison(Request $request,UserRepository $userRepository, SessionInterface $session): Response
     {
         $user = $this->getUser();
 
         // Récupérer le panier de la session
         $panier = $session->get('panier', []);
+        $session = $request->getSession();
+        $userid = $session->get('user_id');
+        $user = $userRepository->find($userid);
 
+        if (!$user) {
+            // Handle the case where the user doesn't exist
+            throw $this->createNotFoundException('User not found.');
+        }
         // Si le panier est vide, rediriger
         if (empty($panier)) {
             $this->addFlash('error', 'Votre panier est vide.');
@@ -109,14 +118,22 @@ final class CommandeController extends AbstractController
     }
 
     #[Route('/commande/valider', name: 'app_commande_valider')]
-    public function validerCommande(Request $request, SessionInterface $session): Response
+    public function validerCommande(Request $request, SessionInterface $session,UserRepository $userRepository): Response
     {
+        $session = $request->getSession();
         // Récupérer l'utilisateur connecté
         $user = $this->getUser();
 
         // Récupérer le panier de la session
         $panier = $session->get('panier', []);
+        $session = $request->getSession();
+        $userid = $session->get('user_id');
+        $user = $userRepository->find($userid);
 
+        if (!$user) {
+            // Handle the case where the user doesn't exist
+            throw $this->createNotFoundException('User not found.');
+        }
         // Si le panier est vide, rediriger
         if (empty($panier)) {
             $this->addFlash('error', 'Votre panier est vide.');
@@ -131,6 +148,9 @@ final class CommandeController extends AbstractController
                 $montantTotal += $produit->getPrix() * $quantite;
             }
         }
+
+        // Récupérer le panier de la session
+
 
         // Créer une nouvelle commande
         $commande = new Commande();

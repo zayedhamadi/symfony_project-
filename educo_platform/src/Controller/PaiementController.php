@@ -12,24 +12,31 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\UserRepository;
 
 class PaiementController extends AbstractController
 {
     #[Route('/commander-et-payer', name: 'app_commander_et_payer')]
-    public function commanderEtPayer(Request $request, ProduitRepository $produitRepository, EntityManagerInterface $entityManager,$stripeSK): Response
+    public function commanderEtPayer(Request $request, ProduitRepository $produitRepository, UserRepository $userRepository, EntityManagerInterface $entityManager,$stripeSK): Response
     {
         $session = $request->getSession();
+        $userid = $session->get('user_id');
         $panier = $session->get('panier', []);
-
+//echo ($userid);
+//dd($session);
         if (empty($panier)) {
             return $this->render('paiement/error.html.twig', [
                 'message' => 'Votre panier est vide.'
             ]);
         }
+        $user = $userRepository->find($userid);
 
-        // Créer une nouvelle commande
+        if (!$user) {
+            // Handle the case where the user doesn't exist
+            throw $this->createNotFoundException('User not found.');
+        }
         $commande = new Commande();
-        $commande->setParent($this->getUser());
+        $commande->setParent($user);
         $commande->setStatut('En attente');
         $commande->setDateCommande(new \DateTime());
 

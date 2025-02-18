@@ -6,6 +6,8 @@ use App\Repository\CategorieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
 class Categorie
@@ -16,9 +18,18 @@ class Categorie
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le nom de la catégorie ne peut pas être vide.")]
+    #[Assert\Length(max: 255, maxMessage: "Le nom de la catégorie ne peut pas dépasser 255 caractères.")]
+    #[Assert\Regex(
+        pattern: "/^[a-zA-ZÀ-ÿ\s]+$/", // Expression régulière pour autoriser uniquement des lettres et espaces
+        message: "Le nom de la catégorie ne doit contenir que des lettres et des espaces."
+    )]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "La description de la catégorie ne peut pas être vide.")]
+    #[Assert\Length(max: 255, maxMessage: "La description ne peut pas dépasser 255 caractères.")]
+
     private ?string $description = null;
 
     /**

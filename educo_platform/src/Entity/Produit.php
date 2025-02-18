@@ -6,6 +6,7 @@ use App\Repository\ProduitRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
@@ -15,22 +16,40 @@ class Produit
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message: "Le nom du produit est obligatoire.")]
+    #[Assert\Length(max: 255, maxMessage: "Le nom du produit ne peut pas dépasser 255 caractères.")]
+    #[Assert\Regex(
+        pattern: "/^[a-zA-ZÀ-ÖØ-öø-ÿ\s-]+$/",
+        message: "Le nom du produit ne doit contenir que des lettres et des espaces."
+    )]
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: "La description est obligatoire.")]
+    #[Assert\Length(max: 255, maxMessage: "La description ne peut pas dépasser 255 caractères.")]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le prix est obligatoire.")]
+    #[Assert\Positive(message: "Le prix doit être un nombre positif.")]
     private ?float $prix = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le stock est obligatoire.")]
+    #[Assert\PositiveOrZero(message: "Le stock ne peut pas être négatif.")]
     private ?int $stock = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Regex(
+        pattern: "/\.(jpg|jpeg|png|gif)$/i",
+        message: "L'image doit être au format JPG, JPEG, PNG ou GIF."
+    )]
+
     private ?string $image = null;
 
     #[ORM\ManyToOne(targetEntity: Categorie::class, inversedBy: 'produits')]
+    #[Assert\NotBlank(message: "Le categorie est obligatoire.")]
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $categorie = null;
 

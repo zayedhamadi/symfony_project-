@@ -29,7 +29,7 @@ security:
         password_parameter: password
         default_target_path: app_testing_login
         always_use_default_target_path: true
-       # success_handler: lexik_jwt_authentication.handler.authentication_success
+        success_handler: lexik_jwt_authentication.handler.authentication_success
         failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
       logout:
@@ -54,7 +54,7 @@ security:
     - { path: ^/api/token/refresh, roles: PUBLIC_ACCESS }
     - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
   #  - { path: ^/user, roles: Admin }
- #   - { path: ^/user/new, roles: Admin }
+  #   - { path: ^/user/new, roles: Admin }
 
 
 when@test:

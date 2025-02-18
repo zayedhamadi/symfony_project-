@@ -1,62 +1,76 @@
-{% extends 'base.html.twig' %}
+{% extends 'side-bar.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}Liste des Élèves{% endblock %}
 
 {% block body %}
-    <h1>User index</h1>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Liste des utilisateurs</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Image</th>
-                <th>Email</th>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Adresse</th>
-                <th>Description</th>
-                <th>Num_tel</th>
-                <th>Genre</th>
-                <th>EtatCompte</th>
-                <th>DateNaissance</th>
-                <th>Roles</th>
-                <th>Password</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-              <td>  <img src="{{ asset('uploads/' ~ user.image) }}" alt="Image de profil">
-              </td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.nom }}</td>
-                <td>{{ user.prenom }}</td>
-                <td>{{ user.adresse }}</td>
-                <td>{{ user.description }}</td>
-                <td>{{ user.numTel }}</td>
-                <td>{{ user.genre ? user.genre.name : '' }}</td>
-                <td>{{ user.etatCompte ? user.etatCompte.name : '' }}</td>
-                <td>{{ user.dateNaissance ? user.dateNaissance|date('Y-m-d') : '' }}</td>
-                <td>
-                    {% for role in user.roles %}
-                        {{ role }}{% if not loop.last %}, {% endif %}
-                    {% endfor %}
-                </td>
-                <td>{{ user.password }}</td>
-                <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="14">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="mb-4">
+            <form method="get" action="{{ path('app_user_list') }}">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control rounded-start" placeholder="Rechercher par nom, prénom ou e-mail" value="{{ app.request.query.get('search') }}">
+                    <button class="btn btn-primary rounded-end" type="submit">
+                        <i class="fas fa-search"></i> Rechercher
+                    </button>
+                </div>
+            </form>
+        </div>
 
-    <a href="{{ path('app_user_new') }}">Create new</a>
+        <div class="table-responsive mt-4">
+            <table class="table table-striped table-hover">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Image</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Numéro de téléphone</th>
+                    <th scope="col">Genre</th>
+                    <th scope="col">Date de naissance</th>
+                    <th scope="col">Rôles</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>
+                            {% if user.image %}
+                                <img src="{{ asset('uploads/' ~ user.image) }}" alt="Image de profil" class="img-thumbnail" style="width: 50px; height: 50px;">
+                            {% else %}
+                                <img src="{{ asset('images/default-avatar.png') }}" alt="Image de profil par défaut" class="img-thumbnail" style="width: 50px; height: 50px;">
+                            {% endif %}
+                        </td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.nom }}</td>
+                        <td>{{ user.prenom }}</td>
+                        <td>{{ user.numTel }}</td>
+                        <td>{{ user.genre ? user.genre.name : '' }}</td>
+                        <td>{{ user.dateNaissance ? user.dateNaissance|date('Y-m-d') : '' }}</td>
+                        <td>
+                            {% for role in user.roles %}
+                                {{ role }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <a href="{{ path('app_user_show', {'id': user.id}) }}" class="btn btn-info btn-sm">Voir</a>
+                            <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="9" class="text-center">Aucun enregistrement trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{{ path('app_user_new') }}" class="btn btn-success">
+                <i class="fas fa-user-plus"></i> Créer un nouvel utilisateur
+            </a>
+        </div>
+    </div>
 {% endblock %}

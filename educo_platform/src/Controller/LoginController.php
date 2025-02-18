@@ -2,10 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Enum\EtatCompte;
-use App\Entity\User;
+
 use DateTime;
-use LogicException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -50,17 +48,22 @@ class LoginController extends AbstractController
 
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastEmail = $authenticationUtils->getLastUsername() ?: '';
-
+        dump($session->getId());
+        dump($session->get('jwt_token'));
+        dump($session->get('user_id'));
         return $this->render('login/login.html.twig', [
             'last_email' => $lastEmail,
+            'user_id' => $session->get('user_id'),
             'error' => $error,
         ]);
     }
 
 
     #[Route('/logout', name: 'app_logout', methods: ['GET'])]
-    public function logout(): void
+    public function logout(SessionInterface $session): Response
     {
-        throw new LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        $session->clear();
+        $session->invalidate();
+        return $this->redirectToRoute('app_login');
     }
 }

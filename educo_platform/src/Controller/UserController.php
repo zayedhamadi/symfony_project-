@@ -31,49 +31,48 @@ final class UserController extends AbstractController
     }
 
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
-    public function new(Request                     $request, EntityManagerInterface $entityManager,
-                        UserPasswordHasherInterface $passwordHasher,
-                        MailerInterface             $mailer,
-                        ParameterBagInterface       $params,
-                        SluggerInterface            $slugger): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,
+                        UserPasswordHasherInterface $passwordHasher, MailerInterface $mailer,
+                        ParameterBagInterface $params, SluggerInterface $slugger): Response
     {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+        try {
+            $user = new User();
+            $form = $this->createForm(UserType::class, $user);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $imageFile = $form->get('image')->getData();
-            if ($imageFile) {
-                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+            if ($form->isSubmitted() && $form->isValid()) {
+                $imageFile = $form->get('image')->getData();
+                if ($imageFile) {
+                    $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
 
-                try {
-                    $imageFile->move($this->getParameter('uploads_directory'), $newFilename);
-                    $user->setImage($newFilename);
-                } catch (FileException $e) {
-                    throw new Exception("Erreur lors de l'upload de l'image.");
-
+                    try {
+                        $imageFile->move($this->getParameter('uploads_directory'), $newFilename);
+                        $user->setImage($newFilename);
+                    } catch (FileException $e) {
+                        throw new Exception("Erreur lors de l'upload de l'image.");
+                    }
                 }
 
+                $plainPassword = $user->getPassword();
+                $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
+                $user->setPassword($hashedPassword);
 
-            }
+                $entityManager->persist($user);
+                $entityManager->flush();
 
-            $plainPassword = $user->getPassword();
-            $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
-            $user->setPassword($hashedPassword);
+                // Flash message for success
+                $this->addFlash('success', 'Utilisateur créé avec succès.');
 
-            $entityManager->persist($user);
-            $entityManager->flush();
+                $projectDir = $params->get('kernel.project_dir');
+                $imagePath = $projectDir . '/public/images/educo.jpg';
 
-            $projectDir = $params->get('kernel.project_dir');
-            $imagePath = $projectDir . '/public/images/educo.jpg';
+                if (!file_exists($imagePath)) {
+                    throw new Exception("L'image educo.jpg n'a pas été trouvée dans le dossier public/images.");
+                }
 
-            if (!file_exists($imagePath)) {
-                throw new Exception("L'image educo.jpg n'a pas été trouvée dans le dossier public/images.");
-            }
-
-            $htmlContent = "
+                $htmlContent = "
             <!DOCTYPE html>
             <html lang='fr'>
             <head>
@@ -111,23 +110,28 @@ final class UserController extends AbstractController
             </html>
             ";
 
-            $emailMessage = (new Email())
-                ->from('educolearning@educo.com')
-                ->to($user->getEmail())
-                ->subject('Bienvenue sur Educo')
-                ->html($htmlContent)
-                ->attachFromPath($imagePath, 'educo_logo', 'image/jpeg');
+                $emailMessage = (new Email())
+                    ->from('educolearning@educo.com')
+                    ->to($user->getEmail())
+                    ->subject('Bienvenue sur Educo')
+                    ->html($htmlContent)
+                    ->attachFromPath($imagePath, 'educo_logo', 'image/jpeg');
 
-            $mailer->send($emailMessage);
+                $mailer->send($emailMessage);
 
+                return $this->redirectToRoute('app_user_index');
+            }
+
+            return $this->render('user/new.html.twig', [
+                'user' => $user,
+                'form' => $form,
+            ]);
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Une erreur est survenue lors de la création de l\'utilisateur.');
             return $this->redirectToRoute('app_user_index');
         }
-
-        return $this->render('user/new.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
     }
+
 
 
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
@@ -180,5 +184,27 @@ final class UserController extends AbstractController
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
 
+
+
+
+    #[Route('/', name: 'app_user_list')]
+    public function chercherUser(Request $request, UserRepository $userRepository)
+    {
+        $search = $request->query->get('search');
+
+        if ($search) {
+            $users = $userRepository->createQueryBuilder('u')
+                ->where('u.nom LIKE :search OR u.prenom LIKE :search OR u.email LIKE :search')
+                ->setParameter('search', '%' . $search . '%')
+                ->getQuery()
+                ->getResult();
+        } else {
+            $users = $userRepository->findAll();
+        }
+
+        return $this->render('user/index.html.twig', [
+            'users' => $users,
+        ]);
+    }
 
 }

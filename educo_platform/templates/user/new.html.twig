@@ -1,10 +1,43 @@
+{% extends 'side-bar.html.twig' %}
 
-{% block title %}New User{% endblock %}
+{% block title %}Nouvel utilisateur{% endblock %}
 
 {% block body %}
-    <h1>Create new User</h1>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Créer un nouvel utilisateur</h1>
 
-    {{ include('user/_form.html.twig') }}
+        <!-- Vérification des messages flash -->
+        {% for message in app.flashes('success') %}
+            <script>
+                console.log("Success Message:", '{{ message }}'); // Ajoutez ceci pour déboguer
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Succès',
+                    text: '{{ message }}',
+                    showConfirmButton: true
+                });
+            </script>
+        {% endfor %}
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+        {% for message in app.flashes('error') %}
+            <script>
+                console.log("Error Message:", '{{ message }}'); // Ajoutez ceci pour déboguer
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur',
+                    text: '{{ message }}',
+                    showConfirmButton: true
+                });
+            </script>
+        {% endfor %}
+
+
+        <div class="card p-4">
+            {{ include('user/_form.html.twig') }}
+        </div>
+
+        <div class="mt-3">
+            <a href="{{ path('app_user_index') }}" class="btn btn-secondary">Retour à la liste</a>
+        </div>
+    </div>
 {% endblock %}

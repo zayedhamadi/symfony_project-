@@ -297,9 +297,6 @@ final class CommandeController extends AbstractController
 
         return $this->redirectToRoute('app_commande_details', ['id' => $id]);
     }
-    public function getNomClient(): ?string
-    {
-        return $this->parent ? $this->parent->getNom() : null;
-    }
+
 
 }

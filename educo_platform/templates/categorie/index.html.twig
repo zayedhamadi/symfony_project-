@@ -1,0 +1,55 @@
+{% extends 'side-bar.html.twig' %}
+{% block title %}Categorie index{% endblock %}
+
+{% block body %}
+    <div class="container" style="margin-top: 100px !important; padding: 0 15px !important;">
+        <h1 class="mb-4">Categorie index</h1>
+        <form action="{{ path('app_categorie_index') }}" method="get" class="d-flex mb-3">
+            <input type="text" name="search" class="form-control me-2" placeholder="Rechercher une catégorie..." value="{{ search }}" style="max-width: 250px;" >
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i> Rechercher
+            </button>
+        </form>
+        <!-- Utilisation de d-flex et justify-content-end pour aligner à droite avec un espacement -->
+        <div class="d-flex justify-content-end mb-3" style="padding-right: 40px;">
+            <a href="{{ path('app_categorie_new') }}" class="btn btn-primary">Ajouter une catégorie</a>
+        </div>
+
+        <table class="table table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for categorie in categories %}
+                <tr>
+                    <td>{{ categorie.id }}</td>
+                    <td>{{ categorie.nom }}</td>
+                    <td>{{ categorie.description }}</td>
+                    <td>
+                    <span style="display: flex; gap: 10px;">
+                        <a href="{{ path('app_categorie_show', {'id': categorie.id}) }}" class="btn btn-info btn-sm" title="Voir">
+                            <i class="fas fa-eye"></i>
+                        </a>
+
+                        <a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}" class="btn btn-warning btn-sm" title="Modifier">
+                            <i class="fas fa-edit"></i>
+                        </a>
+
+                        {{ include('categorie/_delete_form.html.twig') }}
+                    </span>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

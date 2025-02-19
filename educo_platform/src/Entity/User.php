@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Enum\Rolee;
+use DateTimeInterface;
 use App\Entity\Enum\EtatCompte;
 use App\Entity\Enum\Genre;
 use App\Repository\UserRepository;
@@ -13,83 +15,48 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_PhoneNumber', fields: ['num_tel'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $image = null;
+
 
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 180,nullable: true)]
+
+    #[ORM\Column(length: 180, nullable: true)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 180,nullable: true)]
+
+    #[ORM\Column(length: 180, nullable: true)]
     private ?string $prenom = null;
 
-    #[ORM\Column(length: 180,nullable: true)]
+
+    #[ORM\Column(length: 180, nullable: true)]
     private ?string $adresse = null;
 
-    #[ORM\Column(length: 300,nullable: true)]
+    #[ORM\Column(length: 300, nullable: true)]
     private ?string $description = null;
+
+
     #[ORM\Column(nullable: true)]
     private ?int $num_tel = null;
 
     #[ORM\Column(type: 'string', nullable: true, enumType: Genre::class)]
-    private Genre $genre ;
+    private ?Genre $genre = null;
 
     #[ORM\Column(type: 'string', nullable: true, enumType: EtatCompte::class)]
-    private EtatCompte $etatCompte;
+    private ?EtatCompte $etatCompte = null;
 
 
-    public function getGenre(): ?Genre
-    {
-        return $this->genre;
-    }
-
-    public function setGenre(?Genre $genre): void
-    {
-        $this->genre = $genre;
-    }
-
-    public function getEtatCompte(): ?EtatCompte
-    {
-        return $this->etatCompte;
-    }
-
-    public function setEtatCompte(?EtatCompte $etatCompte): void
-    {
-        $this->etatCompte = $etatCompte;
-    }
-
-    public function getNumTel(): ?int
-    {
-        return $this->num_tel;
-    }
-
-    public function setNumTel(?int $num_tel): void
-    {
-        $this->num_tel = $num_tel;
-    }
-
-    public function getDateNaissance(): ?\DateTimeInterface
-    {
-        return $this->dateNaissance;
-    }
-
-    public function setDateNaissance(?\DateTimeInterface $dateNaissance): void
-    {
-        $this->dateNaissance = $dateNaissance;
-    }
     #[ORM\Column(type: 'date', nullable: true)]
-    private ?\DateTimeInterface $dateNaissance = null;
-    /**
-     * @var list<string> The user roles
-     */
-    #[ORM\Column]
-    private array $roles = [];
+    private ?DateTimeInterface $dateNaissance = null;
 
     /**
      * @var string The hashed password
@@ -103,8 +70,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Classe::class, mappedBy: 'id_user')]
     private Collection $classes;
 
-    #[ORM\ManyToOne(inversedBy: 'idUser')]
-    private ?Reclamation $reclamation = null;
+    #[ORM\OneToMany(targetEntity: Reclamation::class, mappedBy: 'user')]
+    private Collection $reclamations;
+
 
 
     /**
@@ -119,6 +87,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Matiere::class, mappedBy: 'idEnsg')]
     private Collection $matieres;
 
+    #[ORM\ManyToOne(inversedBy: 'IdUser')]
+    private ?Cours $cours = null;
 
 
 
@@ -127,6 +97,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->classes = new ArrayCollection();
         $this->eleves = new ArrayCollection();
         $this->matieres = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
+        $this->reclamations = new ArrayCollection();
 
     }
 
@@ -145,6 +117,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->nom = $nom;
     }
 
+//    #[ORM\ManyToOne(inversedBy: 'IdUser')]
+//    private ?Cours $cours = null;
+
     public function getPrenom(): ?string
     {
         return $this->prenom;
@@ -155,15 +130,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->prenom = $prenom;
     }
 
-    public function getAdresse(): ?string
+    public function getImage(): ?string
     {
-        return $this->adresse;
+        return $this->image;
     }
 
-    public function setAdresse(?string $adresse): void
+    public function setImage(?string $image): self
     {
-        $this->adresse = $adresse;
+        $this->image = $image;
+        return $this;
     }
+
 
     public function getDescription(): ?string
     {
@@ -194,29 +171,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
+     * @return Rolee[]
      * @see UserInterface
-     *
-     * @return list<string>
      */
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+
+        if (empty(array_intersect($roles, [Rolee::Admin->value, Rolee::User->value]))) {
+            return $roles;
+        }
 
         return array_unique($roles);
     }
 
     /**
-     * @param list<string> $roles
+     * @param Rolee[] $roles
      */
     public function setRoles(array $roles): static
     {
-        $this->roles = $roles;
+        $this->roles = array_map(fn($role) => $role instanceof Rolee ? $role->value : $role, $roles);
 
         return $this;
     }
@@ -234,6 +212,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->password = $password;
 
         return $this;
+    }
+
+    public function getFullName(): string
+    {
+        return $this->nom . ' ' . $this->prenom;
     }
 
     /**
@@ -284,7 +267,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    
+    /**
+     * @return Collection<int, Evenement>
+     */
+    public function getEvenements(): Collection
+    {
+        return $this->evenements;
+    }
+
+    public function addEvenement(Evenement $evenement): static
+    {
+        if (!$this->evenements->contains($evenement)) {
+            $this->evenements->add($evenement);
+            $evenement->setIdOrganisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvenement(Evenement $evenement): static
+    {
+        if ($this->evenements->removeElement($evenement)) {
+            // set the owning side to null (unless already changed)
+            if ($evenement->getIdOrganisateur() === $this) {
+                $evenement->setIdOrganisateur(null);
+            }
+        }
+
+        return $this;
+    }
 
     /**
      * @return Collection<int, Eleve>
@@ -346,7 +357,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-  
+    public function getCours(): ?Cours
+    {
+        return $this->cours;
+    }
+
+    public function setCours(?Cours $cours): static
+    {
+        $this->cours = $cours;
+
+        return $this;
+    }
+
+    public function getDateNaissance(): ?DateTimeInterface
+    {
+        return $this->dateNaissance;
+    }
+
+    public function setDateNaissance(?DateTimeInterface $dateNaissance): void
+    {
+        $this->dateNaissance = $dateNaissance;
+    }
 
 
 }

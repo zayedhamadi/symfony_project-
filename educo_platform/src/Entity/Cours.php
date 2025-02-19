@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\CoursRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CoursRepository::class)]
@@ -19,6 +17,8 @@ class Cours
     private ?string $name = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Matiere $IdMatiere = null;
 
     #[ORM\OneToMany(targetEntity: Quiz::class, mappedBy: 'cours')]
@@ -26,17 +26,31 @@ class Cours
 
     #[ORM\OneToMany(mappedBy: 'cours', targetEntity: Classe::class)]
     private Collection $classes;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $name = null; // New name field
+//    /**
+//     * @var Collection<int, User>
+//     */
+//    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'cours')]
+//    private Collection $IdUser;
 
     public function __construct()
     {
         $this->quizzes = new ArrayCollection();
         $this->classes = new ArrayCollection();
     }
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $pdfFilename = null;
+//    public function __construct()
+//    {
+//        $this->IdUser = new ArrayCollection();
+//    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
+
 
     public function getName(): ?string
     {
@@ -66,8 +80,10 @@ class Cours
      * @return Collection<int, Quiz>
      */
     public function getQuizzes(): Collection
+    public function getPdfFilename(): ?string
     {
         return $this->quizzes;
+        return $this->pdfFilename;
     }
 
     public function addQuiz(Quiz $quiz): static
@@ -107,10 +123,18 @@ class Cours
             $class->setCours($this);
         }
 
+    public function setPdfFilename(?string $pdfFilename): self
+    {
+        $this->pdfFilename = $pdfFilename;
         return $this;
+    }
+    public function getName(): ?string
+    {
+        return $this->name;
     }
 
     public function removeClass(Classe $class): static
+    public function setName(string $name): static
     {
         if ($this->classes->removeElement($class)) {
             // Set the owning side to null (unless already changed)
@@ -119,6 +143,38 @@ class Cours
             }
         }
 
+        $this->name = $name;
         return $this;
     }
+
+
+//    /**
+//     * @return Collection<int, User>
+//     */
+//    public function getIdUser(): Collection
+//    {
+//        return $this->IdUser;
+//    }
+//
+//    public function addIdUser(User $idUser): static
+//    {
+//        if (!$this->IdUser->contains($idUser)) {
+//            $this->IdUser->add($idUser);
+//            $idUser->setCours($this);
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removeIdUser(User $idUser): static
+//    {
+//        if ($this->IdUser->removeElement($idUser)) {
+//            // set the owning side to null (unless already changed)
+//            if ($idUser->getCours() === $this) {
+//                $idUser->setCours(null);
+//            }
+//        }
+//
+//        return $this;
+//    }
 }

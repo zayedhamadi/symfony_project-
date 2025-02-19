@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
+use App\Entity\Enum\Statut;
 use App\Repository\ReclamationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ReclamationRepository::class)]
 class Reclamation
@@ -17,30 +19,50 @@ class Reclamation
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le titre est obligatoire.")]
+    #[Assert\Length(
+    min: 5,
+    max: 50,
+    minMessage: "Le titre doit contenir au moins {{ limit }} caractères.",
+    maxMessage: "Le titre ne doit pas dépasser {{ limit }} caractères."
+     )]
     private ?string $titre = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "La description est obligatoire.")]
+    #[Assert\Length(
+        min: 10,
+        minMessage: "La description doit contenir au moins {{ limit }} caractères."
+    )]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotNull(message: "La date de création est obligatoire.")]
     private ?\DateTimeInterface $dateDeCreation = null;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'reclamation')]
-    private Collection $idUser;
+    #[ORM\Column(type: 'string' , enumType: Statut::class)]
+    #[Assert\NotNull(message: "Le statut est obligatoire.")]
+    private Statut $statut ;
+    public function getStatut(): ?Statut
+    {
+        return $this->statut;
+    }
 
-    /**
-     * @var Collection<int, HistoriqueReclamation>
-     */
-    #[ORM\OneToMany(targetEntity: HistoriqueReclamation::class, mappedBy: 'refReclamtion')]
-    private Collection $historiqueReclamations;
+    public function setStatut(?Statut $statut): void
+    {
+        $this->statut = $statut;
+    }
+
+
+    #[ORM\ManyToOne(inversedBy: 'reclamations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+    
 
     public function __construct()
     {
-        $this->idUser = new ArrayCollection();
-        $this->historiqueReclamations = new ArrayCollection();
+        $this->dateDeCreation = new \DateTime();
+        $this->statut = Statut::EN_ATTENTE; 
     }
 
     public function getId(): ?int
@@ -84,63 +106,15 @@ class Reclamation
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getIdUser(): Collection
+    public function getUser(): ?User
     {
-        return $this->idUser;
+        return $this->user;
     }
-
-    public function addIdUser(User $idUser): static
+    
+    public function setUser(?User $user): static
     {
-        if (!$this->idUser->contains($idUser)) {
-            $this->idUser->add($idUser);
-            $idUser->setReclamation($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIdUser(User $idUser): static
-    {
-        if ($this->idUser->removeElement($idUser)) {
-            // set the owning side to null (unless already changed)
-            if ($idUser->getReclamation() === $this) {
-                $idUser->setReclamation(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, HistoriqueReclamation>
-     */
-    public function getHistoriqueReclamations(): Collection
-    {
-        return $this->historiqueReclamations;
-    }
-
-    public function addHistoriqueReclamation(HistoriqueReclamation $historiqueReclamation): static
-    {
-        if (!$this->historiqueReclamations->contains($historiqueReclamation)) {
-            $this->historiqueReclamations->add($historiqueReclamation);
-            $historiqueReclamation->setRefReclamtion($this);
-        }
-
-        return $this;
-    }
-
-    public function removeHistoriqueReclamation(HistoriqueReclamation $historiqueReclamation): static
-    {
-        if ($this->historiqueReclamations->removeElement($historiqueReclamation)) {
-            // set the owning side to null (unless already changed)
-            if ($historiqueReclamation->getRefReclamtion() === $this) {
-                $historiqueReclamation->setRefReclamtion(null);
-            }
-        }
-
+        $this->user = $user;
+    
         return $this;
     }
 }

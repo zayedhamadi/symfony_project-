@@ -68,8 +68,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\ManyToMany(targetEntity: Classe::class, mappedBy: 'id_user')]
     private Collection $classes;
-    #[ORM\ManyToOne(inversedBy: 'idUser')]
-    private ?Reclamation $reclamation = null;
+
+    #[ORM\OneToMany(targetEntity: Reclamation::class, mappedBy: 'user')]
+    private Collection $reclamations;
+
+
+
     /**
      * @var Collection<int, Eleve>
      */
@@ -81,8 +85,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Matiere::class, mappedBy: 'idEnsg')]
     private Collection $matieres;
 
-    #[ORM\ManyToOne(inversedBy: 'IdUser')]
-    private ?Cours $cours = null;
+  
 
     /**
      * @var Collection<int, Commande>
@@ -101,8 +104,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->eleves = new ArrayCollection();
         $this->matieres = new ArrayCollection();
         $this->commandes = new ArrayCollection();
+        $this->reclamations = new ArrayCollection();
 
+    }
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(?string $nom): void
+    {
+        $this->nom = $nom;
     }
 
 //    #[ORM\ManyToOne(inversedBy: 'IdUser')]
@@ -129,10 +147,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getDescription(): ?string
     {
@@ -247,17 +261,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getReclamation(): ?Reclamation
-    {
-        return $this->reclamation;
+    /**
+ * @return Collection<int, Reclamation>
+ */
+public function getReclamations(): Collection
+{
+    return $this->reclamations;
+}
+
+public function addReclamation(Reclamation $reclamation): static
+{
+    if (!$this->reclamations->contains($reclamation)) {
+        $this->reclamations->add($reclamation);
+        $reclamation->setUser($this);
     }
 
-    public function setReclamation(?Reclamation $reclamation): static
-    {
-        $this->reclamation = $reclamation;
+    return $this;
+}
 
-        return $this;
+public function removeReclamation(Reclamation $reclamation): static
+{
+    if ($this->reclamations->removeElement($reclamation)) {
+        // set the owning side to null (unless already changed)
+        if ($reclamation->getUser() === $this) {
+            $reclamation->setUser(null);
+        }
     }
+
+    return $this;
+}
+
 
 
     /**
@@ -331,15 +364,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 //
 //        return $this;
 //    }
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(?string $nom): void
-    {
-        $this->nom = $nom;
-    }
+    
 
     public function getAdresse(): ?string
     {

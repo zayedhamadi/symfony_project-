@@ -4,28 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="gestion vente">
+    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="quelque modification gestion vente">
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/symfony_project-.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/symfony_project-.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/.env" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/migrations/Version20250213102840.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/migrations/Version20250216155739.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/CommandeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/CommandeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/PaiementController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/PaiementController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Entity/Categorie.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Entity/Categorie.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Entity/Produit.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Entity/Produit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Entity/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Form/CategorieType.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Form/CategorieType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/categorie/_delete_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/categorie/_delete_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/categorie/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/categorie/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/categorie/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/categorie/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/CategorieController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/CategorieController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/ProduitController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/ProduitController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Form/ProduitType.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Form/ProduitType.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/educo_platform/templates/categorie/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/categorie/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/categorie/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/categorie/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/categorie/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/categorie/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/produit/_delete_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/produit/_delete_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/produit/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/produit/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/produit/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/produit/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/produit/boutique.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/produit/boutique.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/educo_platform/templates/produit/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/produit/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/produit/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/produit/new.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,9 +30,13 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
+  &quot;history&quot;: [
+    {
+      &quot;state&quot;: &quot;OPEN&quot;
+    }
+  ],
   &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;zayedhamadi&quot;
+    &quot;state&quot;: &quot;OPEN&quot;
   }
 }</component>
   <component name="GithubPullRequestsUISettings">{
@@ -55,6 +47,7 @@
 }</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/educo_platform/templates/categorie/index.html.twig" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/educo_platform/templates/categorie/new.html.twig" root0="FORCE_HIGHLIGHTING" root1="SKIP_INSPECTION" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="E:\Xampp\php\php.exe">
     <include_path>
@@ -325,6 +318,9 @@
       <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/cache" />
     </include_path>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -340,6 +336,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;branche__old&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -347,7 +344,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;web.server&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -381,8 +378,45 @@
       <workItem from="1726135876496" duration="216000" />
       <workItem from="1739442293763" duration="1174000" />
       <workItem from="1739828670929" duration="11000" />
-      <workItem from="1739867407379" duration="1173000" />
+      <workItem from="1739867407379" duration="5842000" />
+      <workItem from="1739875053590" duration="659000" />
+      <workItem from="1739902688265" duration="5256000" />
+      <workItem from="1739915829720" duration="7193000" />
+      <workItem from="1739969681409" duration="592000" />
     </task>
+    <task id="LOCAL-00001" summary="gestion ventev2">
+      <option name="closed" value="true" />
+      <created>1739868983521</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1739868983521</updated>
+    </task>
+    <task id="LOCAL-00002" summary="gestion ventev2.">
+      <option name="closed" value="true" />
+      <created>1739869116290</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1739869116290</updated>
+    </task>
+    <task id="LOCAL-00003" summary="quelque modification gestion vente">
+      <option name="closed" value="true" />
+      <created>1739909355301</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1739909355301</updated>
+    </task>
+    <task id="LOCAL-00004" summary="quelque modification gestion vente">
+      <option name="closed" value="true" />
+      <created>1739909447240</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1739909447240</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -401,6 +435,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="gestion vente" />
-    <option name="LAST_COMMIT_MESSAGE" value="gestion vente" />
+    <MESSAGE value="gestion ventev2" />
+    <MESSAGE value="gestion ventev2." />
+    <MESSAGE value="quelque modification gestion vente" />
+    <option name="LAST_COMMIT_MESSAGE" value="quelque modification gestion vente" />
   </component>
 </project>

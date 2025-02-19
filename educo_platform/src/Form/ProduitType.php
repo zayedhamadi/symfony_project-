@@ -43,8 +43,7 @@ class ProduitType extends AbstractType
                 'constraints' => [
                     new File([
                         'maxSize' => '2M',
-                        'mimeTypes' => ['image/jpeg', 'image/png'],
-                        'mimeTypesMessage' => 'Merci d\'uploader une image valide (JPG ou PNG)',
+
                     ])
                 ],
             ]);

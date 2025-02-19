@@ -158,8 +158,7 @@ final class CommandeController extends AbstractController
         $commande->setDateCommande(new \DateTime());
         $commande->setMontantTotal($montantTotal);
         $commande->setStatut('En attente');
-        $commande->setModePaiement(''); // Mode de paiement à définir plus tard
-
+        $commande->setModePaiement("a l'administration");
         // Ajouter les produits du panier à la commande
         foreach ($panier as $id => $quantite) {
             $produit = $this->entityManager->getRepository(Produit::class)->find($id);

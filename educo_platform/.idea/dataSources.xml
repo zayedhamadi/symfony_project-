@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="testproj@localhost" uuid="ff0fa742-7fce-4af0-ae26-120ade096a9a">
+    <data-source source="LOCAL" name="projet_pidev@localhost" uuid="5b54debb-253d-49b2-b7ba-5e893a6db47b">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3307/testproj</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/projet_pidev</jdbc-url>
       <jdbc-additional-properties>
-        <property name="database.introspection.mysql.dbe5060" value="true" />
+        <property name="com.intellij.clouds.kubernetes.db.host.port" />
+        <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
+        <property name="com.intellij.clouds.kubernetes.db.container.port" />
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>

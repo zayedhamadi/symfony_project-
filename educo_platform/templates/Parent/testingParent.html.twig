@@ -1,0 +1,19 @@
+
+
+{% block title %}Hello TestingParentController!{% endblock %}
+
+{% block body %}
+
+
+   tesingggggg Parent  twiggggggggggggggggggggggggggggggg
+{% endblock %}
+{% if app.session.get('jwt_token') %}
+    <script>
+        localStorage.setItem("jwt_token", "{{ app.session.get('jwt_token') }}");
+        localStorage.setItem("idUser", "{{ app.session.get('user_id') }}");
+
+        console.log("Token JWT stocké :", localStorage.getItem("jwt_token"));
+        console.log("idUser :", localStorage.getItem("idUser"));
+    </script>
+{% endif %}
+

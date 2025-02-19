@@ -34,6 +34,42 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
 
+    public function countUsersByRole()
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.roles, COUNT(u.id) as count')
+            ->groupBy('u.roles')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
+    public function countUsersByGender()
+    {
+        $results = $this->createQueryBuilder('u')
+            ->select('u.genre, COUNT(u.id) as count')
+            ->groupBy('u.genre')
+            ->getQuery()
+            ->getResult();
+
+        $genderStats = [
+            'Homme' => 0,
+            'Femme' => 0,
+        ];
+
+        foreach ($results as $result) {
+            if (isset($genderStats[$result['genre']])) {
+                $genderStats[$result['genre']] = $result['count']; // Correction ici
+            }
+        }
+
+        return $genderStats;
+    }
+
+
+}
+
     //    /**
     //     * @return User[] Returns an array of User objects
     //     */
@@ -58,4 +94,4 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     //            ->getOneOrNullResult()
     //        ;
     //    }
-}
+

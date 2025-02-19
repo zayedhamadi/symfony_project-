@@ -1,0 +1,40 @@
+{% extends 'side-bar.html.twig' %}
+
+{% block title %}Votre Panier{% endblock %}
+
+{% block body %}
+    <h1 class="text-center my-4">Votre Panier</h1>
+
+    {% if items is empty %}
+        <p class="text-center">Votre panier est vide.</p>
+    {% else %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Image</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+                <th>Total</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in items %}
+                <tr>
+                    <td>{{ item.produit.nom }}</td>
+                    <td><img src="{{ asset('uploads/' ~ item.produit.image) }}" width="50"></td>
+                    <td>{{ item.produit.prix }} dt</td>
+                    <td>{{ item.quantite }}</td>
+                    <td>{{ item.produit.prix * item.quantite }} dt</td>
+                    <td>
+                        <a href="{{ path('app_panier_remove', {'id': item.produit.id}) }}" class="btn btn-danger btn-sm">Retirer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <h3 class="text-right">Total : {{ total }} dt</h3>
+        <a href="#" class="btn btn-success">Passer la commande</a>
+    {% endif %}
+{% endblock %}

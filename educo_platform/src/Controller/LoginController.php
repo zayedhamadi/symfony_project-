@@ -18,7 +18,7 @@ class LoginController extends AbstractController
     #[Route('/', name: 'homepage')]
     public function home(): Response
     {
-        return $this->redirectToRoute('app_login');
+        return $this->redirectToRoute('app_home');
     }
 
     #[Route('/login', name: 'app_login')]
@@ -46,11 +46,11 @@ class LoginController extends AbstractController
 
 
             if (in_array(Rolee::Admin->value, $user->getRoles())) {
-                return $this->redirect('https://127.0.0.1:8000/testing/login ');
+                return $this->redirectToRoute('app_user_index');
             } elseif (in_array(Rolee::Enseignant->value, $user->getRoles())) {
-                return $this->redirect('https://127.0.0.1:8000/cessation/getAllCessation ');
+                return $this->redirectToRoute('evenement_new');
             } elseif (in_array(Rolee::Parent->value, $user->getRoles())) {
-                return $this->redirect('https://127.0.0.1:8000/contact');
+                return $this->redirectToRoute('evenement_index');
             }
             return $this->redirectToRoute('app_dashboardAdmin');
         }
@@ -68,9 +68,7 @@ class LoginController extends AbstractController
     }
 
 
-
-
-    #[Route('/logout', name: 'app_logout', methods: ['GET'])]
+    #[Route('/logout', name: 'app_logout', methods: ['POST','GET'])]
     public function logout(SessionInterface $session): Response
     {
         $session->clear();

@@ -1,6 +1,5 @@
 {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
 
-<!-- Nom -->
 <div class="mb-3">
     {{ form_label(form.nom, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
     {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre nom'}}) }}
@@ -9,7 +8,6 @@
     </div>
 </div>
 
-<!-- Prénom -->
 <div class="mb-3">
     {{ form_label(form.prenom, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
     {{ form_widget(form.prenom, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre prénom'}}) }}
@@ -18,7 +16,6 @@
     </div>
 </div>
 
-<!-- E-mail -->
 <div class="mb-3">
     {{ form_label(form.email, 'E-mail', {'label_attr': {'class': 'form-label'}}) }}
     {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre adresse e-mail'}}) }}
@@ -27,7 +24,6 @@
     </div>
 </div>
 
-<!-- Mot de passe -->
 <div class="mb-3">
     {{ form_label(form.password, 'Mot de passe', {'label_attr': {'class': 'form-label'}}) }}
     {{ form_widget(form.password, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre mot de passe'}}) }}
@@ -36,7 +32,6 @@
     </div>
 </div>
 
-<!-- Numéro de téléphone -->
 <div class="mb-3">
     {{ form_label(form.num_tel, 'Numéro de téléphone', {'label_attr': {'class': 'form-label'}}) }}
     {{ form_widget(form.num_tel, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre numéro de téléphone'}}) }}
@@ -45,7 +40,6 @@
     </div>
 </div>
 
-<!-- Date de naissance -->
 <div class="mb-3">
     {{ form_label(form.dateNaissance, 'Date de naissance', {'label_attr': {'class': 'form-label'}}) }}
     {{ form_widget(form.dateNaissance, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre date de naissance'}}) }}
@@ -54,7 +48,6 @@
     </div>
 </div>
 
-<!-- Genre -->
 <div class="mb-3">
     {{ form_label(form.genre, 'Genre', {'label_attr': {'class': 'form-label'}}) }}
     {{ form_widget(form.genre, {'attr': {'class': 'form-control'}}) }}
@@ -63,7 +56,6 @@
     </div>
 </div>
 
-<!-- État du compte -->
 <div class="mb-3">
     {{ form_label(form.etatCompte, 'État du compte', {'label_attr': {'class': 'form-label'}}) }}
     {{ form_widget(form.etatCompte, {'attr': {'class': 'form-control'}}) }}
@@ -72,7 +64,6 @@
     </div>
 </div>
 
-<!-- Roles -->
 <div class="mb-3">
     {{ form_label(form.roles, 'Roles', {'label_attr': {'class': 'form-label'}}) }}
     {{ form_widget(form.roles, {'attr': {'class': 'form-control'}}) }}
@@ -81,7 +72,6 @@
     </div>
 </div>
 
-<!-- Image -->
 <div class="mb-3">
     {{ form_label(form.image, 'Image de profil', {'label_attr': {'class': 'form-label'}}) }}
     {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
@@ -90,7 +80,6 @@
     </div>
 </div>
 
-<!-- Adresse -->
 <div class="mb-3">
     {{ form_label(form.adresse, 'Adresse', {'label_attr': {'class': 'form-label'}}) }}
     {{ form_widget(form.adresse, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre adresse'}}) }}
@@ -99,9 +88,8 @@
     </div>
 </div>
 
-<hr> <!-- Ligne de séparation -->
+<hr>
 
-<!-- Description -->
 <div class="mb-3">
     {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
     {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Décrivez-vous en quelques mots'}}) }}
@@ -110,7 +98,6 @@
     </div>
 </div>
 
-<!-- Bouton Enregistrer -->
 <button type="submit" class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
 
 {{ form_end(form) }}

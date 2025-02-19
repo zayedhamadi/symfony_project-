@@ -20,7 +20,7 @@ use Symfony\Component\Mailer\MailerInterface;
 
 #[\Symfony\Component\Routing\Attribute\Route('/cessation/')]
 
-class cessatonController extends AbstractController
+class cessationController extends AbstractController
 {
     private $cessationRepository;
     private $userRepository;
@@ -59,8 +59,7 @@ class cessatonController extends AbstractController
             return $this->json(['error' => 'Cessation already exists for this user'], Response::HTTP_BAD_REQUEST);
         }
 
-        $data = json_decode($request->getContent(), true);
-        $motif = $data['motif'] ?? null;
+        $motif = $request->request->get('motif');  // Get the motif from the form submission
 
         if (!$motif) {
             return $this->json(['error' => 'Motif is required'], Response::HTTP_BAD_REQUEST);
@@ -85,61 +84,61 @@ class cessatonController extends AbstractController
             ->subject('Votre compte a été désactivé')
             ->html(
                 '<html>
-            <head>
-                <style>
-                    body {
-                        font-family: Arial, sans-serif;
-                        background-color: #f8f9fa;
-                        padding: 20px;
-                    }
-                    .container {
-                        background-color: #ffffff;
-                        border-radius: 8px;
-                        padding: 30px;
-                        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                    }
-                    .btn {
-                        display: inline-block;
-                        padding: 10px 20px;
-                        background-color: #007bff;
-                        color: white;
-                        text-decoration: none;
-                        border-radius: 5px;
-                        font-weight: bold;
-                    }
-                    .btn:hover {
-                        background-color: #0056b3;
-                    }
-                    h1 {
-                        color: #343a40;
-                    }
-                    p {
-                        color: #6c757d;
-                        font-size: 16px;
-                    }
-                    .logo {
-                        width: 100%;
-                        max-width: 300px;
-                        display: block;
-                        margin: 20px auto;
-                    }
-                </style>
-            </head>
-            <body>
-                <div class="container">
-                    <h1>Votre compte a été désactivé</h1>
-                    <p>Bonjour ' . $user->getFullName() . ',</p>
-                    <p>Nous vous informons que votre compte a été désactivé pour le motif suivant :</p>
-                    <p><strong>' . $motif . '</strong></p>
-                    <p>En conséquence, vous ne pourrez plus vous connecter à votre compte.</p>
-                    <p>Si vous avez des questions, n\'hésitez pas à contacter notre support.</p>
-                    <p>Cordialement,</p>
-                    <p><strong>L\'équipe de support</strong></p>
-                    <a href="https://127.0.0.1:8000/login" class="btn">Visiter notre site</a>
-                    <img class="logo" src="cid:educo_logo" alt="Logo de notre site" />
-                </div>
-            </body>
-        </html>'
+        <head>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f8f9fa;
+                    padding: 20px;
+                }
+                .container {
+                    background-color: #ffffff;
+                    border-radius: 8px;
+                    padding: 30px;
+                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                }
+                .btn {
+                    display: inline-block;
+                    padding: 10px 20px;
+                    background-color: #007bff;
+                    color: white;
+                    text-decoration: none;
+                    border-radius: 5px;
+                    font-weight: bold;
+                }
+                .btn:hover {
+                    background-color: #0056b3;
+                }
+                h1 {
+                    color: #343a40;
+                }
+                p {
+                    color: #6c757d;
+                    font-size: 16px;
+                }
+                .logo {
+                    width: 100%;
+                    max-width: 300px;
+                    display: block;
+                    margin: 20px auto;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>Votre compte a été désactivé</h1>
+                <p>Bonjour ' . $user->getFullName() . ',</p>
+                <p>Nous vous informons que votre compte a été désactivé pour le motif suivant :</p>
+                <p><strong>' . $motif . '</strong></p>
+                <p>En conséquence, vous ne pourrez plus vous connecter à votre compte.</p>
+                <p>Si vous avez des questions, n\'hésitez pas à contacter notre support.</p>
+                <p>Cordialement,</p>
+                <p><strong>L\'équipe de support</strong></p>
+                <a href="https://127.0.0.1:8000/login" class="btn">Visiter notre site</a>
+                <img class="logo" src="cid:educo_logo" alt="Logo de notre site" />
+            </div>
+        </body>
+    </html>'
             )
             ->attachFromPath($imagePath, 'educo.jpg', 'image/jpeg')
             ->embedFromPath($imagePath, 'educo_logo');
@@ -148,6 +147,9 @@ class cessatonController extends AbstractController
 
         return $this->json(['success' => 'User has been deactivated and notified by email'], Response::HTTP_OK);
     }
+
+
+
 
 
 

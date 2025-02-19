@@ -188,7 +188,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
 
-        if (empty(array_intersect($roles, [Rolee::Admin->value, Rolee::User->value]))) {
+        if (empty(array_intersect($roles, [Rolee::Admin->value]))) {
             return $roles;
         }
 

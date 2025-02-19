@@ -4,17 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="quelque modification gestion vente">
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/symfony_project-.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/symfony_project-.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/.env" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/CommandeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/CommandeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Entity/Commande.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Entity/Commande.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/commande/admin.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/commande/admin.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/commande/details.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/commande/details.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/produit/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/produit/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/CategorieController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/CategorieController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/ProduitController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/ProduitController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Form/ProduitType.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Form/ProduitType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/categorie/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/categorie/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/produit/boutique.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/produit/boutique.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/produit/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/produit/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,16 +29,16 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "history": [
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;history&quot;: [
     {
-      "state": "OPEN"
+      &quot;state&quot;: &quot;OPEN&quot;
     }
   ],
-  "lastFilter": {
-    "state": "OPEN"
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/zayedhamadi/symfony_project-.git&quot;,
@@ -381,7 +380,9 @@
       <workItem from="1739828670929" duration="11000" />
       <workItem from="1739867407379" duration="5842000" />
       <workItem from="1739875053590" duration="659000" />
-      <workItem from="1739902688265" duration="4867000" />
+      <workItem from="1739902688265" duration="5256000" />
+      <workItem from="1739915829720" duration="7193000" />
+      <workItem from="1739969681409" duration="592000" />
     </task>
     <task id="LOCAL-00001" summary="gestion ventev2">
       <option name="closed" value="true" />
@@ -399,7 +400,23 @@
       <option name="project" value="LOCAL" />
       <updated>1739869116290</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="quelque modification gestion vente">
+      <option name="closed" value="true" />
+      <created>1739909355301</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1739909355301</updated>
+    </task>
+    <task id="LOCAL-00004" summary="quelque modification gestion vente">
+      <option name="closed" value="true" />
+      <created>1739909447240</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1739909447240</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -420,6 +437,7 @@
     <MESSAGE value="gestion vente" />
     <MESSAGE value="gestion ventev2" />
     <MESSAGE value="gestion ventev2." />
-    <option name="LAST_COMMIT_MESSAGE" value="gestion ventev2." />
+    <MESSAGE value="quelque modification gestion vente" />
+    <option name="LAST_COMMIT_MESSAGE" value="quelque modification gestion vente" />
   </component>
 </project>

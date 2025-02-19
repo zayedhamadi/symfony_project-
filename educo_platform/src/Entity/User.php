@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Entity\Enum\Rolee;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -88,8 +89,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var list<string> The user roles
      */
-    #[ORM\Column]
-    private array $roles = [];
+    #[ORM\Column(type: 'string', enumType: Rolee::class)]
+    private ?Rolee $role = null; // Only one role per user
+//    private array $roles = [];
 
     /**
      * @var string The hashed password
@@ -118,10 +120,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Matiere::class, mappedBy: 'idEnsg')]
     private Collection $matieres;
-
-    #[ORM\ManyToOne(inversedBy: 'IdUser')]
-    private ?Cours $cours = null;
-
 
 
     public function __construct()
@@ -286,35 +284,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Evenement>
-     */
-    public function getEvenements(): Collection
-    {
-        return $this->evenements;
-    }
-
-    public function addEvenement(Evenement $evenement): static
-    {
-        if (!$this->evenements->contains($evenement)) {
-            $this->evenements->add($evenement);
-            $evenement->setIdOrganisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEvenement(Evenement $evenement): static
-    {
-        if ($this->evenements->removeElement($evenement)) {
-            // set the owning side to null (unless already changed)
-            if ($evenement->getIdOrganisateur() === $this) {
-                $evenement->setIdOrganisateur(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Eleve>
@@ -376,17 +345,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCours(): ?Cours
-    {
-        return $this->cours;
-    }
-
-    public function setCours(?Cours $cours): static
-    {
-        $this->cours = $cours;
-
-        return $this;
-    }
 
 
 }

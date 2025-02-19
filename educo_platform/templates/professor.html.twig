@@ -1,0 +1,37 @@
+{% extends 'side-bar.html.twig' %}
+
+
+
+{% block title %}Teacher Dashboard{% endblock %}
+
+{% block body %}
+    <div style="margin-top: 100px; margin-left: 0;">
+
+        <div class="container mt-5">
+            <h1 class="mb-4">Dashboard - {{ enseignant.nom }} {{ enseignant.prenom }}</h1>
+
+            <div class="card p-3 shadow">
+                <h4>Total Matières: <strong>{{ matiereCount }}</strong></h4>
+            </div>
+
+            <div class="mt-4">
+                <h3>Liste des Matières</h3>
+                {% if matieres is not empty %}
+                    <ul class="list-group">
+                        {% for matiere in matieres %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ matiere.nom }}
+                                <span class="badge bg-primary rounded-pill">{{ matiere.cours|length }} cours</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">Aucune matière enseignée.</p>
+                {% endif %}
+            </div>
+
+            <div class="mt-4">
+                <a href="{{ path('app_cours_new') }}" class="btn btn-success">Ajouter un Cours</a>
+            </div>
+        </div>    </div>
+{% endblock %}

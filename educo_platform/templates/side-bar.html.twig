@@ -123,11 +123,10 @@
 
                         </li>
                         <li class="nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarLayouts">
+{#                            <a href="{{ path('enseigant_app' , {'id': enseignant.id}) }}" >#}
                                 <i class="fas fa-th-list"></i>
-                                <p> Professors</p>
+                                <p>Professors</p>
                             </a>
-
                         </li>
                         <li class="nav-item">
                             <a data-bs-toggle="collapse" href="#forms">
@@ -569,8 +568,8 @@
 
             </div>
 
-            {% block body %}
-            {% endblock %}
+                {% block body %}
+                {% endblock %}
 
 
 

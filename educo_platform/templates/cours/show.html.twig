@@ -1,0 +1,18 @@
+{% extends 'side-bar.html.twig' %}
+
+{% block title %} Course details  {% endblock %}
+
+{% block body %}
+    <h1>Course Details</h1>
+
+    <div>
+        <h2>{{ cour.name }}</h2>
+        <p><strong>ID:</strong> {{ cour.id }}</p>
+        <p><strong>Subject:</strong> {{ cour.IdMatiere ? cour.IdMatiere.nom : 'No subject assigned' }}</p>
+    </div>
+    {% if cour.pdfFilename %}
+        <a href="{{ asset('uploads/' ~ cour.pdfFilename) }}" target="_blank">Download PDF</a>
+    {% endif %}
+
+    <a href="{{ path('app_cours_index') }}">Back to Course List</a>
+{% endblock %}

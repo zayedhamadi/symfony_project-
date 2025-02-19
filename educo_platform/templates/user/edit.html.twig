@@ -28,28 +28,29 @@
             margin-bottom: 20px;
         }
 
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .form-control {
             width: 100%;
-            padding: 10px;
-            border-radius: 5px;
+            padding: 12px;
+            border-radius: 8px;
             border: 1px solid #ccc;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
         }
 
         .btn-primary {
             background-color: #007bff;
             color: #fff;
             border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
+            padding: 12px 20px;
+            border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
@@ -62,8 +63,8 @@
             background-color: #6c757d;
             color: #fff;
             border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
+            padding: 12px 20px;
+            border-radius: 8px;
             text-decoration: none;
             display: inline-block;
             transition: background-color 0.3s ease;
@@ -76,6 +77,21 @@
         .button-group {
             display: flex;
             justify-content: space-between;
+        }
+
+        .form-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .is-invalid {
+            border: 2px solid red;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
         }
     </style>
 {% endblock %}
@@ -93,13 +109,108 @@
 
         {# Afficher le formulaire #}
         {{ form_start(form, {'attr': {'class': 'form'}}) }}
+
         <div class="form-group">
-            {{ form_widget(form) }}
+            {{ form_label(form.image, null, {'attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.image, {'attr': {'class': 'form-control' ~ (form.image.vars.errors|length > 0 ? ' is-invalid' : '')}}) }}
+            {% for error in form.image.vars.errors %}
+                <div class="error-message">{{ error.message }}</div>
+            {% endfor %}
         </div>
+
+        <div class="form-group">
+            {{ form_label(form.password, null, {'attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.password, {'attr': {'class': 'form-control' ~ (form.password.vars.errors|length > 0 ? ' is-invalid' : '')}}) }}
+            {% for error in form.password.vars.errors %}
+                <div class="error-message">{{ error.message }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.email, null, {'attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.email, {'attr': {'class': 'form-control' ~ (form.email.vars.errors|length > 0 ? ' is-invalid' : '')}}) }}
+            {% for error in form.email.vars.errors %}
+                <div class="error-message">{{ error.message }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.nom, null, {'attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.nom, {'attr': {'class': 'form-control' ~ (form.nom.vars.errors|length > 0 ? ' is-invalid' : '')}}) }}
+            {% for error in form.nom.vars.errors %}
+                <div class="error-message">{{ error.message }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.prenom, null, {'attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.prenom, {'attr': {'class': 'form-control' ~ (form.prenom.vars.errors|length > 0 ? ' is-invalid' : '')}}) }}
+            {% for error in form.prenom.vars.errors %}
+                <div class="error-message">{{ error.message }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.adresse, null, {'attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.adresse, {'attr': {'class': 'form-control' ~ (form.adresse.vars.errors|length > 0 ? ' is-invalid' : '')}}) }}
+            {% for error in form.adresse.vars.errors %}
+                <div class="error-message">{{ error.message }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.description, null, {'attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.description, {'attr': {'class': 'form-control' ~ (form.description.vars.errors|length > 0 ? ' is-invalid' : '')}}) }}
+            {% for error in form.description.vars.errors %}
+                <div class="error-message">{{ error.message }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.num_tel, null, {'attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.num_tel, {'attr': {'class': 'form-control' ~ (form.num_tel.vars.errors|length > 0 ? ' is-invalid' : '')}}) }}
+            {% for error in form.num_tel.vars.errors %}
+                <div class="error-message">{{ error.message }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.dateNaissance, null, {'attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.dateNaissance, {'attr': {'class': 'form-control' ~ (form.dateNaissance.vars.errors|length > 0 ? ' is-invalid' : '')}}) }}
+            {% for error in form.dateNaissance.vars.errors %}
+                <div class="error-message">{{ error.message }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.genre, null, {'attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.genre, {'attr': {'class': 'form-control' ~ (form.genre.vars.errors|length > 0 ? ' is-invalid' : '')}}) }}
+            {% for error in form.genre.vars.errors %}
+                <div class="error-message">{{ error.message }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.etatCompte, null, {'attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.etatCompte, {'attr': {'class': 'form-control' ~ (form.etatCompte.vars.errors|length > 0 ? ' is-invalid' : '')}}) }}
+            {% for error in form.etatCompte.vars.errors %}
+                <div class="error-message">{{ error.message }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.roles, null, {'attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.roles, {'attr': {'class': 'form-control' ~ (form.roles.vars.errors|length > 0 ? ' is-invalid' : '')}}) }}
+            {% for error in form.roles.vars.errors %}
+                <div class="error-message">{{ error.message }}</div>
+            {% endfor %}
+        </div>
+
         <div class="button-group">
-            <button type="submit" class="btn btn-primary">Mettre &agrave; jour</button>
-            <a href="{{ path('app_user_index') }}" class="btn btn-secondary">Retour &agrave; la liste</a>
+            <button type="submit" class="btn btn-primary">Mettre à jour</button>
+            <a href="{{ path('app_user_index') }}" class="btn btn-secondary">Retour à la liste</a>
         </div>
+
         {{ form_end(form) }}
     </div>
 {% endblock %}

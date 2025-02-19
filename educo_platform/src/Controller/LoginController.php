@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 
+use App\Entity\Enum\EtatCompte;
 use App\Entity\Enum\Rolee;
+use App\Entity\User;
+use Symfony\Component\HttpFoundation\Request;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -63,7 +66,6 @@ class LoginController extends AbstractController
         return $this->render('login/login.html.twig', [
             'last_email' => $lastEmail,
             'user_id' => $session->get('user_id'),
-            'error' => $error,
         ]);
     }
 
@@ -75,4 +77,5 @@ class LoginController extends AbstractController
         $session->invalidate();
         return $this->redirectToRoute('app_login');
     }
+
 }

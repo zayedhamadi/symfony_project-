@@ -4,48 +4,133 @@
 
 {% block body %}
     <div class="container mt-5">
-        <h1 class="mb-4">Liste des cessations</h1>
+        <h1 class="text-center mb-4">Liste des cessations</h1>
 
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Image</th> <!-- Nouvelle colonne pour l'image -->
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Rôle</th>
-                <th>Motif</th>
-                <th>Date de Cessation</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
+        <div class="row">
             {% for cessation in cessations %}
-                <tr>
-                    <!-- Affichage de l'image -->
-                    <td>
-                        {% if cessation.idUser.image %}
-                            <img src="{{ asset('uploads/' ~ cessation.idUser.image) }}" alt="Image de {{ cessation.idUser.prenom }}" width="50" height="50">
-                        {% else %}
-                            <img src="{{ asset('images/default-avatar.png') }}" alt="Image par défaut" width="50" height="50">
-                        {% endif %}
-                    </td>
-                    <td>{{ cessation.idUser.prenom }}</td> <!-- Afficher le prénom de l'utilisateur -->
-                    <td>{{ cessation.idUser.nom }}</td> <!-- Afficher le nom de l'utilisateur -->
-                    <td>{{ cessation.idUser.roles|join(', ') }}</td> <!-- Afficher tous les rôles de l'utilisateur -->
-                    <td>{{ cessation.motif }}</td> <!-- Afficher le motif de la cessation -->
-                    <td>{{ cessation.dateMotif|date('d/m/Y ') }}</td>
-                    <td>
-                        <form action="{{ path('activate_account', {'id': cessation.id}) }}" method="POST">
-                            <button type="submit" class="btn btn-blue">Activer son compte</button>
-                        </form>
-                    </td>
-                </tr>
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm border-light rounded">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="me-3">
+                                    {% if cessation.idUser.image %}
+                                        <img src="{{ asset('uploads/' ~ cessation.idUser.image) }}" alt="Image de {{ cessation.idUser.prenom }}" width="60" height="60" class="rounded-circle border border-2">
+                                    {% else %}
+                                        <img src="{{ asset('images/default-avatar.png') }}" alt="Image par défaut" width="60" height="60" class="rounded-circle border border-2">
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <h5 class="mb-0">{{ cessation.idUser.prenom }} {{ cessation.idUser.nom }}</h5>
+                                    <p class="text-muted">{{ cessation.idUser.roles|join(', ') }}</p>
+                                </div>
+                            </div>
+                            <p><strong>Motif:</strong> {{ cessation.motif }}</p>
+                            <p><strong>Date de Cessation:</strong> {{ cessation.dateMotif|date('d/m/Y') }}</p>
+
+                            <form action="{{ path('activate_account', {'id': cessation.id}) }}" method="POST">
+                                <button type="submit" class="btn btn-outline-success btn-sm w-100">Activer son compte</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             {% else %}
-                <tr>
-                    <td colspan="7" class="text-center">Aucune cessation trouvée</td>
-                </tr>
+                <div class="col-12 text-center">
+                    <p>Aucune cessation trouvée</p>
+                </div>
             {% endfor %}
-            </tbody>
-        </table>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <a href="{{ path('app_user_index') }}" class="btn btn-outline-secondary w-auto mb-3"
+               style="border-radius: 30px; font-weight: bold; padding: 12px 30px; font-size: 1rem; text-align: center;">
+                <i class="fas fa-arrow-left"></i> Retour à la page des utilisateurs
+            </a>
+        </div>
     </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .container {
+            padding-top: 50px;
+        }
+
+        h1 {
+            font-family: 'Arial', sans-serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card img {
+            border-radius: 50%;
+            border: 3px solid #007bff;
+            transition: transform 0.3s ease;
+        }
+
+        .card img:hover {
+            transform: scale(1.1);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-body h5 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .card-body p {
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        .card-body .btn {
+            font-weight: 600;
+        }
+
+        .btn-outline-success {
+            color: #28a745;
+            border-color: #28a745;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .btn-outline-success:hover {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-outline-secondary {
+            color: #6c757d;
+            border-color: #6c757d;
+            font-weight: bold;
+            padding: 12px 30px;
+            font-size: 1rem;
+            border-radius: 30px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .card-body h5 {
+                font-size: 1.1rem;
+            }
+
+            .card-body p {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
 {% endblock %}

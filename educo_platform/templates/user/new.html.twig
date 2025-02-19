@@ -3,13 +3,55 @@
 {% block title %}Nouvel utilisateur{% endblock %}
 
 {% block body %}
+
+    {% block javascripts %}
+        <script src="http://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const form = document.querySelector('form');
+                if (form) {
+                    form.addEventListener('submit', function (event) {
+                        event.preventDefault();
+
+
+                        fetch(form.action, {
+                            method: form.method,
+                            body: new FormData(form)
+                        })
+                            .then(response => {
+                                if (response.ok) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Succès',
+                                        text: 'Utilisateur créé avec succès!',
+                                        showConfirmButton: true
+                                    }).then(() => {
+                                        window.location.href = '{{ path('app_user_index') }}';
+                                    });
+                                } else {
+                                    throw new Error('Erreur lors de l\'enregistrement');
+                                }
+                            })
+                            .catch(error => {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Erreur',
+                                    text: error.message,
+                                    showConfirmButton: true
+                                });
+                            });
+                    });
+                }
+            });
+        </script>
+    {% endblock %}
+
     <div class="container mt-5">
         <h1 class="text-center mb-4">Créer un nouvel utilisateur</h1>
 
-        <!-- Vérification des messages flash -->
         {% for message in app.flashes('success') %}
             <script>
-                console.log("Success Message:", '{{ message }}'); // Ajoutez ceci pour déboguer
+                console.log("Success Message:", '{{ message }}');
                 Swal.fire({
                     icon: 'success',
                     title: 'Succès',
@@ -21,7 +63,7 @@
 
         {% for message in app.flashes('error') %}
             <script>
-                console.log("Error Message:", '{{ message }}'); // Ajoutez ceci pour déboguer
+                console.log("Error Message:", '{{ message }}');
                 Swal.fire({
                     icon: 'error',
                     title: 'Erreur',
@@ -30,7 +72,6 @@
                 });
             </script>
         {% endfor %}
-
 
         <div class="card p-4">
             {{ include('user/_form.html.twig') }}

@@ -59,7 +59,7 @@ class cessationController extends AbstractController
             return $this->json(['error' => 'Cessation already exists for this user'], Response::HTTP_BAD_REQUEST);
         }
 
-        $motif = $request->request->get('motif');  // Get the motif from the form submission
+        $motif = $request->request->get('motif');
 
         if (!$motif) {
             return $this->json(['error' => 'Motif is required'], Response::HTTP_BAD_REQUEST);
@@ -73,6 +73,8 @@ class cessationController extends AbstractController
         $user->setEtatCompte(EtatCompte::Inactive);
 
         $this->entityManager->persist($cessation);
+        $this->entityManager->persist($user);
+
         $this->entityManager->flush();
 
         $projectDir = $this->getParameter('kernel.project_dir');
@@ -145,7 +147,7 @@ class cessationController extends AbstractController
 
         $mailer->send($email);
 
-        return $this->json(['success' => 'User has been deactivated and notified by email'], Response::HTTP_OK);
+        return $this->redirectToRoute('get_all_cessations');
     }
 
 

@@ -213,6 +213,26 @@ final class UserController extends AbstractController
         ]);
     }
 
+    public function fillerUserByRole(Request $request)
+    {
+        $role = $request->query->get('role');
+
+        $queryBuilder = $this->getDoctrine()->getRepository(User::class)->createQueryBuilder('u');
+
+        if ($role) {
+            // Adjust this to check for role values correctly
+            $queryBuilder->andWhere(':role MEMBER OF u.roles')
+                ->setParameter('role', $role);
+        }
+
+        $users = $queryBuilder->getQuery()->getResult();
+
+        return $this->render('user/index.html.twig', [
+            'users' => $users,
+        ]);
+    }
+
+
 
 
 }

@@ -95,89 +95,31 @@
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
             <div class="sidebar-content">
                 <ul class="nav nav-secondary">
-                    <li class="nav-item active">
-                        <a href="{{ path('admin_dashboard') }}">
-                            <i class="fas fa-home"></i>
-                            <p> Dashbord</p>
-
-                        </a>
-
-                    </li>
-                    <li class="nav-section">
-                    <span class="sidebar-mini-icon">
-                      <i class="fa fa-ellipsis-h"></i>
-                    </span>
-
-                    </li>
-                    <li class="nav-item">
-                        <a data-bs-toggle="collapse" href="#gestionUtilisateur" aria-expanded="false">
-                            <i class="fas fa-users-cog"></i>
-                            <p>Gestion utilisateur</p>
-                            <span class="caret"></span>
-                        </a>
-                        <div class="collapse" id="gestionUtilisateur">
-                            <ul class="nav nav-collapse">
-                                <li>
-                                    <a href="{{ path('app_user_new') }}">
-                                        <i class="fas fa-user-plus"></i>
-                                        <p>Ajouter Utilisateur</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('get_all_cessations') }}">
-                                        <i class="fas fa-user-slash"></i>
-                                        <p>Cessation</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
 
                     <li class="nav-item">
-                        <a href="{{ path('app_gestion_classe_index') }}">
+                        <a href="{{ path('app_cours_index') }}">
                             <i class="fas fa-school" style="display: inline-block;"></i>
-                            <p>Gesion classe</p>
+                            <p>Gestion cours</p>
                         </a>
                     </li>
-
                     <li class="nav-item">
-                        <a  href="{{ path('app_eleve_index') }}">
-                            <i class="fas fa-user-graduate"></i>
-                            <p>Gestion eleve</p>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a  href="{{ path('reclamation') }}">
-                            <i class="fas fa-exclamation-circle"></i>
-                            <p>Gestion reclamtion</p>
-                        </a>
-
-                    </li>
-                    <li class="nav-item">
-                        <a data-bs-toggle="collapse" href="#gestionVente" aria-expanded="false">
-                            <i class="fas fa-shopping-cart"></i>
-                            <p>Gestion vente</p>
+                        <a data-bs-toggle="collapse" href="#gestionMatiere" aria-expanded="false">
+                            <i class="fas fa-school"></i>
+                            <p>Gestion Matière</p>
                             <span class="caret"></span>
                         </a>
-                        <div class="collapse" id="gestionVente">
+                        <div class="collapse" id="gestionMatiere">
                             <ul class="nav nav-collapse">
                                 <li>
-                                    <a href="{{ path('app_categorie_index') }}">
-                                        <i class="fas fa-boxes"></i>
-                                        <p>Catégorie </p>
+                                    <a href="{{ path('app_matiere_new') }}">
+                                        <i class="fas fa-plus-circle"></i>
+                                        <p>Ajouter Matière</p>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ path('app_produit_index') }}">
-                                        <i class="fas fa-boxes"></i>
-                                        <p>produit </p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('app_commande_admin') }}">
-                                        <i class="fas fa-truck"></i>
-                                        <p>Suivre Commande</p>
+                                    <a href="{{ path('app_matiere_list') }}">
+                                        <i class="fas fa-book-open"></i>
+                                        <p>Consulter Matière</p>
                                     </a>
                                 </li>
                             </ul>
@@ -185,13 +127,62 @@
                     </li>
 
 
+                    <li class="nav-item">
+                        <a data-bs-toggle="collapse" href="#gestionQuiz" aria-expanded="false">
+                            <i class="fas fa-user-graduate"></i>
+                            <p>Gestion Quiz</p>
+                            <span class="caret"></span>
+                        </a>
+                        <div class="collapse" id="gestionQuiz">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path('quiz_index') }}">
+                                        <i class="fas fa-puzzle-piece"></i>
+                                        <p>Quiz</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('note_list') }}">
+                                        <i class="fas fa-star"></i>
+                                        <p>Note</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('question_index') }}">
+
+                                    <i class="fas fa-question-circle"></i>
+                                        <p>Question</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
 
                     <li class="nav-item">
-                        <a  href="{{ path('evenement_index') }}">
-                            <i class="fas fa-file" style="display: inline-block;"></i>
-                            <p>Gestion evenement</p>
+                        <a data-bs-toggle="collapse" href="#gestionReclamation" aria-expanded="false">
+                            <i class="fas fa-file"></i>
+                            <p>Réclamation</p>
+                            <span class="caret"></span>
                         </a>
+                        <div class="collapse" id="gestionReclamation">
+                            <ul class="nav nav-collapse">
+                                <li>
+                                    <a href="{{ path('ajouter_reclamation') }}">
+                                        <i class="fas fa-edit"></i>
+                                        <p>Déposer Réclamation</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('mes_reclamations') }}">
+                                        <i class="fas fa-eye"></i>
+                                        <p>Suivre Réclamation</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
+
 
                 </ul>
             </div>

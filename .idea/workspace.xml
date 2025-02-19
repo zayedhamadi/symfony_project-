@@ -4,19 +4,37 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="fix cours error">
-      <change afterPath="$PROJECT_DIR$/educo_platform/templates/commande/mes_commandes.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/educo_platform/templates/vente_dashbord/dashboard.html.twig" afterDir="false" />
+    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="quelque modification">
+      <change afterPath="$PROJECT_DIR$/educo_platform/templates/side-bar-ensg.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/.env" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/educo_platform/migrations/Version20250219143326.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/CategorieController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/CategorieController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/CommandeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/CommandeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Repository/CommandeRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Repository/CommandeRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Repository/ProduitRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Repository/ProduitRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/commande/confirmation.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/commande/confirmation.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/commande/paiement.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/commande/paiement.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/commande/paiement_carte.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/commande/paiement_carte.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/commande/paiement_livraison.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/commande/paiement_livraison.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/NoteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/NoteController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Entity/Matiere.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Entity/Matiere.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Form/MatiereType.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Form/MatiereType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Repository/MatiereRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Repository/MatiereRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/cessation/all_cessations.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/cessation/all_cessations.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/cours/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/cours/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/cours/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/cours/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/cours/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/cours/new.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/cours/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/cours/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/matiere/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/matiere/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/matiere/list.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/matiere/list.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/matiere/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/matiere/new.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/note/list.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/note/list.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/question/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/question/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/question/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/question/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/question/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/question/new.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/question/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/question/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/quiz/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/quiz/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/quiz/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/quiz/new.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/quiz/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/quiz/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/reclamation/ajouter.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/reclamation/ajouter.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/reclamation/mes_reclamations.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/reclamation/mes_reclamations.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/side-bar.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/side-bar.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -385,7 +403,7 @@
       <workItem from="1739875053590" duration="659000" />
       <workItem from="1739902688265" duration="5256000" />
       <workItem from="1739915829720" duration="7193000" />
-      <workItem from="1739969681409" duration="16605000" />
+      <workItem from="1739969681409" duration="26741000" />
     </task>
     <task id="LOCAL-00001" summary="gestion ventev2">
       <option name="closed" value="true" />
@@ -451,7 +469,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739990352396</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="quelque modification">
+      <option name="closed" value="true" />
+      <created>1739998914588</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1739998914588</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -476,6 +502,7 @@
     <MESSAGE value="quelque modification gestion vente v2" />
     <MESSAGE value="side-bar urggg" />
     <MESSAGE value="fix cours error" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix cours error" />
+    <MESSAGE value="quelque modification" />
+    <option name="LAST_COMMIT_MESSAGE" value="quelque modification" />
   </component>
 </project>

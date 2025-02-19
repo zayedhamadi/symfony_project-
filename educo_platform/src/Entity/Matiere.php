@@ -51,6 +51,7 @@ class Matiere
     private Collection $ideleve;
 
     #[ORM\ManyToOne(inversedBy: 'matieres')]
+
     private ?User $idEnsg = null;
 
     /**

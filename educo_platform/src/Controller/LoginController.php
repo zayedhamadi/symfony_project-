@@ -46,11 +46,11 @@ class LoginController extends AbstractController
 
 
             if (in_array(Rolee::Admin->value, $user->getRoles())) {
-                return $this->redirectToRoute('app_user_index');
+                return $this->redirectToRoute('admin_dashboard');
             } elseif (in_array(Rolee::Enseignant->value, $user->getRoles())) {
-                return $this->redirectToRoute('evenement_new');
+                return $this->redirectToRoute('app_cours_index');
             } elseif (in_array(Rolee::Parent->value, $user->getRoles())) {
-                return $this->redirectToRoute('evenement_index');
+                return $this->redirectToRoute('app_boutique');
             }
             return $this->redirectToRoute('app_dashboardAdmin');
         }

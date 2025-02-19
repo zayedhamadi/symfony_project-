@@ -152,10 +152,8 @@ final class CommandeController extends AbstractController
         $user = $userRepository->find($userid);
 
         if (!$user) {
-            // Handle the case where the user doesn't exist
             throw $this->createNotFoundException('User not found.');
         }
-        // Si le panier est vide, rediriger
         if (empty($panier)) {
             $this->addFlash('error', 'Votre panier est vide.');
             return $this->redirectToRoute('app_panier_view');
@@ -170,12 +168,10 @@ final class CommandeController extends AbstractController
             }
         }
 
-        // Récupérer le panier de la session
 
 
-        // Créer une nouvelle commande
         $commande = new Commande();
-        $commande->setParent($user);  // L'utilisateur qui a passé la commande
+        $commande->setParent($user);
         $commande->setDateCommande(new \DateTime());
         $commande->setMontantTotal($montantTotal);
         $commande->setStatut('En attente');
@@ -212,7 +208,6 @@ final class CommandeController extends AbstractController
         // Ajouter un message de succès
         $this->addFlash('success', 'Votre commande a été enregistrée avec succès !');
 
-        // Rediriger vers la page de confirmation de commande
         return $this->redirectToRoute('app_commande_confirmation', ['id' => $commande->getId()]);
     }
 

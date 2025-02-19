@@ -3,8 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\CoursRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\Collection;
 #[ORM\Entity(repositoryClass: CoursRepository::class)]
 class Cours
 {
@@ -129,6 +130,7 @@ class Cours
             $this->classes->add($class);
             $class->setCours($this);
         }
+        return $this;
     }
     public function setPdfFilename(?string $pdfFilename): self
     {
@@ -143,7 +145,9 @@ class Cours
         if ($class->getCours() === $this) {
             $class->setCours(null);
         }
-    }}
+    }
+        return $this;
+    }
     
 
     

@@ -4,16 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="quelque modification gestion vente">
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/symfony_project-.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/symfony_project-.iml" afterDir="false" />
+    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="side-bar urggg">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/CategorieController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/CategorieController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/ProduitController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/ProduitController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Form/ProduitType.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Form/ProduitType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/categorie/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/categorie/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/produit/boutique.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/produit/boutique.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/produit/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/produit/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/.env" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/migrations/Version20250219143326.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Entity/Cours.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Entity/Cours.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -382,7 +377,7 @@
       <workItem from="1739875053590" duration="659000" />
       <workItem from="1739902688265" duration="5256000" />
       <workItem from="1739915829720" duration="7193000" />
-      <workItem from="1739969681409" duration="592000" />
+      <workItem from="1739969681409" duration="8369000" />
     </task>
     <task id="LOCAL-00001" summary="gestion ventev2">
       <option name="closed" value="true" />
@@ -416,7 +411,31 @@
       <option name="project" value="LOCAL" />
       <updated>1739909447240</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="quelque modification gestion vente v2">
+      <option name="closed" value="true" />
+      <created>1739970659810</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1739970659810</updated>
+    </task>
+    <task id="LOCAL-00006" summary="quelque modification gestion vente v2">
+      <option name="closed" value="true" />
+      <created>1739970730389</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1739970730389</updated>
+    </task>
+    <task id="LOCAL-00007" summary="side-bar urggg">
+      <option name="closed" value="true" />
+      <created>1739979824304</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1739979824304</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -438,6 +457,8 @@
     <MESSAGE value="gestion ventev2" />
     <MESSAGE value="gestion ventev2." />
     <MESSAGE value="quelque modification gestion vente" />
-    <option name="LAST_COMMIT_MESSAGE" value="quelque modification gestion vente" />
+    <MESSAGE value="quelque modification gestion vente v2" />
+    <MESSAGE value="side-bar urggg" />
+    <option name="LAST_COMMIT_MESSAGE" value="side-bar urggg" />
   </component>
 </project>

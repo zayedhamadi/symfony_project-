@@ -1,0 +1,99 @@
+{% extends 'side-bar.html.twig' %}
+
+{% block title %}Tableau de Bord - Ventes{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4 font-weight-bold text-primary">Tableau de Bord des Ventes</h1>
+
+        <div class="row">
+            <!-- Total des Ventes -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card border-0 shadow-sm rounded">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-muted">Total des Ventes</h5>
+                        <p class="card-text display-6 text-success font-weight-bold">{{ totalVentes }} dt</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Commandes en Attente -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card border-0 shadow-sm rounded">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-muted">Commandes en Attente</h5>
+                        <p class="card-text display-6 text-warning font-weight-bold">{{ commandesEnAttente }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Produits les Plus Vendus -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card border-0 shadow-sm rounded">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-muted">Produits les Plus Vendus</h5>
+                        <ul class="list-unstyled">
+                            {% for produit in produitsPopulaires %}
+                                <li class="d-flex justify-content-between mb-2">
+                                    <span>{{ produit.nom }}</span>
+                                    <span class="text-muted">{{ produit.total_vendu }} ventes</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total des Commandes -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card border-0 shadow-sm rounded">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-muted">Total des Commandes</h5>
+                        <p class="card-text display-6 text-info font-weight-bold">{{ totalCommandes }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <!-- Chiffre d'Affaires Total -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card border-0 shadow-sm rounded">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-muted">Chiffre d'Affaires Total</h5>
+                        <p class="card-text display-6 text-primary font-weight-bold">{{ chiffreAffaires }} dt</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Moyenne des Commandes -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card border-0 shadow-sm rounded">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-muted">Moyenne des Commandes</h5>
+                        <p class="card-text display-6 text-info font-weight-bold">{{ moyenneCommandes }} dt</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Commandes Récentes -->
+            <div class="col-lg-6 mb-4">
+                <div class="card border-0 shadow-sm rounded">
+                    <div class="card-body">
+                        <h5 class="card-title text-muted">Commandes Récentes</h5>
+                        <ul class="list-unstyled">
+                            {% for commande in commandesRecentes %}
+                                <li class="d-flex justify-content-between mb-3">
+                                    <span>Commande ID: {{ commande.id }} - {{ commande.montantTotal }} dt</span>
+                                    <span class="text-muted">{{ commande.dateCommande|date('d-m-Y') }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}

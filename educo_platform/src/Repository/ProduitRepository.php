@@ -15,7 +15,17 @@ class ProduitRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Produit::class);
     }
-
+    public function getProduitsLesPlusVendus(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.nom, SUM(cp.quantite) as total_vendu')
+            ->join('p.commandeProduits', 'cp')
+            ->groupBy('p.id')
+            ->orderBy('total_vendu', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
     //    /**
     //     * @return Produit[] Returns an array of Produit objects
     //     */

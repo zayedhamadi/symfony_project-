@@ -46,76 +46,97 @@ final class CommandeController extends AbstractController
     {
         return $this->render('commande/paiement_livraison.html.twig');
     }
-    #[Route('/commande/valider/livraison', name: 'app_commande_valider_livraison')]
-    public function validerCommandeLivraison(Request $request,UserRepository $userRepository, SessionInterface $session): Response
-    {
-        $user = $this->getUser();
 
-        // Récupérer le panier de la session
-        $panier = $session->get('panier', []);
+    #[Route('/mes-commandes', name: 'app_mes_commandes')]
+    public function mesCommandes(Request $request,UserRepository $userRepository): Response
+    {
+        // Récupérer l'utilisateur connecté
         $session = $request->getSession();
         $userid = $session->get('user_id');
         $user = $userRepository->find($userid);
 
+
         if (!$user) {
-            // Handle the case where the user doesn't exist
-            throw $this->createNotFoundException('User not found.');
-        }
-        // Si le panier est vide, rediriger
-        if (empty($panier)) {
-            $this->addFlash('error', 'Votre panier est vide.');
-            return $this->redirectToRoute('app_panier_view');
+            throw $this->createNotFoundException('Utilisateur non connecté.');
         }
 
-        // Calculer le montant total de la commande
-        $montantTotal = 0;
-        foreach ($panier as $id => $quantite) {
-            $produit = $this->entityManager->getRepository(Produit::class)->find($id);
-            if ($produit) {
-                $montantTotal += $produit->getPrix() * $quantite;
-            }
-        }
+        // Récupérer les commandes de cet utilisateur
+        $commandes = $this->entityManager->getRepository(Commande::class)->findBy(['parent' => $user], ['dateCommande' => 'DESC']);
 
-        // Créer une nouvelle commande avec paiement à la livraison
-        $commande = new Commande();
-        $commande->setParent($user);  // L'utilisateur qui a passé la commande
-        $commande->setDateCommande(new \DateTime());
-        $commande->setMontantTotal($montantTotal);
-        $commande->setStatut('En attente de paiement à l\'administration');
-        $commande->setModePaiement('Livraison');  // Mode de paiement : livraison
-
-        // Ajouter les produits du panier à la commande
-        foreach ($panier as $id => $quantite) {
-            $produit = $this->entityManager->getRepository(Produit::class)->find($id);
-            if ($produit) {
-                // Créer un nouvel objet CommandeProduit pour associer le produit à la commande
-                $commandeProduit = new CommandeProduit();
-                $commandeProduit->setProduit($produit);
-                $commandeProduit->setQuantite($quantite); // Définir la quantité
-                $commandeProduit->setCommande($commande); // Associer à la commande
-
-                // Persister la nouvelle entité CommandeProduit
-                $this->entityManager->persist($commandeProduit);
-
-                // Décrémenter la quantité du produit en stock
-                $produit->setQuantite($produit->getQuantite() - $quantite);
-                $this->entityManager->persist($produit);
-            }
-        }
-
-        // Sauvegarder la commande
-        $this->entityManager->persist($commande);
-        $this->entityManager->flush();
-
-        // Vider le panier après la commande
-        $session->remove('panier');
-
-        // Ajouter un message de succès
-        $this->addFlash('success', 'Votre commande a été enregistrée avec succès !');
-
-        // Rediriger vers la page de confirmation de commande
-        return $this->redirectToRoute('app_commande_confirmation', ['id' => $commande->getId()]);
+        return $this->render('commande/mes_commandes.html.twig', [
+            'commandes' => $commandes,
+        ]);
     }
+//    #[Route('/commande/valider/livraison', name: 'app_commande_valider_livraison')]
+//    public function validerCommandeLivraison(Request $request,UserRepository $userRepository, SessionInterface $session): Response
+//    {
+//        $user = $this->getUser();
+//
+//        // Récupérer le panier de la session
+//        $panier = $session->get('panier', []);
+//        $session = $request->getSession();
+//        $userid = $session->get('user_id');
+//        $user = $userRepository->find($userid);
+//
+//        if (!$user) {
+//            // Handle the case where the user doesn't exist
+//            throw $this->createNotFoundException('User not found.');
+//        }
+//        // Si le panier est vide, rediriger
+//        if (empty($panier)) {
+//            $this->addFlash('error', 'Votre panier est vide.');
+//            return $this->redirectToRoute('app_panier_view');
+//        }
+//
+//        // Calculer le montant total de la commande
+//        $montantTotal = 0;
+//        foreach ($panier as $id => $quantite) {
+//            $produit = $this->entityManager->getRepository(Produit::class)->find($id);
+//            if ($produit) {
+//                $montantTotal += $produit->getPrix() * $quantite;
+//            }
+//        }
+//
+//        // Créer une nouvelle commande avec paiement à la livraison
+//        $commande = new Commande();
+//        $commande->setParent($user);  // L'utilisateur qui a passé la commande
+//        $commande->setDateCommande(new \DateTime());
+//        $commande->setMontantTotal($montantTotal);
+//        $commande->setStatut('En attente de paiement à l\'administration');
+//        $commande->setModePaiement('Livraison');  // Mode de paiement : livraison
+//
+//        // Ajouter les produits du panier à la commande
+//        foreach ($panier as $id => $quantite) {
+//            $produit = $this->entityManager->getRepository(Produit::class)->find($id);
+//            if ($produit) {
+//                // Créer un nouvel objet CommandeProduit pour associer le produit à la commande
+//                $commandeProduit = new CommandeProduit();
+//                $commandeProduit->setProduit($produit);
+//                $commandeProduit->setQuantite($quantite); // Définir la quantité
+//                $commandeProduit->setCommande($commande); // Associer à la commande
+//
+//                // Persister la nouvelle entité CommandeProduit
+//                $this->entityManager->persist($commandeProduit);
+//
+//                // Décrémenter la quantité du produit en stock
+//                $produit->setQuantite($produit->getQuantite() - $quantite);
+//                $this->entityManager->persist($produit);
+//            }
+//        }
+//
+//        // Sauvegarder la commande
+//        $this->entityManager->persist($commande);
+//        $this->entityManager->flush();
+//
+//        // Vider le panier après la commande
+//        $session->remove('panier');
+//
+//        // Ajouter un message de succès
+//        $this->addFlash('success', 'Votre commande a été enregistrée avec succès !');
+//
+//        // Rediriger vers la page de confirmation de commande
+//        return $this->redirectToRoute('app_commande_confirmation', ['id' => $commande->getId()]);
+//    }
 
     #[Route('/commande/valider', name: 'app_commande_valider')]
     public function validerCommande(Request $request, SessionInterface $session,UserRepository $userRepository): Response

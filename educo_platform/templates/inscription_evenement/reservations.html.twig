@@ -1,0 +1,42 @@
+{% extends 'side-bar.html.twig' %}
+
+{% block title %}Mes Réservations{% endblock %}
+
+{% block body %}
+    <div class="container" style="margin-top: 100px !important; padding: 0 15px !important;">
+        <h1 class="mb-4">Mes Réservations</h1>
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Événement</th>
+                    <th>Enfant</th>
+                    <th>Date d'inscription</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reservation in reservations %}
+                    <tr>
+                        <td>{{ reservation.evenement.titre }}</td>
+                        <td>{{ reservation.enfant.nom }}</td>
+                        <td>{{ reservation.dateInscription|date('d/m/Y') }}</td>
+                        <td>
+                            <span style="display: flex; gap: 10px;">
+                                <form action="{{ path('supprimer_reservation', {'id': reservation.id}) }}" method="POST" style="display: inline;">
+                                    <button type="submit" class="btn btn-danger btn-sm"> <i class="fas fa-trash"></i> </button>
+                                </form>
+                            </span>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">Aucune réservation trouvée</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="mt-3">
+            <a href="{{ path('evenement_liste') }}" class="btn btn-secondary">Retour</a>
+        </div>
+    </div>
+{% endblock %}

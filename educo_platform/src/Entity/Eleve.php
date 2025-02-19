@@ -7,35 +7,52 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EleveRepository::class)]
 class Eleve
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\Id]  
+    #[ORM\GeneratedValue]  
+    #[ORM\Column]  
+    private ?int $id = null;  
+
+    #[ORM\Column(length: 255)]  
+    #[Assert\NotBlank(message: "Le nom de l'élève ne peut pas être vide.")]
+    #[Assert\Length(max: 50, maxMessage: "Le nom ne peut pas dépasser {{ limit }} caractères.")]
+    private ?string $Nom = null;  
+
+    #[ORM\Column(length: 255)]  
+    #[Assert\NotBlank(message: "Le prénom de l'élève ne peut pas être vide.")]
+    #[Assert\Length(max: 50, maxMessage: "Le prénom ne peut pas dépasser {{ limit }} caractères.")]
+    private ?string $Prenom = null;  
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]  
+    #[Assert\NotBlank(message: "La date de naissance ne peut pas être vide.")]
+    private ?\DateTimeInterface $DateDeNaissance = null;  
+
+    #[ORM\ManyToOne(inversedBy: 'eleves')]  
+    #[Assert\NotNull(message: "Veuillez sélectionner une classe.")]  
+    private ?Classe $IdClasse = null;  
+
+    #[ORM\ManyToOne(inversedBy: 'eleves')]  
+    #[Assert\NotNull(message: "Veuillez sélectionner un parent.")]  
+    private ?User $IdParent = null;  
+
     #[ORM\Column]
-    private ?int $id = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $Nom = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $Prenom = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $DateDeNaissance = null;
-
-    #[ORM\ManyToOne(inversedBy: 'eleves')]
-    private ?Classe $IdClasse = null;
-
-    #[ORM\ManyToOne(inversedBy: 'eleves')]
-    private ?User $IdParent = null;
-
-    #[ORM\Column]
+    #[Assert\NotBlank(message: "La moyenne ne peut pas être vide.")]
+    #[Assert\GreaterThanOrEqual(value: 0, message: "La moyenne doit être positive.")]
+    #[Assert\LessThanOrEqual(value: 20, message: "La moyenne ne peut pas dépasser 20.")]
     private ?float $moyenne = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le nombre d'absences ne peut pas être vide.")]
+    #[Assert\GreaterThanOrEqual(value: 0, message: "Le nombre d'absences ne peut pas être négatif.")]
     private ?int $NbreAbscence = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotBlank(message: "La date d'inscription ne peut pas être vide.")]
+    private ?\DateTimeInterface $DateInscription = null;
 
     /**
      * @var Collection<int, Matiere>
@@ -46,6 +63,8 @@ class Eleve
     public function __construct()
     {
         $this->matieres = new ArrayCollection();
+        $this->moyenne = 0.0; // Valeur par défaut
+        $this->NbreAbscence = 0; // Valeur par défaut
     }
 
     public function getId(): ?int
@@ -61,7 +80,6 @@ class Eleve
     public function setNom(string $Nom): static
     {
         $this->Nom = $Nom;
-
         return $this;
     }
 
@@ -73,7 +91,6 @@ class Eleve
     public function setPrenom(string $Prenom): static
     {
         $this->Prenom = $Prenom;
-
         return $this;
     }
 
@@ -85,7 +102,6 @@ class Eleve
     public function setDateDeNaissance(\DateTimeInterface $DateDeNaissance): static
     {
         $this->DateDeNaissance = $DateDeNaissance;
-
         return $this;
     }
 
@@ -97,7 +113,6 @@ class Eleve
     public function setIdClasse(?Classe $IdClasse): static
     {
         $this->IdClasse = $IdClasse;
-
         return $this;
     }
 
@@ -109,7 +124,6 @@ class Eleve
     public function setIdParent(?User $IdParent): static
     {
         $this->IdParent = $IdParent;
-
         return $this;
     }
 
@@ -121,7 +135,6 @@ class Eleve
     public function setMoyenne(float $moyenne): static
     {
         $this->moyenne = $moyenne;
-
         return $this;
     }
 
@@ -133,7 +146,17 @@ class Eleve
     public function setNbreAbscence(int $NbreAbscence): static
     {
         $this->NbreAbscence = $NbreAbscence;
+        return $this;
+    }
 
+    public function getDateInscription(): ?\DateTimeInterface
+    {
+        return $this->DateInscription;
+    }
+
+    public function setDateInscription(\DateTimeInterface $DateInscription): static
+    {
+        $this->DateInscription = $DateInscription;
         return $this;
     }
 
@@ -151,7 +174,6 @@ class Eleve
             $this->matieres->add($matiere);
             $matiere->addIdeleve($this);
         }
-
         return $this;
     }
 
@@ -160,7 +182,6 @@ class Eleve
         if ($this->matieres->removeElement($matiere)) {
             $matiere->removeIdeleve($this);
         }
-
         return $this;
     }
 }

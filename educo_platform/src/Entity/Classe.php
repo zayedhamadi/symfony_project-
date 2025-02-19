@@ -6,6 +6,7 @@ use App\Repository\ClasseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ClasseRepository::class)]
 class Classe
@@ -16,18 +17,24 @@ class Classe
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le nom de la classe ne peut pas être vide.")]
+    #[Assert\Length(max: 100, maxMessage: "Le nom de la classe ne peut pas dépasser {{ limit }} caractères.")]
     private ?string $nom_classe = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le numéro de salle ne peut pas être vide.")]
     private ?int $Num_salle = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "La capacité maximale ne peut pas être vide.")]
+    #[Assert\GreaterThan(value: 0, message: "La capacité maximale doit être supérieure à {{ compared_value }}.")]
     private ?int $capacite_max = null;
 
     /**
      * @var Collection<int, User>
      */
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'classes')]
+    #[Assert\Count(min: 1, minMessage: 'Veuillez sélectionner au moins un utilisateur.')]  
     private Collection $id_user;
 
     /**

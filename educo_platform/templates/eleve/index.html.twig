@@ -1,0 +1,47 @@
+{% extends 'side-bar.html.twig' %}
+
+{% block title %}Liste des Élèves{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Liste des Élèves</h1>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Date de Naissance</th>
+                    <th scope="col">Date de inscrption</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for eleve in eleves %}
+                <tr>
+                    <th scope="row">{{ eleve.id }}</th>
+                    <td>{{ eleve.Nom }}</td>
+                    <td>{{ eleve.Prenom }}</td>
+                    <td>{{ eleve.DateDeNaissance ? eleve.DateDeNaissance|date('Y-m-d') : '' }}</td>
+                     <td>{{ eleve.DateInscription  ? eleve.DateInscription |date('Y-m-d') : '' }}</td>
+                    <td>
+                        <a href="{{ path('app_eleve_show', {'id': eleve.id}) }}" class="btn btn-info btn-sm">Voir</a>
+                        <a href="{{ path('app_eleve_edit', {'id': eleve.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{{ path('app_eleve_new') }}" class="btn btn-success">Créer un nouvel élève</a>
+    </div>
+</div>
+{% endblock %}

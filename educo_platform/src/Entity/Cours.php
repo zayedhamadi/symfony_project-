@@ -26,9 +26,10 @@ class Cours
 
     #[ORM\OneToMany(mappedBy: 'cours', targetEntity: Classe::class)]
     private Collection $classes;
-    #[ORM\Column(type: 'string', length: 255)]
-    private ?string $name = null; // New name field
-//    /**
+    
+
+
+    //    /**
 //     * @var Collection<int, User>
 //     */
 //    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'cours')]
@@ -79,10 +80,16 @@ class Cours
     /**
      * @return Collection<int, Quiz>
      */
-    public function getQuizzes(): Collection
-    public function getPdfFilename(): ?string
-    {
+    public function getQuizzes(): Collection{
         return $this->quizzes;
+    }
+
+  
+
+
+
+
+    public function getPdfFilename(): ?string{
         return $this->pdfFilename;
     }
 
@@ -122,32 +129,24 @@ class Cours
             $this->classes->add($class);
             $class->setCours($this);
         }
-
+    }
     public function setPdfFilename(?string $pdfFilename): self
     {
         $this->pdfFilename = $pdfFilename;
         return $this;
     }
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
+    
 
     public function removeClass(Classe $class): static
-    public function setName(string $name): static
-    {
-        if ($this->classes->removeElement($class)) {
-            // Set the owning side to null (unless already changed)
-            if ($class->getCours() === $this) {
-                $class->setCours(null);
-            }
+    {if ($this->classes->removeElement($class)) {
+        // Set the owning side to null (unless already changed)
+        if ($class->getCours() === $this) {
+            $class->setCours(null);
         }
+    }}
+    
 
-        $this->name = $name;
-        return $this;
-    }
-
-
+    
 //    /**
 //     * @return Collection<int, User>
 //     */

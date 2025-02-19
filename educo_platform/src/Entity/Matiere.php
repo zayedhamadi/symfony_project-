@@ -163,7 +163,7 @@ class Matiere
 
         return $this;
     }
-}
+
 
     /**
      * @return Collection<int, Cours>

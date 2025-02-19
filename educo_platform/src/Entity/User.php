@@ -87,8 +87,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Matiere::class, mappedBy: 'idEnsg')]
     private Collection $matieres;
 
-    #[ORM\ManyToOne(inversedBy: 'IdUser')]
-    private ?Cours $cours = null;
+
+
+    /**
+     * @var Collection<int, Commande>
+     */
+    #[ORM\OneToMany(targetEntity: Commande::class, mappedBy: 'parent')]
+    private Collection $commandes;
+    /**
+     * @var Rolee[] The user roles
+     */
+    #[ORM\Column(type: "json")]
+    private array $roles = [];
 
 
 
@@ -255,6 +265,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+ * @return Collection<int, Reclamation>
+ */
+public function getReclamations(): Collection
+{
+    return $this->reclamations;
+}
+
+public function addReclamation(Reclamation $reclamation): static
+{
+    if (!$this->reclamations->contains($reclamation)) {
+        $this->reclamations->add($reclamation);
+        $reclamation->setUser($this);
+    }
+
+    return $this;
+}
+
+public function removeReclamation(Reclamation $reclamation): static
+{
+    if ($this->reclamations->removeElement($reclamation)) {
+        // set the owning side to null (unless already changed)
+        if ($reclamation->getUser() === $this) {
+            $reclamation->setUser(null);
+        }
+    }
+
+    return $this;
+}
+
+
     public function getReclamation(): ?Reclamation
     {
         return $this->reclamation;
@@ -267,35 +308,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Evenement>
-     */
-    public function getEvenements(): Collection
-    {
-        return $this->evenements;
-    }
-
-    public function addEvenement(Evenement $evenement): static
-    {
-        if (!$this->evenements->contains($evenement)) {
-            $this->evenements->add($evenement);
-            $evenement->setIdOrganisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEvenement(Evenement $evenement): static
-    {
-        if ($this->evenements->removeElement($evenement)) {
-            // set the owning side to null (unless already changed)
-            if ($evenement->getIdOrganisateur() === $this) {
-                $evenement->setIdOrganisateur(null);
-            }
-        }
-
-        return $this;
-    }
+    
 
     /**
      * @return Collection<int, Eleve>
@@ -357,17 +370,90 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCours(): ?Cours
+//    public function getCours(): ?Cours
+//    {
+//        return $this->cours;
+//    }
+//
+//    public function setCours(?Cours $cours): static
+//    {
+//        $this->cours = $cours;
+//
+//        return $this;
+//    }
+
+
+    public function getAdresse(): ?string
     {
-        return $this->cours;
+        return $this->adresse;
     }
 
-    public function setCours(?Cours $cours): static
+    public function setAdresse(?string $adresse): void
     {
-        $this->cours = $cours;
+        $this->adresse = $adresse;
+    }
+
+    public function getNumTel(): ?int
+    {
+        return $this->num_tel;
+    }
+
+    public function setNumTel(?int $num_tel): void
+    {
+        $this->num_tel = $num_tel;
+    }
+
+    public function getGenre(): ?Genre
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(?Genre $genre): void
+    {
+        $this->genre = $genre;
+    }
+
+    public function getEtatCompte(): ?EtatCompte
+    {
+        return $this->etatCompte;
+
+    }
+
+    public function setEtatCompte(?EtatCompte $etatCompte): void
+    {
+        $this->etatCompte = $etatCompte;
+    }
+
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): static
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes->add($commande);
+            $commande->setParent($this);
+        }
 
         return $this;
     }
+
+    public function removeCommande(Commande $commande): static
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getParent() === $this) {
+                $commande->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+  
 
     public function getDateNaissance(): ?DateTimeInterface
     {

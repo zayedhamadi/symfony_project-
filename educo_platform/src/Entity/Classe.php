@@ -6,6 +6,7 @@ use App\Repository\ClasseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ClasseRepository::class)]
 class Classe
@@ -16,18 +17,24 @@ class Classe
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le nom de la classe ne peut pas être vide.")]
+    #[Assert\Length(max: 100, maxMessage: "Le nom de la classe ne peut pas dépasser {{ limit }} caractères.")]
     private ?string $nom_classe = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le numéro de salle ne peut pas être vide.")]
     private ?int $Num_salle = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "La capacité maximale ne peut pas être vide.")]
+    #[Assert\GreaterThan(value: 0, message: "La capacité maximale doit être supérieure à {{ compared_value }}.")]
     private ?int $capacite_max = null;
 
     /**
      * @var Collection<int, User>
      */
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'classes')]
+    #[Assert\Count(min: 1, minMessage: 'Veuillez sélectionner au moins un utilisateur.')]  
     private Collection $id_user;
 
     /**
@@ -36,10 +43,17 @@ class Classe
     #[ORM\OneToMany(targetEntity: Eleve::class, mappedBy: 'IdClasse')]
     private Collection $eleves;
 
+    /**
+     * @var Collection<int, Quiz>
+     */
+    #[ORM\OneToMany(targetEntity: Quiz::class, mappedBy: 'classe')]
+    private Collection $quizzes;
+
     public function __construct()
     {
         $this->id_user = new ArrayCollection();
         $this->eleves = new ArrayCollection();
+        $this->quizzes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -128,9 +142,39 @@ class Classe
     public function removeElefe(Eleve $elefe): static
     {
         if ($this->eleves->removeElement($elefe)) {
-            // set the owning side to null (unless already changed)
+            // Set the owning side to null (unless already changed)
             if ($elefe->getIdClasse() === $this) {
                 $elefe->setIdClasse(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Quiz>
+     */
+    public function getQuizzes(): Collection
+    {
+        return $this->quizzes;
+    }
+
+    public function addQuiz(Quiz $quiz): static
+    {
+        if (!$this->quizzes->contains($quiz)) {
+            $this->quizzes->add($quiz);
+            $quiz->setClasse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuiz(Quiz $quiz): static
+    {
+        if ($this->quizzes->removeElement($quiz)) {
+            // Set the owning side to null (unless already changed)
+            if ($quiz->getClasse() === $this) {
+                $quiz->setClasse(null);
             }
         }
 

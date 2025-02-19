@@ -1,0 +1,14 @@
+{% extends 'side-bar.html.twig' %}
+
+{% block title %}Modifier le Quiz{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Modifier le Quiz</h1>
+
+        <div class="card p-4 shadow-sm">
+            {{ include('quiz/_form.html.twig', {'button_label': 'Modifier', 'attr': {'novalidate': 'novalidate'}}) }}
+        </div>
+
+    </div>
+{% endblock %}

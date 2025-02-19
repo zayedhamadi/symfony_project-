@@ -1,0 +1,19 @@
+{% extends 'side-bar.html.twig' %}  
+
+{% block title %}Nouvel Élève{% endblock %}  
+
+{% block body %}  
+<div class="container mt-5">  
+    <h1 class="text-center mb-4">Créer un nouvel élève</h1>  
+
+    
+        <div class="card p-4" >  
+            {{ include('eleve/_form.html.twig') }}  
+        </div>  
+     
+
+    <div class="mt-3 text-center">  
+        <a href="{{ path('app_eleve_index') }}" class="btn btn-secondary">Retour à la liste</a>  
+    </div>  
+</div>  
+{% endblock %}

@@ -63,6 +63,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
     /**
      * @var Collection<int, Classe>
      */
@@ -79,13 +80,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Eleve::class, mappedBy: 'IdParent')]
     private Collection $eleves;
+
     /**
      * @var Collection<int, Matiere>
      */
     #[ORM\OneToMany(targetEntity: Matiere::class, mappedBy: 'idEnsg')]
     private Collection $matieres;
 
-  
+
 
     /**
      * @var Collection<int, Commande>
@@ -97,6 +99,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column(type: "json")]
     private array $roles = [];
+
+
 
     public function __construct()
     {
@@ -292,6 +296,19 @@ public function removeReclamation(Reclamation $reclamation): static
 }
 
 
+    public function getReclamation(): ?Reclamation
+    {
+        return $this->reclamation;
+    }
+
+    public function setReclamation(?Reclamation $reclamation): static
+    {
+        $this->reclamation = $reclamation;
+
+        return $this;
+    }
+
+    
 
     /**
      * @return Collection<int, Eleve>
@@ -364,7 +381,7 @@ public function removeReclamation(Reclamation $reclamation): static
 //
 //        return $this;
 //    }
-    
+
 
     public function getAdresse(): ?string
     {
@@ -436,6 +453,7 @@ public function removeReclamation(Reclamation $reclamation): static
 
         return $this;
     }
+  
 
     public function getDateNaissance(): ?DateTimeInterface
     {

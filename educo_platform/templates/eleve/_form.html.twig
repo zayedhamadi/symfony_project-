@@ -1,0 +1,56 @@
+{# gestion_eleve/_form.html.twig #}
+
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+    <div class="mb-3">
+        {{ form_label(form.Nom, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.Nom, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le nom de l\'élève'}}) }}
+       
+       <div class="invalid-feedback d-block text-danger">
+            {{ form_errors(form.Nom) }}
+        </div>
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.Prenom, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.Prenom, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le prénom de l\'élève'}}) }}
+        <div class="invalid-feedback d-block text-danger">
+            {{ form_errors(form.Prenom) }}
+        </div>
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.DateDeNaissance, 'Date de Naissance', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.DateDeNaissance, {'attr': {'class': 'form-control', 'placeholder': 'Entrez la date de naissance'}}) }}
+        <div class="invalid-feedback d-block text-danger">
+            {{ form_errors(form.DateDeNaissance) }}
+        </div>
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.DateInscription , 'Date de inscription', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.DateInscription , {'attr': {'class': 'form-control', 'placeholder': 'Entrez la date de naissance'}}) }}
+        <div class="invalid-feedback d-block text-danger">
+            {{ form_errors(form.DateInscription) }}
+        </div>
+    </div>
+
+    {# Champ IdClasse #}
+    <div class="mb-3">
+        {{ form_label(form.IdClasse, 'Classe', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.IdClasse, {'attr': {'class': 'form-control'}}) }}
+        <div class="invalid-feedback d-block text-danger">
+            {{ form_errors(form.IdClasse) }}
+        </div>
+    </div>
+
+    {# Champ IdParent #}
+    <div class="mb-3">
+        {{ form_label(form.IdParent, 'Parent', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.IdParent, {'attr': {'class': 'form-control'}}) }}
+        <div class="invalid-feedback d-block text-danger">
+            {{ form_errors(form.IdParent) }}
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}

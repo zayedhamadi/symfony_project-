@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Reclamation;
 use App\Form\ReclamationType;
 use App\Entity\Enum\Statut;
+use App\Repository\UserRepository;
 
 
 class ReclamationController extends AbstractController
@@ -22,35 +23,59 @@ class ReclamationController extends AbstractController
             'reclamations' => $repository->findAll(),
         ]);
     }
+    #[Route('/mes-reclamations', name: 'mes_reclamations', methods: ['GET'])]
+public function mesReclamations(Request $request,ReclamationRepository $repository,UserRepository $userRepository): Response
+{
+    $session = $request->getSession();
+        $userid = $session->get('user_id');
+        $user = $userRepository->find($userid);
+
+    if (!$user) {
+        throw $this->createAccessDeniedException('Vous devez être connecté pour voir vos réclamations.');
+    }
+
+    $reclamations = $repository->findBy(['user' => $user]);
+
+    return $this->render('reclamation/mes_reclamations.html.twig', [
+        'reclamations' => $reclamations,
+    ]);
+}
+
     #[Route('/ajouter', name: 'ajouter_reclamation', methods: ['GET','POST'])]
-    public function ajouter(Request $request, EntityManagerInterface $entityManager): Response
+    public function ajouter(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
         $reclamation = new Reclamation();
         $form = $this->createForm(ReclamationType::class, $reclamation);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Debugging
-            dump($form->getErrors());
-            dump($reclamation); // Vérifie les données avant la persistance
-        
-            $reclamation->setDateDeCreation(new \DateTime()); 
-            $reclamation->setStatut(Statut::EN_ATTENTE);
-            
-            
-            $entityManager->persist($reclamation);
-            $entityManager->flush();
-        
-            $this->addFlash('success', 'Votre réclamation a été envoyée avec succès !');
-            return $this->redirectToRoute('reclamation');
+    
+        $session = $request->getSession();
+        $userid = $session->get('user_id');
+        $user = $userRepository->find($userid);
+    
+        if (!$user) {
+            throw $this->createNotFoundException('User not found.');
         }
-        
-
+    
+        if ($form->isSubmitted()) {
+            dump($form->getErrors());  // Debug validation errors
+            
+            if ($form->isValid()) {
+                $reclamation->setDateDeCreation(new \DateTime()); 
+                $reclamation->setStatut(Statut::EN_ATTENTE);
+                $reclamation->setUser($user);
+                
+                $entityManager->persist($reclamation);
+                $entityManager->flush();
+                $this->addFlash('success', 'Votre réclamation a été envoyée avec succès !');
+                return $this->redirectToRoute('mes_reclamations');
+            }
+        }
+    
         return $this->render('reclamation/ajouter.html.twig', [
             'form' => $form->createView(),
         ]);
     }
-    #[Route('/modifier/{id}', name: 'modifier_reclamation', methods: ['GET', 'POST'])]
+        #[Route('/modifier/{id}', name: 'modifier_reclamation', methods: ['GET', 'POST'])]
     public function modifier(int $id, Request $request, EntityManagerInterface $entityManager, ReclamationRepository $repository): Response
     {
     $reclamation = $repository->find($id);
@@ -59,7 +84,8 @@ class ReclamationController extends AbstractController
         throw $this->createNotFoundException('Réclamation non trouvée');
     }
 
-    $form = $this->createForm(ReclamationType::class, $reclamation);
+    $form = $this->createForm(ReclamationType::class, $reclamation,[
+        'only_statut' => true,]);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {

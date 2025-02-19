@@ -1,0 +1,73 @@
+{% extends 'side-bar.html.twig' %}
+
+{% block title %}Teacher Dashboard{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Teacher Dashboard</h1>
+
+        <!-- Display Statistics -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Quizzes</h5>
+                        <p class="card-text">{{ totalQuizzes }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Questions</h5>
+                        <p class="card-text">{{ totalQuestions }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quizzes Section -->
+        <h2>Quizzes</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for quiz in quizzes %}
+                    <tr>
+                        <td>{{ quiz.titre }}</td>
+                        <td>{{ quiz.description }}</td>
+                        
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Questions Section -->
+        <h2>Questions</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Quiz</th>
+                    <th>texte</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for quiz in quizzes %}
+
+                {% for question in questions %}
+                    <tr>
+                        <td>{{ question.quiz.titre }}</td>
+                         <td>{{ question.texte }}</td>
+
+                    </tr>
+                {% endfor %}
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

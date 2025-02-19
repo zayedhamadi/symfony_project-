@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Enum\Rolee;
 use DateTimeInterface;
 use App\Entity\Enum\EtatCompte;
 use App\Entity\Enum\Genre;
@@ -56,16 +57,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'date', nullable: true)]
     private ?DateTimeInterface $dateNaissance = null;
-    /**
-     * @var list<string> The user roles
-     */
-    #[ORM\Column]
-    private array $roles = [];
+
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
     private ?string $password = null;
+
     /**
      * @var Collection<int, Classe>
      */
@@ -82,19 +80,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Eleve::class, mappedBy: 'IdParent')]
     private Collection $eleves;
+
     /**
      * @var Collection<int, Matiere>
      */
     #[ORM\OneToMany(targetEntity: Matiere::class, mappedBy: 'idEnsg')]
     private Collection $matieres;
 
-  
+
 
     /**
      * @var Collection<int, Commande>
      */
     #[ORM\OneToMany(targetEntity: Commande::class, mappedBy: 'parent')]
     private Collection $commandes;
+    /**
+     * @var Rolee[] The user roles
+     */
+    #[ORM\Column(type: "json")]
+    private array $roles = [];
 
 
 
@@ -123,13 +127,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->nom = $nom;
     }
 
+//    #[ORM\ManyToOne(inversedBy: 'IdUser')]
+//    private ?Cours $cours = null;
+
     public function getPrenom(): ?string
     {
         return $this->prenom;
     }
-
-//    #[ORM\ManyToOne(inversedBy: 'IdUser')]
-//    private ?Cours $cours = null;
 
     public function setPrenom(?string $prenom): void
     {
@@ -181,25 +185,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return list<string>
+     * @return Rolee[]
      * @see UserInterface
-     *
      */
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = '';
-#ROLE_USER
+
+        if (empty(array_intersect($roles, [Rolee::Admin->value, Rolee::User->value]))) {
+            return $roles;
+        }
+
         return array_unique($roles);
     }
 
     /**
-     * @param list<string> $roles
+     * @param Rolee[] $roles
      */
     public function setRoles(array $roles): static
     {
-        $this->roles = $roles;
+        $this->roles = array_map(fn($role) => $role instanceof Rolee ? $role->value : $role, $roles);
 
         return $this;
     }
@@ -212,16 +217,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function getFullName(): string
-    {
-        return $this->nom . ' ' . $this->prenom;
-    }
-
     public function setPassword(string $password): static
     {
         $this->password = $password;
 
         return $this;
+    }
+
+    public function getFullName(): string
+    {
+        return $this->nom . ' ' . $this->prenom;
     }
 
     /**
@@ -291,6 +296,19 @@ public function removeReclamation(Reclamation $reclamation): static
 }
 
 
+    public function getReclamation(): ?Reclamation
+    {
+        return $this->reclamation;
+    }
+
+    public function setReclamation(?Reclamation $reclamation): static
+    {
+        $this->reclamation = $reclamation;
+
+        return $this;
+    }
+
+    
 
     /**
      * @return Collection<int, Eleve>
@@ -363,7 +381,7 @@ public function removeReclamation(Reclamation $reclamation): static
 //
 //        return $this;
 //    }
-    
+
 
     public function getAdresse(): ?string
     {
@@ -401,6 +419,11 @@ public function removeReclamation(Reclamation $reclamation): static
 
     }
 
+    public function setEtatCompte(?EtatCompte $etatCompte): void
+    {
+        $this->etatCompte = $etatCompte;
+    }
+
     /**
      * @return Collection<int, Commande>
      */
@@ -430,11 +453,7 @@ public function removeReclamation(Reclamation $reclamation): static
 
         return $this;
     }
-
-    public function setEtatCompte(?EtatCompte $etatCompte): void
-    {
-        $this->etatCompte = $etatCompte;
-    }
+  
 
     public function getDateNaissance(): ?DateTimeInterface
     {
@@ -445,7 +464,6 @@ public function removeReclamation(Reclamation $reclamation): static
     {
         $this->dateNaissance = $dateNaissance;
     }
-
 
 
 }

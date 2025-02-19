@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Enum\EtatCompte;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
@@ -62,7 +63,6 @@ final class UserController extends AbstractController
                 $entityManager->persist($user);
                 $entityManager->flush();
 
-                // Flash message for success
                 $this->addFlash('success', 'Utilisateur créé avec succès.');
 
                 $projectDir = $params->get('kernel.project_dir');
@@ -155,7 +155,7 @@ final class UserController extends AbstractController
             if ($imageFile) {
                 $newFilename = uniqid() . '.' . $imageFile->guessExtension();
                 $imageFile->move(
-                    $this->getParameter('uploads_directory'), // Assure-toi d'avoir ce paramètre dans `services.yaml`
+                    $this->getParameter('uploads_directory'),
                     $newFilename
                 );
                 $user->setImage($newFilename);

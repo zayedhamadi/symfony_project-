@@ -6,6 +6,12 @@
 {% block body %}
     <div class="container " style="margin-top: 100px !important; padding: 0 15px !important;">
         <h1 class="mb-4">Liste des Produits</h1>
+        <form action="{{ path('app_produit_index') }}" method="get" class="d-flex mb-3">
+            <input type="text" name="search" class="form-control me-2" placeholder="Rechercher un produit..." value="{{ search }}" style="max-width: 250px;">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-search"></i> Rechercher
+            </button>
+        </form>
         <div class="d-flex justify-content-end mb-3" style="padding-right: 40px;">
             <a href="{{ path('app_produit_new') }}" class="btn btn-primary">Ajouter un produit</a>
         </div>

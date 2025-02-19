@@ -155,33 +155,27 @@ class cessatonController extends AbstractController
     #[Route('/activateAccount/{id}', name: 'activate_account', methods: ['POST'])]
     public function activateAccount(int $id): Response
     {
-        // Trouver la cessation par son ID
         $cessation = $this->cessationRepository->find($id);
 
         if (!$cessation) {
             return $this->json(['error' => 'Cessation not found'], Response::HTTP_NOT_FOUND);
         }
 
-        // Récupérer l'utilisateur associé à la cessation
         $user = $cessation->getIdUser();
 
         if ($user) {
-            // Réactiver le compte de l'utilisateur
             $user->setEtatCompte(EtatCompte::Active);
             $this->entityManager->persist($user);
             $this->entityManager->flush();
         }
 
-        // Dissocier l'utilisateur de la cessation sans supprimer l'utilisateur
-        $cessation->setIdUser(null); // Dissocier l'utilisateur de la cessation
-        $this->entityManager->persist($cessation); // Mettre à jour la cessation
+        $cessation->setIdUser(null);
+        $this->entityManager->persist($cessation);
         $this->entityManager->flush();
 
-        // Supprimer la cessation uniquement
         $this->entityManager->remove($cessation);
         $this->entityManager->flush();
 
-        // Rediriger vers la liste des cessations
         return $this->redirectToRoute('get_all_cessations');
     }
 

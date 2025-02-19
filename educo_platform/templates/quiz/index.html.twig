@@ -1,0 +1,61 @@
+{% extends 'side-bar.html.twig' %}
+
+{% block title %}Liste des Quiz{% endblock %}
+
+{% block body %}
+<div class="container" style="margin-top: 100px !important; padding: 0 15px !important;">
+    <h1 class="mb-4">Liste des Quiz</h1>
+
+    <div class="d-flex justify-content-end mb-3" style="padding-right: 40px;">
+        <a href="{{ path('quiz_new') }}" class="btn btn-primary">Créer un nouveau quiz</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Titre</th>
+                    <th>Classe</th>
+                    <th>Matière</th>
+                    <th>Cours</th>
+                    <th>Date d'ajout</th> {# Nouvelle colonne pour la date d'ajout #}
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for quiz in quizzes %}
+                <tr>
+                    <td>{{ quiz.id }}</td>
+                    <td>{{ quiz.titre }}</td>
+                    <td>{{ quiz.classe.NomClasse }}</td> {# Affiche le nom de la classe #}
+                    <td>{{ quiz.matiere.nom }}</td> {# Affiche le nom de la matière #}
+                    <td>{{ quiz.cours.name }}</td>
+                    <td>{{ quiz.dateAjout|date('d/m/Y H:i') }}</td> {# Affiche la date d'ajout formatée #}
+                    <td>
+                        <span style="display: flex; gap: 10px;">
+                            <a href="{{ path('quiz_show', {'id': quiz.id}) }}" class="btn btn-info btn-sm">
+                                <i class="fas fa-eye"></i> <!-- View icon -->
+                            </a>
+                            <a href="{{ path('quiz_edit', {'id': quiz.id}) }}" class="btn btn-warning btn-sm">
+                                <i class="fas fa-edit"></i> <!-- Edit icon -->
+                            </a>
+                            <form method="post" action="{{ path('quiz_delete', {'id': quiz.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce quiz ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ quiz.id) }}">
+                                <button class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i> <!-- Delete icon -->
+                                </button>
+                            </form>
+                        </span>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center">Aucun quiz trouvé</td> {# Colspan mis à jour pour inclure la nouvelle colonne de date d'ajout #}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

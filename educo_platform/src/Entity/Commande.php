@@ -125,4 +125,13 @@ class Commande
         $this->commandeProduits->removeElement($produit);
         return $this;
     }
+    // Dans l'entité Commande
+    public function getNomCompletClient(): ?string
+    {
+        if ($this->parent) {  // Vérifie si la commande a un utilisateur associé
+            return $this->parent->getNom() . ' ' . $this->parent->getPrenom();
+        }
+        return null;
+    }
+
 }

@@ -27,7 +27,7 @@ security:
         login_path: app_login
         username_parameter: email
         password_parameter: password
-        default_target_path: app_testing_login
+        default_target_path: app_dashboardAdmin
         always_use_default_target_path: true
         success_handler: lexik_jwt_authentication.handler.authentication_success
         failure_handler: lexik_jwt_authentication.handler.authentication_failure

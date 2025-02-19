@@ -13,25 +13,64 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use App\Repository\CategorieRepository;
+
 
 #[Route('/produit')]
 final class ProduitController extends AbstractController
 {
     #[Route(name: 'app_produit_index', methods: ['GET'])]
-    public function index(ProduitRepository $produitRepository): Response
+    public function index(ProduitRepository $produitRepository,Request $request): Response
     {
+        $search = $request->query->get('search');
+
+        $queryBuilder = $produitRepository->createQueryBuilder('p');
+
+        if ($search) {
+            $queryBuilder->andWhere('p.nom LIKE :search OR p.description LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+
+        $produits = $queryBuilder->getQuery()->getResult();
+
         return $this->render('produit/index.html.twig', [
-            'produits' => $produitRepository->findAll(),
+            'produits' => $produits,
+            'search' => $search, // Passer la recherche pour garder la valeur dans l'input
         ]);
     }
     #[Route('/boutique', name: 'app_boutique', methods: ['GET'])]
-    public function boutique(ProduitRepository $produitRepository): Response
+    public function boutique(Request $request, ProduitRepository $produitRepository, CategorieRepository $categorieRepository): Response
     {
+        $search = $request->query->get('search');
+        $category = $request->query->get('category');
+
+        // Récupérer toutes les catégories
+        $categories = $categorieRepository->findAll();
+
+        $queryBuilder = $produitRepository->createQueryBuilder('p');
+
+        // Filtrer par catégorie
+        if ($category) {
+            $queryBuilder->andWhere('p.categorie = :category')
+                ->setParameter('category', $category);
+        }
+
+        // Recherche par nom
+        if ($search) {
+            $queryBuilder->andWhere('p.nom LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+
+        $produits = $queryBuilder->getQuery()->getResult();
+
+        // Passer les produits et catégories à la vue
         return $this->render('produit/boutique.html.twig', [
-            'produits' => $produitRepository->findAll(),
+            'produits' => $produits,
+            'search' => $search,
+            'selectedCategory' => $category,
+            'categories' => $categories,  // Ajout des catégories
         ]);
     }
-
     #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {

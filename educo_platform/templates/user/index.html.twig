@@ -9,7 +9,9 @@
         <div class="mb-4">
             <form method="get" action="{{ path('app_user_list') }}">
                 <div class="input-group">
-                    <input type="text" name="search" class="form-control rounded-start" placeholder="Rechercher par nom, prénom ou e-mail" value="{{ app.request.query.get('search') }}">
+                    <input type="text" name="search" class="form-control rounded-start"
+                           placeholder="Rechercher par nom, prénom ou e-mail"
+                           value="{{ app.request.query.get('search') }}">
                     <button class="btn btn-primary rounded-end" type="submit">
                         <i class="fas fa-search"></i> Rechercher
                     </button>
@@ -37,9 +39,11 @@
                     <tr>
                         <td>
                             {% if user.image %}
-                                <img src="{{ asset('uploads/' ~ user.image) }}" alt="Image de profil" class="img-thumbnail" style="width: 50px; height: 50px;">
+                                <img src="{{ asset('uploads/' ~ user.image) }}" alt="Image de profil"
+                                     class="img-thumbnail" style="width: 50px; height: 50px;">
                             {% else %}
-                                <img src="{{ asset('images/default-avatar.png') }}" alt="Image de profil par défaut" class="img-thumbnail" style="width: 50px; height: 50px;">
+                                <img src="{{ asset('images/default-avatar.png') }}" alt="Image de profil par défaut"
+                                     class="img-thumbnail" style="width: 50px; height: 50px;">
                             {% endif %}
                         </td>
                         <td>{{ user.email }}</td>
@@ -72,5 +76,17 @@
                 <i class="fas fa-user-plus"></i> Créer un nouvel utilisateur
             </a>
         </div>
+
+        {% for message in app.flashes('success') %}
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Succès',
+                    text: '{{ message }}',
+                    showConfirmButton: true
+                });
+            </script>
+        {% endfor %}
+
     </div>
 {% endblock %}

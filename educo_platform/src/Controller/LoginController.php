@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Enum\Rolee;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,7 +44,15 @@ class LoginController extends AbstractController
             $session->set('user_id', $userId);
             $session->set('refresh_token', $refreshToken->getRefreshToken());
 
-            return $this->redirectToRoute('app_testing_login');
+
+            if (in_array(Rolee::Admin->value, $user->getRoles())) {
+                return $this->redirect('https://127.0.0.1:8000/testing/login ');
+            } elseif (in_array(Rolee::Enseignant->value, $user->getRoles())) {
+                return $this->redirect('https://127.0.0.1:8000/cessation/getAllCessation ');
+            } elseif (in_array(Rolee::Parent->value, $user->getRoles())) {
+                return $this->redirect('https://127.0.0.1:8000/contact');
+            }
+            return $this->redirectToRoute('app_dashboardAdmin');
         }
 
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -57,6 +66,8 @@ class LoginController extends AbstractController
             'error' => $error,
         ]);
     }
+
+
 
 
     #[Route('/logout', name: 'app_logout', methods: ['GET'])]

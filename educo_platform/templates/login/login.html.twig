@@ -7,6 +7,18 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    <style>
+        .is-invalid {
+            border: 2px solid red;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+    </style>
 </head>
 <body>
 
@@ -34,16 +46,30 @@
 
             <form method="post" action="{{ path('app_login') }}">
                 <div class="form-group">
-                    <label>Email</label>
+                    <label for="email">Email</label>
+                    {% if error %}
+                        <div class="error-message" style="color: red; margin-bottom: 10px;">
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </div>
+                    {% endif %}
                     <input type="email" id="email" name="email" placeholder="Saisir votre adresse email"
-                           value="{{ last_email }}" required>
+                           value="{{ last_email }}" required
+                           pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                           title="Veuillez entrer une adresse email valide."
+                           class="{{ error ? 'is-invalid' : '' }}">
                 </div>
 
                 <div class="form-group">
-                    <label>Mot de passe</label>
+                    <label for="password">Mot de passe</label>
+                    {% if error %}
+                        <div class="error-message" style="color: red; margin-bottom: 10px;">
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </div>
+                    {% endif %}
                     <div class="password-container">
                         <input type="password" name="password" id="password" placeholder="Saisir votre mot de passe"
-                               required>
+                               required minlength="6" title="Le mot de passe doit contenir au moins 6 caractères."
+                               class="{{ error ? 'is-invalid' : '' }}">
                         <i class="bi bi-eye toggle-password" id="togglePassword"></i>
                     </div>
                 </div>
@@ -77,6 +103,8 @@
             icon.classList.add("bi-eye");
         }
     });
+
+
 </script>
 
 </body>

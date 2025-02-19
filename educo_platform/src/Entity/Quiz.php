@@ -46,11 +46,31 @@ class Quiz
     #[ORM\OneToMany(targetEntity: Note::class, mappedBy: 'quiz')]
     private Collection $notes;
 
+    // New ManyToOne relationship with Classe
+    #[ORM\ManyToOne(targetEntity: Classe::class, inversedBy: 'quizzes')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: "La classe ne peut pas être nulle.")]
+    private Classe $classe;
+
+    // New relationship with Matiere
+    #[ORM\ManyToOne(targetEntity: Matiere::class, inversedBy: 'quizzes')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: "La matière ne peut pas être nulle.")]
+    private Matiere $matiere;
+
+    #[ORM\Column(type: 'datetime')]
+    #[Assert\NotNull(message: "La date d'ajout ne peut pas être nulle.")]
+    private \DateTimeInterface $dateAjout;
+
+
     public function __construct()
     {
         $this->questions = new ArrayCollection();
         $this->notes = new ArrayCollection();
+        $this->dateAjout = new \DateTime(); // Définit automatiquement la date actuelle
+
     }
+    
 
     // Getters et Setters
 
@@ -145,4 +165,39 @@ class Quiz
         }
         return $this;
     }
+
+    // New getters and setters for Classe
+    public function getClasse(): ?Classe
+    {
+        return $this->classe;
+    }
+
+    public function setClasse(?Classe $classe): self
+    {
+        $this->classe = $classe;
+        return $this;
+    }
+
+    // New getters and setters for Matiere
+    public function getMatiere(): ?Matiere
+    {
+        return $this->matiere;
+    }
+
+    public function setMatiere(?Matiere $matiere): self
+    {
+        $this->matiere = $matiere;
+        return $this;
+    }
+    public function getDateAjout(): ?\DateTimeInterface
+{
+    return $this->dateAjout;
+}
+
+public function setDateAjout(\DateTimeInterface $dateAjout): self
+{
+    $this->dateAjout = $dateAjout;
+    return $this;
+}
+
 }

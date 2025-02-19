@@ -12,7 +12,7 @@ class Question
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private int $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: 'text')]
     #[Assert\NotBlank(message: 'Le texte de la question ne peut pas être vide.')]
@@ -23,7 +23,7 @@ class Question
         maxMessage: 'La question ne peut pas dépasser {{ limit }} caractères.'
     )]
     #[Assert\Regex(
-        pattern: '/^[a-zA-Z0-9\s\p{P}]+$/u',
+        pattern: '/^[\p{L}0-9\s\p{P}]+$/u',
         message: 'Le texte de la question ne peut contenir que des lettres, des chiffres et des signes de ponctuation.'
     )]
     private string $texte;
@@ -49,12 +49,21 @@ class Question
         max: 255,
         maxMessage: 'La réponse ne peut pas dépasser {{ limit }} caractères.'
     )]
+    #[Assert\Choice(
+        callback: 'getOptions',
+        message: 'La réponse doit être une des options fournies.'
+    )]
     private string $reponse;
 
     #[ORM\ManyToOne(targetEntity: Quiz::class, inversedBy: 'questions')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull(message: 'Chaque question doit être associée à un quiz.')]
     private Quiz $quiz;
+
+    public function __construct()
+    {
+        $this->options = [];
+    }
 
     public function getId(): ?int
     {

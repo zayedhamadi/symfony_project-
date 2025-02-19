@@ -8,6 +8,14 @@
 
         <table class="table">
             <tbody>
+                 <tr>
+                    <th>Titre du Quiz</th> {# Ajout du titre du quiz #}
+                    <td>{{ question.quiz.titre }}</td>
+                </tr>
+                <tr>
+                    <th>Classe</th> {# Ajout du nom de la classe #}
+                    <td>{{ question.quiz.classe.NomClasse }}</td>
+                </tr>
                 <tr>
                     <th>Id</th>
                     <td>{{ question.id }}</td>
@@ -21,9 +29,10 @@
                     <td>{{ question.options ? question.options|json_encode : '' }}</td>
                 </tr>
                 <tr>
-                    <th>Réponse</th>
+                    <th>Bonne Réponse</th>
                     <td>{{ question.reponse }}</td>
                 </tr>
+
             </tbody>
         </table>
 

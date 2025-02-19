@@ -1,0 +1,25 @@
+{% extends 'side-bar.html.twig' %}
+
+{% block title %}Liste des Notes{% endblock %}
+
+{% block body %}
+    <h1>Liste des Notes</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Élève</th>
+                <th>Quiz</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for note in notes %}
+                <tr>
+                    <td>{{ note.getEleve().getNom() }}</td>
+                    <td>{{ note.getQuiz().getTitre() }}</td>
+                    <td>{{ note.getScore() }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

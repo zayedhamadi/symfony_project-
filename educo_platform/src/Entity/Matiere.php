@@ -30,9 +30,16 @@ class Matiere
     #[ORM\ManyToOne(inversedBy: 'matieres')]
     private ?User $idEnsg = null;
 
+    /**
+     * @var Collection<int, Quiz>
+     */
+    #[ORM\OneToMany(targetEntity: Quiz::class, mappedBy: 'matiere')]
+    private Collection $quizzes;
+
     public function __construct()
     {
         $this->ideleve = new ArrayCollection();
+        $this->quizzes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -96,6 +103,36 @@ class Matiere
     public function setIdEnsg(?User $idEnsg): static
     {
         $this->idEnsg = $idEnsg;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Quiz>
+     */
+    public function getQuizzes(): Collection
+    {
+        return $this->quizzes;
+    }
+
+    public function addQuiz(Quiz $quiz): static
+    {
+        if (!$this->quizzes->contains($quiz)) {
+            $this->quizzes->add($quiz);
+            $quiz->setMatiere($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuiz(Quiz $quiz): static
+    {
+        if ($this->quizzes->removeElement($quiz)) {
+            // Set the owning side to null (unless already changed)
+            if ($quiz->getMatiere() === $this) {
+                $quiz->setMatiere(null);
+            }
+        }
 
         return $this;
     }

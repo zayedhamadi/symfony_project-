@@ -16,21 +16,29 @@ class QuestionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('texte', TextType::class, [
-                'label' => 'Entrez la question',
-            ])
-            ->add('options', TextType::class, [
-                'label' => 'Options de réponse (séparées par des virgules)',
-                'required' => true,
-            ])
-            ->add('reponse', TextType::class, [
-                'label' => 'Bonne réponse',
-            ])
-            ->add('quiz', EntityType::class, [
-                'class' => Quiz::class,
-                'choice_label' => 'titre', // Change to 'titre' if you have a title field in Quiz
-                'label' => 'Quiz associé',
-            ]);
+    ->add('texte', TextType::class, [
+        'label' => 'Entrez la question',
+        'attr' => ['class' => 'form-control'],
+    ])
+    ->add('options', TextType::class, [
+        'label' => 'Options de réponse (séparées par des virgules)',
+        'required' => true,
+        'attr' => ['class' => 'form-control'],
+    ])
+    ->add('reponse', TextType::class, [
+        'label' => 'Bonne réponse',
+        'attr' => ['class' => 'form-control'],
+    ])
+    ->add('quiz', EntityType::class, [
+        'class' => Quiz::class,
+        'choice_label' => 'titre', // Utilise le bon champ pour afficher le titre du quiz
+        'label' => 'Quiz associé',
+        'placeholder' => 'Sélectionnez un quiz', // Ajoute un placeholder comme pour "matiere"
+        'attr' => [
+            'class' => 'form-control',
+        ],
+    ]);
+    
 
         // Transform the options field (JSON <-> String)
         $builder->get('options')

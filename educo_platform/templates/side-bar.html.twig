@@ -59,6 +59,7 @@
     <link href="{{asset('lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
     <link href="{{asset('lib/lightbox/css/lightbox.min.css')}}" rel="stylesheet">
     <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link rel="stylesheet" href="{{asset('assets/css/demo.css')}}" />
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
 </head>
@@ -157,12 +158,16 @@
 
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="widgets.html">
-                                <i class="fas fa-desktop"></i>
-                                <p>Mailbox</p>
-                            </a>
-                        </li>
+                     <li class="nav-item dropdown" id="quizzesDropdown">
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-desktop"></i>
+        <p>Quizzes</p>
+    </a>
+    <div class="dropdown-menu" aria-labelledby="quizzesDropdown">
+        <a class="dropdown-item" href="{{ path('quiz_index') }}">List of Quizzes</a>
+        <a class="dropdown-item" href="{{ path('question_index') }}">List of Questions</a>
+    </div>
+</li>
                         <li class="nav-item">
                             <a href="../../documentation/index.html">
                                 <i class="fas fa-file"></i>

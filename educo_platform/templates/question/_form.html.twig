@@ -1,6 +1,8 @@
 {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate', 'method': 'POST'}}) }}
+
+<div class="card shadow-sm p-4 mt-4">
     <div class="mb-3">
-        {{ form_label(form.texte, 'Texte de la question', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_label(form.texte, 'Texte de la question', {'label_attr': {'class': 'form-label fw-bold'}}) }}
         {{ form_widget(form.texte, {
             'attr': {
                 'class': 'form-control' ~ (form.texte.vars.errors|length > 0 ? ' is-invalid' : ''),
@@ -13,20 +15,20 @@
     </div>
 
     <div class="mb-3">
-        {{ form_label(form.options, 'Options de réponse', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_label(form.options, 'Options de réponse', {'label_attr': {'class': 'form-label fw-bold'}}) }}
         {{ form_widget(form.options, {
             'attr': {
                 'class': 'form-control' ~ (form.options.vars.errors|length > 0 ? ' is-invalid' : ''),
                 'placeholder': 'Entrez les options, séparées par des virgules'
             }
         }) }}
-        <div class="invalid-feedback">
+        <div class="invalid-feedback d-block text-danger">
             {{ form_errors(form.options) }}
         </div>
     </div>
 
     <div class="mb-3">
-        {{ form_label(form.reponse, 'Bonne réponse', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_label(form.reponse, 'Bonne réponse', {'label_attr': {'class': 'form-label fw-bold'}}) }}
         {{ form_widget(form.reponse, {
             'attr': {
                 'class': 'form-control' ~ (form.reponse.vars.errors|length > 0 ? ' is-invalid' : ''),
@@ -38,18 +40,28 @@
         </div>
     </div>
 
-    <div class="mb-3">
-        {{ form_label(form.quiz, 'Quiz', {'label_attr': {'class': 'form-label'}}) }}
-        {{ form_widget(form.quiz, {
-            'attr': {
-                'class': 'form-control' ~ (form.quiz.vars.errors|length > 0 ? ' is-invalid' : '')
-            }
-        }) }}
-        <div class="invalid-feedback">
-            {{ form_errors(form.quiz) }}
-        </div>
+   <div class="mb-3">
+    {{ form_label(form.quiz, 'Quiz', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+    {{ form_widget(form.quiz, {
+        'attr': {
+            'class': 'form-control' ~ (form.quiz.vars.errors|length > 0 ? ' is-invalid' : ''),
+            'placeholder': 'Sélectionnez un quiz'
+        }
+    }) }}
+    <div class="invalid-feedback">
+        {{ form_errors(form.quiz) }}
     </div>
+</div>
 
-    <button type="submit" class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+
+    <div class="d-flex justify-content-between">
+        <a href="{{ path('question_index') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left"></i> Retour à la liste
+        </a>
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> {{ button_label|default('Enregistrer') }}
+        </button>
+    </div>
+</div>
 
 {{ form_end(form) }}

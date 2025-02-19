@@ -36,10 +36,17 @@ class Classe
     #[ORM\OneToMany(targetEntity: Eleve::class, mappedBy: 'IdClasse')]
     private Collection $eleves;
 
+    /**
+     * @var Collection<int, Quiz>
+     */
+    #[ORM\OneToMany(targetEntity: Quiz::class, mappedBy: 'classe')]
+    private Collection $quizzes;
+
     public function __construct()
     {
         $this->id_user = new ArrayCollection();
         $this->eleves = new ArrayCollection();
+        $this->quizzes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -128,9 +135,39 @@ class Classe
     public function removeElefe(Eleve $elefe): static
     {
         if ($this->eleves->removeElement($elefe)) {
-            // set the owning side to null (unless already changed)
+            // Set the owning side to null (unless already changed)
             if ($elefe->getIdClasse() === $this) {
                 $elefe->setIdClasse(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Quiz>
+     */
+    public function getQuizzes(): Collection
+    {
+        return $this->quizzes;
+    }
+
+    public function addQuiz(Quiz $quiz): static
+    {
+        if (!$this->quizzes->contains($quiz)) {
+            $this->quizzes->add($quiz);
+            $quiz->setClasse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuiz(Quiz $quiz): static
+    {
+        if ($this->quizzes->removeElement($quiz)) {
+            // Set the owning side to null (unless already changed)
+            if ($quiz->getClasse() === $this) {
+                $quiz->setClasse(null);
             }
         }
 

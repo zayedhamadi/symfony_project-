@@ -1,0 +1,14 @@
+{% extends 'side-bar-ensg.html.twig' %}
+
+{% block title %}Créer un Quiz{% endblock %}
+
+{% block body %}
+        <h1 class="mb-4">Créer un Quiz</h1>
+
+        <div class="card p-4 shadow-sm">
+            {{ include('quiz/_form.html.twig', {'button_label': 'Créer', 'attr': {'novalidate': 'novalidate'}}) }}
+        </div>
+
+     
+
+{% endblock %}

@@ -38,38 +38,25 @@
             <h2>Se connecter</h2>
             <p>Entrez vos informations pour vous connecter</p>
 
-            {% if error %}
-                <div class="error-message">
-                    {{ error.messageKey|trans(error.messageData, 'security') }}
-                </div>
-            {% endif %}
+
 
             <form method="post" action="{{ path('app_login') }}">
                 <div class="form-group">
                     <label for="email">Email</label>
-                    {% if error %}
-                        <div class="error-message" style="color: red; margin-bottom: 10px;">
-                            {{ error.messageKey|trans(error.messageData, 'security') }}
-                        </div>
-                    {% endif %}
+
                     <input type="email" id="email" name="email" placeholder="Saisir votre adresse email"
                            value="{{ last_email }}" required
                            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                            title="Veuillez entrer une adresse email valide."
-                           class="{{ error ? 'is-invalid' : '' }}">
+                           >
                 </div>
 
                 <div class="form-group">
                     <label for="password">Mot de passe</label>
-                    {% if error %}
-                        <div class="error-message" style="color: red; margin-bottom: 10px;">
-                            {{ error.messageKey|trans(error.messageData, 'security') }}
-                        </div>
-                    {% endif %}
                     <div class="password-container">
                         <input type="password" name="password" id="password" placeholder="Saisir votre mot de passe"
                                required minlength="6" title="Le mot de passe doit contenir au moins 6 caractères."
-                               class="{{ error ? 'is-invalid' : '' }}">
+                               >
                         <i class="bi bi-eye toggle-password" id="togglePassword"></i>
                     </div>
                 </div>
@@ -103,6 +90,8 @@
             icon.classList.add("bi-eye");
         }
     });
+
+
 </script>
 
 </body>

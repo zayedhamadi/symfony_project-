@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 
+use App\Entity\Enum\EtatCompte;
 use App\Entity\Enum\Rolee;
+use App\Entity\User;
+use Symfony\Component\HttpFoundation\Request;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +21,7 @@ class LoginController extends AbstractController
     #[Route('/', name: 'homepage')]
     public function home(): Response
     {
-        return $this->redirectToRoute('app_login');
+        return $this->redirectToRoute('app_home');
     }
 
     #[Route('/login', name: 'app_login')]
@@ -46,11 +49,11 @@ class LoginController extends AbstractController
 
 
             if (in_array(Rolee::Admin->value, $user->getRoles())) {
-                return $this->redirect('https://127.0.0.1:8000/testing/login ');
+                return $this->redirectToRoute('admin_dashboard');
             } elseif (in_array(Rolee::Enseignant->value, $user->getRoles())) {
-                return $this->redirect('https://127.0.0.1:8000/cessation/getAllCessation ');
+                return $this->redirectToRoute('app_cours_index');
             } elseif (in_array(Rolee::Parent->value, $user->getRoles())) {
-                return $this->redirect('https://127.0.0.1:8000/contact');
+                return $this->redirectToRoute('app_boutique');
             }
             return $this->redirectToRoute('app_dashboardAdmin');
         }
@@ -63,16 +66,16 @@ class LoginController extends AbstractController
         return $this->render('login/login.html.twig', [
             'last_email' => $lastEmail,
             'user_id' => $session->get('user_id'),
-            'error' => $error,
         ]);
     }
 
 
-    #[Route('/logout', name: 'app_logout', methods: ['GET'])]
+    #[Route('/logout', name: 'app_logout', methods: ['POST','GET'])]
     public function logout(SessionInterface $session): Response
     {
         $session->clear();
         $session->invalidate();
         return $this->redirectToRoute('app_login');
     }
+
 }

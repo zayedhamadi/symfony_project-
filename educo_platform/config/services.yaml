@@ -6,6 +6,7 @@
 parameters:
     uploads_directory: '%kernel.project_dir%/public/uploads'
 
+    pdf_directory: '%kernel.project_dir%/public/uploads/pdfs'
 
 services:
     # default configuration for services in *this* file

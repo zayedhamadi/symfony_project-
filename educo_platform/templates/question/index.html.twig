@@ -1,0 +1,65 @@
+{% extends 'side-bar-ensg.html.twig' %}
+
+{% block title %}Liste des Questions{% endblock %}
+
+{% block body %}
+<div class="container" style="margin-top: 100px !important; padding: 0 15px !important;">
+    <h1 class="mb-4">Liste des Questions</h1>
+
+    <div class="d-flex justify-content-end mb-3" style="padding-right: 40px;">
+        <a href="{{ path('question_new') }}" class="btn btn-primary">Créer une nouvelle question</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Question</th>
+                    <th>Options</th>
+                    <th>Bonne Réponse</th>
+                    <th>Quiz</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for question in questions %}
+                <tr>
+                    <td>{{ question.id }}</td>
+                    <td>{{ question.texte }}</td>
+                    <td>{{ question.options|join(', ') }}</td>
+                    <td>{{ question.reponse }}</td>
+                    <td>
+                        {% if question.quiz %}
+                            {{ question.quiz.titre }}
+                        {% else %}
+                            Non assigné
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span style="display: flex; gap: 10px;">
+                            <a href="{{ path('question_show', {'id': question.id}) }}" class="btn btn-info btn-sm">
+                                <i class="fas fa-eye"></i> <!-- View icon -->
+                            </a>
+                            <a href="{{ path('question_edit', {'id': question.id}) }}" class="btn btn-warning btn-sm">
+                                <i class="fas fa-edit"></i> <!-- Edit icon -->
+                            </a>
+                            <form method="post" action="{{ path('question_delete', {'id': question.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette question ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ question.id) }}">
+                                <button class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i> <!-- Delete icon -->
+                                </button>
+                            </form>
+                        </span>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6" class="text-center">Aucune question trouvée</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

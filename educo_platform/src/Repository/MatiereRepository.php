@@ -16,6 +16,15 @@ class MatiereRepository extends ServiceEntityRepository
         parent::__construct($registry, Matiere::class);
     }
 
+    public function findAllWithEnseignant(): array
+    {
+        return $this->createQueryBuilder('m')
+            ->leftJoin('m.idEnsg', 'e')
+            ->addSelect('e') // Ensures the enseignant is loaded
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Matiere[] Returns an array of Matiere objects
     //     */

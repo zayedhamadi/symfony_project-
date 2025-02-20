@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Commandes{% endblock %}
+
+{% block body %}
+    <h1>Mes Commandes</h1>
+
+    {% if commandes is empty %}
+        <p>Aucune commande passée.</p>
+    {% else %}
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Montant Total</th>
+                <th>Statut</th>
+                <th>Mode de paiement</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for commande in commandes %}
+                <tr>
+                    <td>{{ commande.id }}</td>
+                    <td>{{ commande.dateCommande|date('d/m/Y H:i') }}</td>
+                    <td>{{ commande.montantTotal }} €</td>
+                    <td>{{ commande.statut }}</td>
+                    <td>{{ commande.modePaiement }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}

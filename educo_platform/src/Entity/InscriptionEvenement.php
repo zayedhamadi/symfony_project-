@@ -19,7 +19,7 @@ class InscriptionEvenement
     #[Assert\NotNull]
     private ?\DateTimeInterface $dateInscription = null;
 
-    #[ORM\ManyToOne(inversedBy: 'inscriptionEvenements', cascade: ['remove'])]
+    #[ORM\ManyToOne(inversedBy: 'inscriptionEvenements')]
     private ?Evenement $evenement = null;
 
     #[ORM\ManyToOne]

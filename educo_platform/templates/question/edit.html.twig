@@ -1,0 +1,14 @@
+{% extends 'side-bar-ensg.html.twig' %}
+
+{% block title %}Modifier la Question{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Modifier la Question</h1>
+
+        <div class="card p-4 shadow-sm">
+            {{ include('question/_form.html.twig', {'button_label': 'Modifier'}) }}
+        </div>
+
+    </div>
+{% endblock %}

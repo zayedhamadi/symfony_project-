@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -74,15 +75,45 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 
     #[ORM\Column(type: 'date', nullable: true)]
-    #[Assert\NotBlank(message: "La date de naissance est obligatoire")]
+    #[Assert\NotBlank(message: "La date de naissance est obligatoire.")]
     #[Assert\LessThanOrEqual("today", message: "La date de naissance ne peut pas être supérieure à la date actuelle.")]
+    #[Assert\Callback(callback: 'validateAge')]
     private ?DateTimeInterface $dateNaissance = null;
+
+    public function validateAge(ExecutionContextInterface $context): void
+    {
+        $today = new \DateTime();
+        $minAge = 18;
+
+        if (!$this->dateNaissance) {
+            $context->buildViolation('La date de naissance est obligatoire.')
+                ->atPath('dateNaissance')
+                ->addViolation();
+            return;
+        }
+
+        if ($this->dateNaissance > $today) {
+            $context->buildViolation('La date de naissance ne peut pas être supérieure à la date actuelle.')
+                ->atPath('dateNaissance')
+                ->addViolation();
+            return;
+        }
+
+        $age = $today->diff($this->dateNaissance)->y;
+        if ($age < $minAge) {
+            $context->buildViolation('L\'utilisateur doit avoir au moins 18 ans.')
+                ->atPath('dateNaissance')
+                ->addViolation();
+        }
+    }
+
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
     #[Assert\NotBlank(message: "Le mot de passe est obligatoire")]
+    #[Assert\Regex(pattern: "/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[\W_]).+$/", message: "Le mot de passe doit contenir au minimum un chiffre, une lettre et un caractère spécial.")]
     private ?string $password = null;
 
     /**

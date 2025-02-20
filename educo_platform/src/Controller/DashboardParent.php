@@ -29,11 +29,11 @@ final class DashboardParent extends AbstractController
         $user = $this->getUser();
 
         // Vérifier si l'utilisateur a le rôle 'ROLE_PARENT'
-        if (in_array('ROLE_PARENT', $user->getRoles())) {
+
             return $this->render('dashborad_parent/profile.html.twig', [
                 'user' => $user,
             ]);
-        }
+
 
         return $this->redirectToRoute('app_login');
     }

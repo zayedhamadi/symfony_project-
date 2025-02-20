@@ -54,7 +54,7 @@
 
 {% block body %}
     <div class="container">
-        <h1>Bonjour, {{ user.prenom }} {{ user.nom }} !</h1>
+        <h1>Bonjour, {{ user.getPrenom() }} {{ user.getNom() }} !</h1>
         <p>Voici votre profil :</p>
 
         <ul>

@@ -71,8 +71,13 @@
                 {% else %}
                     <p class="text-center">Aucun produit disponible pour le moment.</p>
                 {% endfor %}
-            </div>
+
+                <div class="d-flex justify-content-center">
+                    {{ knp_pagination_render(produits) }}
+                </div>
         </div>
+        <!-- Ajout de la pagination -->
+
     </div>
 
     <!-- Script pour empêcher le rechargement et mettre à jour le panier -->

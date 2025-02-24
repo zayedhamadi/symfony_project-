@@ -76,35 +76,74 @@ class PanierController extends AbstractController
 
         return $this->redirectToRoute('app_panier_view');
     }
-    #[Route('/panier/update/{id}', name: 'app_panier_update_quantite', methods: ['POST'])]
-    public function updateQuantity($id, Request $request, SessionInterface $session)
+//    #[Route('/panier/update/{id}', name: 'app_panier_update_quantite', methods: ['POST'])]
+//    public function updateQuantity($id, Request $request, SessionInterface $session)
+//    {
+//        // Récupérer la quantité soumise par l'utilisateur
+//        $quantite = (int) $request->request->get('quantite');
+//
+//        // Vérifier si la quantité est valide
+//        if ($quantite < 1) {
+//            // Rediriger en cas de quantité invalide
+//            $this->addFlash('error', 'Quantité invalide.');
+//            return $this->redirectToRoute('app_panier_view');
+//        }
+//
+//        // Récupérer le panier depuis la session
+//        $panier = $session->get('panier', []);
+//
+//        // Vérifier si le produit existe dans le panier
+//        if (isset($panier[$id])) {
+//            // Mettre à jour la quantité du produit
+//            $panier[$id] = $quantite;
+//        }
+//
+//        // Sauvegarder le panier dans la session
+//        $session->set('panier', $panier);
+//
+//        // Rediriger vers la page du panier
+//        $this->addFlash('success', 'Quantité mise à jour !');
+//        return $this->redirectToRoute('app_panier_view');
+//    }
+    #[Route('/update/{id}', name: 'app_panier_update_quantite', methods: ['POST'])]
+    public function updateQuantity($id, Request $request, SessionInterface $session, ProduitRepository $produitRepository): Response
     {
-        // Récupérer la quantité soumise par l'utilisateur
         $quantite = (int) $request->request->get('quantite');
 
-        // Vérifier si la quantité est valide
         if ($quantite < 1) {
-            // Rediriger en cas de quantité invalide
-            $this->addFlash('error', 'Quantité invalide.');
-            return $this->redirectToRoute('app_panier_view');
+            return $this->json(['success' => false, 'message' => 'Quantité invalide.'], 400);
         }
 
-        // Récupérer le panier depuis la session
         $panier = $session->get('panier', []);
 
-        // Vérifier si le produit existe dans le panier
-        if (isset($panier[$id])) {
-            // Mettre à jour la quantité du produit
-            $panier[$id] = $quantite;
+        if (!isset($panier[$id])) {
+            return $this->json(['success' => false, 'message' => 'Produit introuvable dans le panier.'], 404);
         }
 
-        // Sauvegarder le panier dans la session
+        $produit = $produitRepository->find($id);
+        if (!$produit) {
+            return $this->json(['success' => false, 'message' => 'Produit non trouvé.'], 404);
+        }
+
+        $panier[$id] = $quantite;
         $session->set('panier', $panier);
 
-        // Rediriger vers la page du panier
-        $this->addFlash('success', 'Quantité mise à jour !');
-        return $this->redirectToRoute('app_panier_view');
+        // Recalculer le total du panier
+        $totalPanier = 0;
+        foreach ($panier as $prodId => $qte) {
+            $p = $produitRepository->find($prodId);
+            if ($p) {
+                $totalPanier += $p->getPrix() * $qte;
+            }
+        }
+
+        return $this->json([
+            'success' => true,
+            'total_produit' => $produit->getPrix() * $quantite,
+            'total_panier' => $totalPanier
+        ]);
     }
+
     #[Route('/vider', name: 'app_panier_clear', methods: ['POST'])]
     public function clearCart(SessionInterface $session): Response
     {

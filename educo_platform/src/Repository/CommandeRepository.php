@@ -15,13 +15,8 @@ class CommandeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Commande::class);
     }
-    public function getTotalVentes(): float
-    {
-        return $this->createQueryBuilder('c')
-            ->select('SUM(c.montantTotal)')
-            ->getQuery()
-            ->getSingleScalarResult();
-    }
+
+
 
     public function countCommandesEnAttente(): int
     {
@@ -40,20 +35,28 @@ class CommandeRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
-    public function getChiffreAffaires(): float
+
+    public function getTotalVentes(): float
     {
-        return $this->createQueryBuilder('c')
+        return (float) ($this->createQueryBuilder('c')
             ->select('SUM(c.montantTotal)')
             ->getQuery()
-            ->getSingleScalarResult();
+            ->getSingleScalarResult() ?? 0);
+    }
+    public function getChiffreAffaires(): float
+    {
+        return (float) ($this->createQueryBuilder('c')
+            ->select('SUM(c.montantTotal)')
+            ->getQuery()
+            ->getSingleScalarResult()?? 0);
     }
 
     public function getMoyenneCommande(): float
     {
-        return $this->createQueryBuilder('c')
+        return (float)( $this->createQueryBuilder('c')
             ->select('AVG(c.montantTotal)')
             ->getQuery()
-            ->getSingleScalarResult();
+            ->getSingleScalarResult()??0);
     }
 
     public function getCommandesRecentes(): array

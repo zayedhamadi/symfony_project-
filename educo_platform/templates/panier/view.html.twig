@@ -21,20 +21,20 @@
             </thead>
             <tbody>
             {% for item in items %}
-                <tr>
+                <tr data-id="{{ item.produit.id }}">
                     <td><img src="{{ asset('uploads/' ~ item.produit.image) }}" width="50"></td>
                     <td>{{ item.produit.nom }}</td>
                     <td>
-                        <!-- Formulaire pour modifier la quantité -->
-                        <form action="{{ path('app_panier_update_quantite', {'id': item.produit.id}) }}" method="post" class="d-inline">
-                            <input type="number" name="quantite" value="{{ item.quantite }}" min="1" class="form-control form-control-sm" style="width: 60px;">
-                            <button type="submit" class="btn btn-success btn-sm mt-2">Mettre à jour</button>
-                        </form>
+                        <input type="number"
+                               class="form-control form-control-sm update-quantite"
+                               data-id="{{ item.produit.id }}"
+                               value="{{ item.quantite }}"
+                               min="1"
+                               style="width: 60px;">
                     </td>
                     <td>{{ item.produit.prix }} dt</td>
-                    <td>{{ item.produit.prix * item.quantite }} dt</td>
+                    <td class="total-produit">{{ item.produit.prix * item.quantite }} dt</td>
                     <td>
-                        <!-- Formulaire pour supprimer l'article -->
                         <form action="{{ path('app_panier_remove', {'id': item.produit.id}) }}" method="post">
                             <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
                         </form>
@@ -44,25 +44,41 @@
             </tbody>
         </table>
 
-        <h4 class="text-right">Total : {{ total }} dt</h4>
+        <h4 class="text-right">Total : <span id="total-panier">{{ total }}</span> dt</h4>
 
         <form action="{{ path('app_panier_clear') }}" method="post">
             <button type="submit" class="btn btn-warning">Vider le panier</button>
         </form>
 
-        <!-- Bouton pour passer à la caisse -->
-        <div class="text-center mt-4">
-
-        </div>
-    {% endif %}
-    {% if items is not empty %}
         <div class="text-center mt-4">
             <a href="{{ path('app_commande_paiement') }}" class="btn btn-success">Commander</a>
         </div>
     {% endif %}
 
-    <!-- Retour à la boutique -->
     <div class="text-center mt-4">
         <a href="{{ path('app_boutique') }}" class="btn btn-primary">Retour à la Boutique</a>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".update-quantite").on("change", function() {
+                let produitId = $(this).data("id");
+                let nouvelleQuantite = $(this).val();
+                let row = $(this).closest("tr");
+
+                $.ajax({
+                    url: "{{ path('app_panier_update_quantite', {'id': 0}) }}".replace('0', produitId),
+                    type: "POST",
+                    data: { quantite: nouvelleQuantite },
+                    success: function(response) {
+                        if (response.success) {
+                            row.find(".total-produit").text(response.total_produit + " dt");
+                            $("#total-panier").text(response.total_panier + " dt");
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}

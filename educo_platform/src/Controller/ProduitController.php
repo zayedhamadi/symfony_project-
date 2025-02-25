@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Repository\CategorieRepository;
+use Knp\Component\Pager\PaginatorInterface;
 
 
 #[Route('/produit')]
@@ -38,37 +39,84 @@ final class ProduitController extends AbstractController
             'search' => $search, // Passer la recherche pour garder la valeur dans l'input
         ]);
     }
+//    #[Route('/boutique', name: 'app_boutique', methods: ['GET'])]
+//    public function boutique(Request $request, ProduitRepository $produitRepository,PaginatorInterface $paginator, CategorieRepository $categorieRepository): Response
+//    {
+//        $search = $request->query->get('search');
+//        $category = $request->query->get('category');
+//
+//        // Récupérer toutes les catégories
+//        $categories = $categorieRepository->findAll();
+//
+//        $queryBuilder = $produitRepository->createQueryBuilder('p');
+//
+//        // Filtrer par catégorie
+//        if ($category) {
+//            $queryBuilder->andWhere('p.categorie = :category')
+//                ->setParameter('category', $category);
+//        }
+//
+//        // Recherche par nom
+//        if ($search) {
+//            $queryBuilder->andWhere('p.nom LIKE :search')
+//                ->setParameter('search', '%' . $search . '%');
+//        }
+//
+//        $produits = $queryBuilder->getQuery()->getResult();
+//
+//        $pagination = $paginator->paginate(
+//            $queryBuilder->getQuery(),  // Requête
+//            $request->query->getInt('page', 1), // Page actuelle
+//            9 // Nombre d'éléments par page
+//        );
+//
+//
+//
+//        // Passer les produits et catégories à la vue
+//        return $this->render('produit/boutique.html.twig', [
+//            'produits' => $produits,
+//            'search' => $search,
+//            'selectedCategory' => $category,
+//            'categories' => $categories,  // Ajout des catégories
+//        ]);
+//    }
+
     #[Route('/boutique', name: 'app_boutique', methods: ['GET'])]
-    public function boutique(Request $request, ProduitRepository $produitRepository, CategorieRepository $categorieRepository): Response
-    {
+    public function boutique(
+        Request $request,
+        ProduitRepository $produitRepository,
+        CategorieRepository $categorieRepository,
+        PaginatorInterface $paginator
+    ): Response {
         $search = $request->query->get('search');
         $category = $request->query->get('category');
-
-        // Récupérer toutes les catégories
         $categories = $categorieRepository->findAll();
 
+        // Création de la requête pour récupérer les produits
         $queryBuilder = $produitRepository->createQueryBuilder('p');
 
-        // Filtrer par catégorie
         if ($category) {
             $queryBuilder->andWhere('p.categorie = :category')
                 ->setParameter('category', $category);
         }
 
-        // Recherche par nom
         if ($search) {
             $queryBuilder->andWhere('p.nom LIKE :search')
                 ->setParameter('search', '%' . $search . '%');
         }
 
-        $produits = $queryBuilder->getQuery()->getResult();
+        // Appliquer la pagination
+        $pagination = $paginator->paginate(
+            $queryBuilder->getQuery(),  // Requête
+            $request->query->getInt('page', 1), // Page actuelle
+            9 // Nombre d'éléments par page
+        );
 
-        // Passer les produits et catégories à la vue
         return $this->render('produit/boutique.html.twig', [
-            'produits' => $produits,
+            'produits' => $pagination, // Doit être un objet `SlidingPaginationInterface`
             'search' => $search,
             'selectedCategory' => $category,
-            'categories' => $categories,  // Ajout des catégories
+            'categories' => $categories,
         ]);
     }
     #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]

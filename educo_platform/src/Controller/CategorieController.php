@@ -30,7 +30,7 @@ final class CategorieController extends AbstractController
 
         return $this->render('categorie/index.html.twig', [
             'categories' => $categories,
-            'search' => $search, // Pour garder la valeur dans l'input de recherche
+            'search' => $search,
         ]);
     }
 

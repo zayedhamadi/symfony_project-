@@ -1,0 +1,38 @@
+{% extends 'side-bar-parentvf.html.twig' %}
+
+{% block title %}Liste des événements{% endblock %}
+
+{% block body %}
+    <div class="container" style="margin-top: 100px !important; padding: 0 15px !important;">
+        <h1 class="mb-4">Liste des événements</h1>
+
+
+
+        <!-- Liste des événements -->
+        <div class="row">
+            {% for evenement in evenements %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ evenement.titre }}</h5>
+                            <p class="card-text"><strong>Date :</strong> {{ evenement.dateDebut|date('Y-m-d H:i') }}</p>
+                            <p class="card-text"><strong>Description :</strong> {{ evenement.description }}</p>
+                            <p class="card-text"><strong>Lieu :</strong> {{ evenement.lieu }}</p>
+                            <p class="card-text"><strong>Nombre de Places :</strong> {{ evenement.nombrePlaces }}</p>
+                            <p class="card-text"><strong>Type d'événement :</strong> {{ evenement.type.value }}</p>
+
+                            <!-- Bouton de réservation si inscription requise -->
+                            {% if evenement.inscriptionRequise %}
+                                <a href="{{ path('inscription_evenement', {'id': evenement.id}) }}" class="btn btn-success">Réserver</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12">
+                    <p class="text-center">Aucun événement trouvé</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

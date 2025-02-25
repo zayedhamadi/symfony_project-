@@ -35,6 +35,12 @@
             "ref": "2390b4ed5c195e0b3f6dea45221f3b7c0af523a0"
         }
     },
+<<<<<<< HEAD
+=======
+    "knplabs/knp-paginator-bundle": {
+        "version": "v6.6.1"
+    },
+>>>>>>> c85bb578b3e8ebcab47dfc5c49f220249a5b2894
     "knplabs/knp-snappy-bundle": {
         "version": "1.10",
         "recipe": {

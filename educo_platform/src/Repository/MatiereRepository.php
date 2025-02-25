@@ -24,6 +24,7 @@ class MatiereRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
     //    /**
     //     * @return Matiere[] Returns an array of Matiere objects
     //     */

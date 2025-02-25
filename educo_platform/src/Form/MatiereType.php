@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Matiere;
 use App\Entity\User;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -35,6 +36,12 @@ class MatiereType extends AbstractType
                 'placeholder' => 'Choose an enseignant',
                 'multiple' => false,  // This ensures only one teacher is selected
                 'expanded' => false,  // This creates a dropdown (select box)
+                'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('u')
+                        ->where('u.roles LIKE :role')
+                        ->setParameter('role', '%Enseignant%');
+                }
+
             ]);
 
     }

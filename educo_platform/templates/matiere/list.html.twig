@@ -37,12 +37,14 @@
 {#    </div>#}
 {#{% endblock %}#}
 
-{% extends 'side-bar.html.twig' %}
+{% extends 'side-bar-ensg.html.twig' %}
 
 {% block title %} Liste des Matières {% endblock %}
 
 {% block body %}
+
     <div class="container mt-4">
+        <div style="margin-top: 100px; margin-left: 0;">
         <h1 class="mb-4">Liste des Matières</h1>
 
         {% for teacher, matieres in groupedMatieres %}
@@ -80,5 +82,6 @@
         {% else %}
             <p>Aucune matière trouvée.</p>
         {% endfor %}
+    </div>
     </div>
 {% endblock %}

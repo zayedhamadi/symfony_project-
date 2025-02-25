@@ -1,25 +1,54 @@
-{% extends 'base.html.twig' %}
+{% extends 'side-bar-parentvf.html.twig' %}
 
 {% block title %}Confirmation de Commande{% endblock %}
 
 {% block body %}
-    <h1 class="text-center my-4">Confirmation de Commande</h1>
+    <div class="container" style="margin-top: 100px !important; padding: 0 15px !important;">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg border-0 rounded-4">
+                    <div class="card-body p-5">
+                        <h2 class="text-center text-success fw-bold mb-4">
+                            <i class="fas fa-check-circle"></i> Commande Confirmée !
+                        </h2>
 
-    <div class="container">
-        <p><strong>Commande N°:</strong> {{ commande.id }}</p>
-        <p><strong>Montant Total:</strong> {{ commande.montantTotal }} dt</p>
-        <p><strong>Mode de Paiement:</strong> {{ commande.modePaiement }}</p>
-        <p><strong>Statut:</strong> {{ commande.statut }}</p>
+                        <div class="mb-4">
+                            <p><strong><i class="fas fa-receipt"></i> Commande N° :</strong> {{ commande.id }}</p>
+                            <p><strong><i class="fas fa-coins"></i> Montant Total :</strong> {{ commande.montantTotal }} dt</p>
+                            <p><strong><i class="fas fa-credit-card"></i> Mode de Paiement :</strong> {{ commande.modePaiement }}</p>
+                            <p><strong><i class="fas fa-info-circle"></i> Statut :</strong> <span class="badge bg-info">{{ commande.statut }}</span></p>
+                        </div>
 
-        <h3>Produits Commandés</h3>
-        <ul>
-            {% for produit in commande.commandeProduits %}
-                <li>{{ produit.nom }} - {{ produit.prix }} dt (Quantité: {{ produit.quantite }})</li>
-            {% endfor %}
-        </ul>
-    </div>
+                        <h4 class="fw-bold"><i class="fas fa-shopping-cart"></i> Produits Commandés</h4>
+                        <table class="table table-striped mt-3">
+                            <thead class="table-dark">
+                            <tr>
+                                <th>Produit</th>
+                                <th>Prix</th>
+                                <th>Quantité</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for produit in commande.commandeProduits %}
+                                <tr>
+                                    <td>{{ produit.nom }}</td>
+                                    <td>{{ produit.prix }} dt</td>
+                                    <td>{{ produit.quantite }}</td>
+                                    <td>{{ produit.prix * produit.quantite }} dt</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
 
-    <div class="text-center mt-4">
-        <a href="{{ path('app_boutique') }}" class="btn btn-primary">Retour à la Boutique</a>
+                        <div class="text-center mt-4">
+                            <a href="{{ path('app_boutique') }}" class="btn btn-primary btn-lg d-flex align-items-center gap-2 justify-content-center">
+                                <i class="fas fa-store"></i> Retour à la Boutique
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

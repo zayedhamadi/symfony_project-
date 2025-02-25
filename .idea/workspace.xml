@@ -4,16 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="quelque modification gestion vente">
+    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="vente_dashbord">
+      <change afterPath="$PROJECT_DIR$/educo_platform/config/packages/knp_paginator.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/educo_platform/templates/eleve/consultermoneleve.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/symfony_project-.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/symfony_project-.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/CategorieController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/CategorieController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/.env" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/config/bundles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/migrations/Version20250219093342.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/migrations/Version20250219143326.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/EleveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/EleveController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/PanierController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/PanierController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/ProduitController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/ProduitController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Form/ProduitType.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Form/ProduitType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/categorie/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/categorie/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/inscription_evenement/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/inscription_evenement/new.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/panier/view.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/panier/view.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/educo_platform/templates/produit/boutique.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/produit/boutique.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/produit/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/produit/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/side-bar-parentvf.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/side-bar-parentvf.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -316,6 +327,10 @@
       <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/clock" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/cache-contracts" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/cache" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/knplabs/knp-snappy" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/knplabs/knp-snappy-bundle" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/knplabs/knp-components" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/knplabs/knp-paginator-bundle" />
     </include_path>
   </component>
   <component name="ProblemsViewState">
@@ -382,7 +397,13 @@
       <workItem from="1739875053590" duration="659000" />
       <workItem from="1739902688265" duration="5256000" />
       <workItem from="1739915829720" duration="7193000" />
-      <workItem from="1739969681409" duration="592000" />
+      <workItem from="1739969681409" duration="35220000" />
+      <workItem from="1740038813251" duration="10204000" />
+      <workItem from="1740061916459" duration="232000" />
+      <workItem from="1740062863743" duration="59000" />
+      <workItem from="1740391744181" duration="415000" />
+      <workItem from="1740416737060" duration="1232000" />
+      <workItem from="1740425331326" duration="1702000" />
     </task>
     <task id="LOCAL-00001" summary="gestion ventev2">
       <option name="closed" value="true" />
@@ -416,7 +437,79 @@
       <option name="project" value="LOCAL" />
       <updated>1739909447240</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="quelque modification gestion vente v2">
+      <option name="closed" value="true" />
+      <created>1739970659810</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1739970659810</updated>
+    </task>
+    <task id="LOCAL-00006" summary="quelque modification gestion vente v2">
+      <option name="closed" value="true" />
+      <created>1739970730389</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1739970730389</updated>
+    </task>
+    <task id="LOCAL-00007" summary="side-bar urggg">
+      <option name="closed" value="true" />
+      <created>1739979824304</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1739979824304</updated>
+    </task>
+    <task id="LOCAL-00008" summary="fix cours error">
+      <option name="closed" value="true" />
+      <created>1739990352396</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1739990352396</updated>
+    </task>
+    <task id="LOCAL-00009" summary="quelque modification">
+      <option name="closed" value="true" />
+      <created>1739998914588</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1739998914588</updated>
+    </task>
+    <task id="LOCAL-00010" summary="fix_errors+routes">
+      <option name="closed" value="true" />
+      <created>1740009071812</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1740009071812</updated>
+    </task>
+    <task id="LOCAL-00011" summary="fix_errors+routes">
+      <option name="closed" value="true" />
+      <created>1740011553798</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1740011553798</updated>
+    </task>
+    <task id="LOCAL-00012" summary="last">
+      <option name="closed" value="true" />
+      <created>1740038929588</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1740038929588</updated>
+    </task>
+    <task id="LOCAL-00013" summary="vente_dashbord">
+      <option name="closed" value="true" />
+      <created>1740048398794</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1740048398794</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -438,6 +531,13 @@
     <MESSAGE value="gestion ventev2" />
     <MESSAGE value="gestion ventev2." />
     <MESSAGE value="quelque modification gestion vente" />
-    <option name="LAST_COMMIT_MESSAGE" value="quelque modification gestion vente" />
+    <MESSAGE value="quelque modification gestion vente v2" />
+    <MESSAGE value="side-bar urggg" />
+    <MESSAGE value="fix cours error" />
+    <MESSAGE value="quelque modification" />
+    <MESSAGE value="fix_errors+routes" />
+    <MESSAGE value="last" />
+    <MESSAGE value="vente_dashbord" />
+    <option name="LAST_COMMIT_MESSAGE" value="vente_dashbord" />
   </component>
 </project>

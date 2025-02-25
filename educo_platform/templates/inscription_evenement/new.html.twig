@@ -1,22 +1,41 @@
-{% extends 'base.html.twig' %}
+{% extends 'side-bar-parentvf.html.twig' %}
 
 {% block title %}Inscription à un événement{% endblock %}
 
 {% block body %}
-    <h1>Inscription à l'événement : {{ evenement.titre }}</h1>
+<div style="margin-top: 200px;">
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header text-center">
+            <h1>Inscription à l'événement : {{ evenement.titre }}</h1>
+        </div>
+        <div class="card-body">
+            <div class="mb-4">
+                <p><strong>Description :</strong> {{ evenement.description }}</p>
+                <p><strong>Lieu :</strong> {{ evenement.lieu }}</p>
+                <p><strong>Date :</strong> {{ evenement.dateDebut|date('d/m/Y H:i') }} - {{ evenement.dateFin|date('d/m/Y H:i') }}</p>
+            </div>
 
-    <p><strong>Description :</strong> {{ evenement.description }}</p>
-    <p><strong>Lieu :</strong> {{ evenement.lieu }}</p>
-    <p><strong>Date :</strong> {{ evenement.dateDebut|date('d/m/Y H:i') }} - {{ evenement.dateFin|date('d/m/Y H:i') }}</p>
+            {% if evenement.inscriptionRequise and evenement.nombrePlaces is not null %}
+                <p class="alert alert-info"><strong>Places restantes :</strong> {{ evenement.nombrePlaces - evenement.inscriptionEvenements|length }}</p>
+            {% endif %}
 
-    {% if evenement.inscriptionRequise and evenement.nombrePlaces is not null %}
-        <p><strong>Places restantes :</strong> {{ evenement.nombrePlaces - evenement.inscriptions|length }}</p>
-    {% endif %}
-
+<form method="post" action="{{ path('inscription_evenement', {'id': evenement.id}) }}">
     {{ form_start(form) }}
-        {{ form_row(form.enfant) }}
-        <button class="btn btn-success">S'inscrire</button>
-    {{ form_end(form) }}
+    <div class="mb-3">
+        {{ form_label(form.enfant, 'Sélectionnez votre enfant') }}
+        {{ form_widget(form.enfant, {'attr': {'class': 'form-control'}}) }}
+    </div>
 
-    <a href="{{ path('evenement_index') }}" class="btn btn-secondary">Retour</a>
+    <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-success">S'inscrire</button>
+    </div>
+    {{ form_end(form) }}
+</form>
+                </div>
+        <div class="card-footer text-center">
+            <a href="{{ path('evenement_liste') }}" class="btn btn-secondary">Retour</a>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -34,6 +34,10 @@ class LoginController extends AbstractController
     {
         if ($this->getUser()) {
             $user = $this->getUser();
+            if ($user->getEtatCompte()?->name === 'inactive') {
+                $this->addFlash('danger', 'Votre compte est inactif. Contactez l’administrateur.');
+                return $this->redirectToRoute('app_login');
+            }
             $token = $jwtManager->create($user);
             $userId = $user->getId();
 
@@ -51,7 +55,7 @@ class LoginController extends AbstractController
             if (in_array(Rolee::Admin->value, $user->getRoles())) {
                 return $this->redirectToRoute('admin_dashboard');
             } elseif (in_array(Rolee::Enseignant->value, $user->getRoles())) {
-                return $this->redirectToRoute('app_cours_index');
+                return $this->redirectToRoute('edit_user_profileUserByHimself');
             } elseif (in_array(Rolee::Parent->value, $user->getRoles())) {
                 return $this->redirectToRoute('app_boutique');
             }

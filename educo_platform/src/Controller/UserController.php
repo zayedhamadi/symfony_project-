@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Enum\EtatCompte;
 use App\Entity\User;
+use App\Form\UserEditByAdminType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,16 +18,25 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/user')]
 final class UserController extends AbstractController
 {
 
     #[Route('/getAll', name: 'app_user_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, Request $request, PaginatorInterface $paginator): Response
     {
+
+        $query = $userRepository->createQueryBuilder('u')->getQuery();
+
+        $users = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            5
+        );
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $users,
         ]);
     }
 
@@ -143,13 +152,12 @@ final class UserController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager,  UserPasswordHasherInterface $passwordHasher): Response
+    public function editUserByAdmin(Request $request, User $user, EntityManagerInterface $entityManager,  UserPasswordHasherInterface $passwordHasher): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserEditByAdminType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Gestion de l'upload d'image
             $imageFile = $form->get('image')->getData();
 
             if ($imageFile) {
@@ -158,15 +166,8 @@ final class UserController extends AbstractController
                     $this->getParameter('uploads_directory'),
                     $newFilename
                 );
-                $user->setImage($newFilename);
             }
-
-            $plainPassword = $form->get('password')->getData();
-            if ($plainPassword) {
-                $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
-                $user->setPassword($hashedPassword);
-            }
-
+            $user->setImage($newFilename);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
@@ -194,29 +195,92 @@ final class UserController extends AbstractController
 
 
     #[Route('/', name: 'app_user_list')]
-    public function chercherUser(Request $request, UserRepository $userRepository)
+    public function chercherUser(Request $request, UserRepository $userRepository, PaginatorInterface $paginator): Response
     {
         $search = $request->query->get('search');
 
+        $query = $userRepository->createQueryBuilder('u');
+
         if ($search) {
-            $users = $userRepository->createQueryBuilder('u')
-                ->where('u.nom LIKE :search OR u.prenom LIKE :search OR u.email LIKE :search')
-                ->setParameter('search', '%' . $search . '%')
-                ->getQuery()
-                ->getResult();
-        } else {
-            $users = $userRepository->findAll();
+            $query->where('u.nom LIKE :search OR u.prenom LIKE :search OR u.email LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+
+        $pagination = $paginator->paginate(
+            $query->getQuery(),
+            $request->query->getInt('page', 1),
+            10
+        );
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->json([
+                'content' => $this->renderView('user/index.html.twig', ['users' => $pagination])
+            ]);
         }
 
         return $this->render('user/index.html.twig', [
-            'users' => $users,
+            'users' => $pagination,
         ]);
     }
 
 
 
 
+    #[Route('/{id}/editUserByHimself', name: 'app_user_editUserByHimself', methods: ['GET', 'POST'])]
+    public function editUserByHimself(UserRepository $userRepository,Request $request, User $user, EntityManagerInterface $entityManager,  UserPasswordHasherInterface $passwordHasher): Response
+    {
 
 
+        $session = $request->getSession();
+        $userid = $session->get('user_id');
+        $user = $userRepository->find($userid);
+
+
+        if (!$user) {
+            throw $this->createNotFoundException('Utilisateur non connecté.');
+        }
+
+
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+
+            if ($imageFile) {
+                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+                $imageFile->move(
+                    $this->getParameter('uploads_directory'),
+                    $newFilename
+                );
+            }
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('user/editUserByHimself.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+    #[Route('/edit-profile', name: 'edit_user_profileUserByHimself')]
+    public function editProfile(Request $request,UserRepository $userRepository)
+    {
+        $session = $request->getSession();
+        $userid = $session->get('user_id');
+        $user = $userRepository->find($userid);
+        dd($userid);
+        dd($user);
+        dd($session);
+        dd($session->get('user_id'));
+        if (!$user) {
+            throw $this->createNotFoundException('Utilisateur non trouvé');
+        }
+
+        return $this->render('user/editUserByHimself.html.twig', [
+            'user' => $user
+        ]);
+    }
 
 }

@@ -19,8 +19,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
+class UserEditByAdminType extends AbstractType
 
-class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -37,10 +37,7 @@ class UserType extends AbstractType
                     ])
                 ],
             ])
-            ->add('password', PasswordType::class, [
-                'label' => 'Mot de passe',
-                'attr' => ['placeholder' => 'Entrez votre mot de passe']
-            ])
+
             ->add('email', EmailType::class, [
                 'label' => 'E-mail',
                 'attr' => ['placeholder' => 'Entrez votre adresse e-mail']
@@ -93,6 +90,8 @@ class UserType extends AbstractType
                 'choice_value' => fn($choice) => (string)$choice,
                 'label' => 'Roles',
                 'multiple' => true,
+                'mapped' => false,
+                'required' => false,
                 'expanded' => true
             ]);
     }

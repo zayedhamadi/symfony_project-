@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Entity\Cours;
 use App\Form\CoursType;
 use App\Repository\CoursRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -17,8 +18,15 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class CoursController extends AbstractController
 {
     #[Route('/', name: 'app_cours_index', methods: ['GET'])]
-    public function index(CoursRepository $coursRepository): Response
+    public function index(Request $request,UserRepository $userRepository,CoursRepository $coursRepository): Response
     {
+        $session = $request->getSession();
+        $userid = $session->get('user_id');
+        $user = $userRepository->find($userid);
+        if (!$user) {
+            throw $this->createNotFoundException('Utilisateur non connecté.');
+        }
+
         return $this->render('cours/index.html.twig', [
             'cours' => $coursRepository->findAll(),
         ]);

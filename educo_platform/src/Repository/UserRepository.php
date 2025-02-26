@@ -34,16 +34,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
 
-    public function countUsersByRole()
-    {
-        return $this->createQueryBuilder('u')
-            ->select('u.roles, COUNT(u.id) as count')
-            ->groupBy('u.roles')
-            ->getQuery()
-            ->getResult();
-    }
-
-
 
     public function countUsersByGender()
     {
@@ -66,32 +56,5 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         return $genderStats;
     }
-
-
 }
-
-    //    /**
-    //     * @return User[] Returns an array of User objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('u')
-    //            ->andWhere('u.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('u.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?User
-    //    {
-    //        return $this->createQueryBuilder('u')
-    //            ->andWhere('u.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 

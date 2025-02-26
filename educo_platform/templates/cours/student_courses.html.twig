@@ -1,0 +1,251 @@
+{% extends 'side-bar.html.twig' %}
+
+{% block nav %} {%endblock %}
+
+{% block title %} Student Courses {% endblock %}
+{% block stylesheets %}
+    <style>
+        #courses {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .course {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .course:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .course h2 {
+            font-size: 1.6rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .show-pdf {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 123, 255, 0.3);
+        }
+
+        .show-pdf:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .show-pdf:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(38, 143, 255, 0.5);
+        }
+
+        .show-pdf:active {
+            transform: translateY(2px);
+        }
+
+        .show-pdf:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        #pdf-viewer {
+            display: none;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            max-height: 80vh; /* Limit height to 80% of the viewport */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+        #pdf-canvas {
+            width: 100%;
+            border: 1px solid #ddd;
+        }
+
+        #close-pdf {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #close-pdf:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+<div style="margin-top: 100px; margin-left: 0;">
+
+    <h1>Courses</h1>
+
+    {# Dropdown to select a class #}
+{#    <form method="get" action="{{ path('student_courses') }}">#}
+{#        <label for="class_id">Select Class:</label>#}
+{#        <select name="class_id" id="class_id" onchange="this.form.submit()">#}
+{#            <option value="">-- Choose a class --</option>#}
+{#            {% for classe in classes %}#}
+{#                <option value="{{ classe.id }}" {% if classe.id == selectedClassId %}selected{% endif %}>#}
+{#                    {{ classe.nomClasse  }}#}
+{#                </option>#}
+{#            {% endfor %}#}
+{#        </select>#}
+{#    </form>#}
+    <h1>Select Class</h1>
+        <form method="get" action="{{ path('student_courses') }}">
+            <div class="form-group">
+                <label for="class_id">Choose a Class:</label>
+                <select name="class_id" id="class_id" class="form-control select2" onchange="this.form.submit()">
+                    <option value="">-- Choose a class --</option>
+                    {% for classe in classes %}
+                        <option value="{{ classe.id }}" {% if classe.id == selectedClassId %}selected{% endif %}>
+                            {{ classe.nomClasse }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+
+    {# Show courses if a class is selected #}
+    {% if courses is not empty %}
+        <div id="courses">
+            {% for course in courses %}
+                <div class="course">
+                    <h2>{{ course.name }}</h2>
+                    <button class="show-pdf" data-pdf="{{ asset('uploads/pdfs/' ~ course.pdfFilename) }}">View PDF</button>
+                </div>
+            {% endfor %}
+
+        </div>
+    {% else %}
+        <p>No courses available for the selected class.</p>
+    {% endif %}
+
+
+    {# Placeholder for the PDF viewer #}
+    {# PDF Viewer Section #}
+    {# PDF Viewer Section #}
+    <div id="pdf-viewer" style="display:none; position: fixed; top: 10%; left: 57%;
+        transform: translateX(-50%); width: 80%; height: 80vh; overflow-y: scroll;
+        background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        text-align: center;">
+
+        {# Exit Button with X #}
+        <button id="exit-pdf" style="position: fixed; top: 15px; right: 20px;
+    background: red; color: white; border: none; padding: 8px 12px;
+    font-size: 16px; cursor: pointer; border-radius: 5px; z-index: 9999;">
+            ✖
+        </button>
+
+        <div id="pdf-container"></div>
+    </div>
+
+
+</div>
+{% endblock %}
+{% block javascripts %}
+    {# Load PDF.js #}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const pdfViewer = document.getElementById('pdf-viewer');
+            const pdfContainer = document.getElementById('pdf-container');
+            const exitButton = document.getElementById('exit-pdf'); // Exit button reference
+            let pdfDoc = null;
+
+            // Handle the PDF button click
+            document.querySelectorAll('.show-pdf').forEach(button => {
+                button.addEventListener('click', function() {
+                    const pdfUrl = this.getAttribute('data-pdf');
+                    console.log('Opening PDF:', pdfUrl);
+                    if (!pdfUrl) {
+                        console.error("PDF URL is missing!");
+                        return;
+                    }
+                    loadPDF(pdfUrl);
+                });
+            });
+
+            // Close the viewer and clear content
+            function closeViewer() {
+                pdfViewer.style.display = 'none';
+                pdfContainer.innerHTML = ''; // Clear previous PDFs
+            }
+
+            // Attach event listener to the exit button
+            exitButton.addEventListener('click', closeViewer);
+
+            // Function to load the PDF
+            function loadPDF(pdfUrl) {
+                pdfViewer.style.display = 'block';
+                pdfContainer.innerHTML = ''; // Clear any previously loaded PDFs
+
+                pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+                    console.log('PDF loaded successfully');
+                    pdfDoc = pdf;
+
+                    // Render all pages of the PDF
+                    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                        renderPage(pageNum);
+                    }
+                }).catch(error => {
+                    console.error('Error loading PDF:', error);
+                });
+            }
+
+            // Render a page of the PDF
+            function renderPage(num) {
+                pdfDoc.getPage(num).then(page => {
+                    const viewport = page.getViewport({ scale: 1.5 });
+                    const canvas = document.createElement('canvas');
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+
+                    pdfContainer.appendChild(canvas); // Add the canvas to the container
+
+                    const context = canvas.getContext('2d');
+                    page.render({
+                        canvasContext: context,
+                        viewport: viewport
+                    });
+                });
+            }
+        });
+    </script>
+
+    <script>
+        // Initialize Select2 on the dropdown for a searchable experience
+        $(document).ready(function() {
+            // Make sure select2 is applied to your select element
+            $('#class_id').select2({
+                placeholder: "Select a class", // Placeholder text
+                allowClear: true // Allow the user to clear the selection
+            });
+        });
+    </script>
+{% endblock %}
+
+
+
+

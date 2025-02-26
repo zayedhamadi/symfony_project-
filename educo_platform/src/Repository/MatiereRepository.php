@@ -24,6 +24,17 @@ class MatiereRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    // src/Repository/MatiereRepository.php
+    public function findAllEnseignants(): array
+    {
+        return $this->createQueryBuilder('m')
+            ->leftJoin('m.idEnsg', 'e') // Join the Enseignant entity
+            ->select('e.id, e.nom') // Select specific fields from Enseignant
+            ->distinct() // Ensure unique results
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Matiere[] Returns an array of Matiere objects
     //     */

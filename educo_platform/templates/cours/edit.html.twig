@@ -3,7 +3,9 @@
 {% block title %} Edit Course {% endblock %}
 
 {% block body %}
-    <div class="container mt-4">
+<div style="margin-top: 100px; margin-left: 0;">
+
+<div class="container mt-4">
         <h1 class="mb-4">Edit Course</h1>
 
         {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
@@ -36,4 +38,5 @@
 
         {{ form_end(form) }}
     </div>
+</div>
 {% endblock %}

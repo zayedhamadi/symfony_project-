@@ -1,28 +1,48 @@
-
 {% extends 'side-bar.html.twig' %}
 
-{% block nav %} {%endblock %}
+{% block nav %} {% endblock %}
 {% block title %}Add New Subject{% endblock %}
 
 {% block body %}
     <div style="margin-top: 100px; margin-left: 0;">
         {{ form_start(form) }}
+
+        <!-- Subject Name Field -->
         <div class="mb-3">
             {{ form_label(form.nom, 'Subject Name') }}
             {{ form_widget(form.nom, { 'attr': {'class': 'form-control'} }) }}
         </div>
 
+        <!-- Assign Teacher Field -->
+{#        <div class="mb-3">#}
+{#            {{ form_label(form.idEnsg, 'Assign Teacher') }}#}
+{#            {{ form_widget(form.idEnsg, { 'attr': {'class': 'form-control'} }) }}#}
+{#        </div>#}
         <div class="mb-3">
             {{ form_label(form.idEnsg, 'Assign Teacher') }}
-            {{ form_widget(form.idEnsg, { 'attr': {'class': 'form-control'} }) }}
-
+            {% if form.idEnsg.vars.value %}
+                {# Display the teacher's name as a read-only field #}
+                <input type="text" class="form-control" value="{{ form.idEnsg.vars.data.nom }}" readonly>
+                {# Add a hidden input to retain the value when the form is submitted #}
+                {{ form_widget(form.idEnsg, { 'attr': {'class': 'd-none'} }) }}
+            {% else %}
+                {# If no teacher is assigned, show the dropdown #}
+                {{ form_widget(form.idEnsg, { 'attr': {'class': 'form-control'} }) }}
+            {% endif %}
         </div>
 
+        <!-- Coefficient Field -->
+        <div class="mb-3">
+            {{ form_label(form.coefficient, 'Coefficient') }}
+            {{ form_widget(form.coefficient, { 'attr': {'class': 'form-control'} }) }}
+        </div>
 
-
-        {{ form_end(form) }}
+        <!-- Save Button inside the form -->
         <button type="submit" class="btn btn-primary">Save</button>
-        <a href="{{ path('app_matiere_list') }}" class="btn btn-secondary">Cancel</a>
-    </div>
 
+        {{ form_end(form) }}  {# End the form here #}
+
+        <!-- Cancel Button outside the form -->
+        <a href="{{ path('app_matiere_list') }}" class="btn btn-secondary mt-3">Cancel</a>
+    </div>
 {% endblock %}

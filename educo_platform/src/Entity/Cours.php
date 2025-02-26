@@ -17,7 +17,6 @@ class Cours
     #[ORM\Column(length: 255)] // New 'name' attribute
     private ?string $name = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\ManyToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private ?Matiere $IdMatiere = null;
@@ -43,10 +42,33 @@ class Cours
     }
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $pdfFilename = null;
+
+    #[Assert\File(
+        maxSize: '5M', // Limit file size to 5MB
+        mimeTypes: ['application/pdf'], // Only allow PDF files
+        mimeTypesMessage: 'Please upload a valid PDF file.'
+    )]
+    private $pdfFile;
+
+
 //    public function __construct()
 //    {
 //        $this->IdUser = new ArrayCollection();
 //    }
+    #[ORM\ManyToOne(targetEntity: Classe::class, inversedBy: 'cours')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Classe $classe = null;
+
+    public function getClasse(): ?Classe
+    {
+        return $this->classe;
+    }
+
+    public function setClasse(?Classe $classe): static
+    {
+        $this->classe = $classe;
+        return $this;
+    }
 
     public function getId(): ?int
     {
@@ -84,10 +106,6 @@ class Cours
     public function getQuizzes(): Collection{
         return $this->quizzes;
     }
-
-  
-
-
 
 
     public function getPdfFilename(): ?string{

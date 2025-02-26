@@ -84,7 +84,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Matiere>
      */
-    #[ORM\OneToMany(targetEntity: Matiere::class, mappedBy: 'idEnsg')]
+    #[ORM\OneToMany(targetEntity: Matiere::class, mappedBy: 'idEnsg' ,cascade: ['remove'])]
     private Collection $matieres;
 
 

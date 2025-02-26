@@ -10,7 +10,11 @@
         <link rel="icon" href="{{ asset('img/kaiadmin/favicon.ico') }}" type="image/x-icon" />
         <!-- SweetAlert2 CSS -->
 
+        <!-- Add these lines in the <head> section -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
+        <!-- Add this line before the closing </body> tag -->
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
         <!-- Fonts and icons -->
         <script src="{{ asset('js/plugin/webfont/webfont.min.js') }}"></script>
@@ -239,6 +243,8 @@
 
     <!-- Chart Circle -->
     <script src="{{ asset('js/plugin/chart-circle/circles.min.js') }}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
 
     <!-- Datatables -->
     <script src="{{ asset('js/plugin/datatables/datatables.min.js') }}"></script>

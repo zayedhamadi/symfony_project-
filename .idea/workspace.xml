@@ -4,27 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="vente_dashbord">
-      <change afterPath="$PROJECT_DIR$/educo_platform/config/packages/knp_paginator.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/educo_platform/templates/eleve/consultermoneleve.html.twig" afterDir="false" />
+    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="add_bundle_pagination+fix_paiement">
       <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/symfony_project-.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/symfony_project-.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/.env" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/educo_platform/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/migrations/Version20250219093342.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/migrations/Version20250219143326.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/EleveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/EleveController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/PanierController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/PanierController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/ProduitController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/ProduitController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/Parent/quiz_list.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/Parent/quiz_list.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/Parent/take_quiz.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/Parent/take_quiz.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/commande/confirmation.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/commande/confirmation.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/commande/mes_commandes.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/commande/mes_commandes.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/commande/paiement.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/commande/paiement.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/commande/paiement_carte.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/commande/paiement_carte.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/commande/paiement_livraison.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/commande/paiement_livraison.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/eleve/consultermoneleve.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/eleve/consultermoneleve.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/evenement/liste.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/evenement/liste.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/educo_platform/templates/inscription_evenement/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/inscription_evenement/new.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/inscription_evenement/reservations.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/inscription_evenement/reservations.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/educo_platform/templates/panier/view.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/panier/view.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/educo_platform/templates/produit/boutique.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/produit/boutique.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/side-bar-parentvf.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/side-bar-parentvf.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/produit/detailsProduit_parent.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/produit/detailsProduit_parent.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/reclamation/ReclamationsParent.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/reclamation/ReclamationsParent.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/reclamation/mes_reclamations.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/reclamation/mes_reclamations.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/reclamation/parent_add_recl.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/reclamation/parent_add_recl.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -403,7 +405,10 @@
       <workItem from="1740062863743" duration="59000" />
       <workItem from="1740391744181" duration="415000" />
       <workItem from="1740416737060" duration="1232000" />
-      <workItem from="1740425331326" duration="1702000" />
+      <workItem from="1740425331326" duration="2273000" />
+      <workItem from="1740485694684" duration="1041000" />
+      <workItem from="1740510293318" duration="1448000" />
+      <workItem from="1740586600716" duration="10030000" />
     </task>
     <task id="LOCAL-00001" summary="gestion ventev2">
       <option name="closed" value="true" />
@@ -509,7 +514,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740048398794</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="add_bundle_pagination+fix_paieement">
+      <option name="closed" value="true" />
+      <created>1740427371712</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1740427371712</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -538,6 +551,7 @@
     <MESSAGE value="fix_errors+routes" />
     <MESSAGE value="last" />
     <MESSAGE value="vente_dashbord" />
-    <option name="LAST_COMMIT_MESSAGE" value="vente_dashbord" />
+    <MESSAGE value="add_bundle_pagination+fix_paieement" />
+    <option name="LAST_COMMIT_MESSAGE" value="add_bundle_pagination+fix_paieement" />
   </component>
 </project>

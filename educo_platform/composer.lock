@@ -1578,8 +1578,6 @@
             "time": "2024-11-23T09:58:58+00:00"
         },
         {
-<<<<<<< HEAD
-=======
             "name": "knplabs/knp-components",
             "version": "v5.1.0",
             "source": {
@@ -1741,7 +1739,6 @@
             "time": "2024-10-07T16:11:50+00:00"
         },
         {
->>>>>>> c85bb578b3e8ebcab47dfc5c49f220249a5b2894
             "name": "knplabs/knp-snappy",
             "version": "v1.5.1",
             "source": {

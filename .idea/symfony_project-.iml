@@ -159,6 +159,13 @@
       <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/knplabs/knp-snappy-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/knplabs/knp-components" />
       <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/knplabs/knp-paginator-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/nyholm/psr7" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/openai-php/client" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/php-http/discovery" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/php-http/multipart-stream-builder" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/psr/http-client" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/psr/http-factory" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/smalot/pdfparser" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

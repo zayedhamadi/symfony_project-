@@ -4,29 +4,79 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="add_bundle_pagination+fix_paiement">
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="fix_some_error">
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/symfony_project-.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/symfony_project-.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/educo_platform/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/Parent/quiz_list.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/Parent/quiz_list.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/Parent/take_quiz.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/Parent/take_quiz.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/config/services.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/-67ae64ac6b4ed.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/2-67ae41999d89b.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/2-67b21075646f6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/417691011-656748836671637-4622605789706519986-n-67b093c88c988.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/417691011-656748836671637-4622605789706519986-n-67b093cd61804.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/417691011-656748836671637-4622605789706519986-n-67b0940143c89.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/417691011-656748836671637-4622605789706519986-n-67b3a7cb61546.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/417691011-656748836671637-4622605789706519986-n-67b3b114c5d9f.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/450218490-2491773897699584-2717764917922836761-n-67af4ca55f5a4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/450218490-2491773897699584-2717764917922836761-n-67b32889a4105.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/450218490-2491773897699584-2717764917922836761-n-67b3293fd8c50.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/450218490-2491773897699584-2717764917922836761-n-67b32a752ab92.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/450218490-2491773897699584-2717764917922836761-n-67b345ca47730.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/450218490-2491773897699584-2717764917922836761-n-67b3aa8f1cf91.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/67af074cc527d.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/67af082601976.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/67af0852d50ee.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/67af416a3f12f.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/67af41fa4a520.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/9ebbd370-5a9d-4802-9ff5-86077c898e7e-67ae425e9e6d2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/9ebbd370-5a9d-4802-9ff5-86077c898e7e-67b0e15acaa4f.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/9ebbd370-5a9d-4802-9ff5-86077c898e7e-67b0f5d0e2fd2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/9ebbd370-5a9d-4802-9ff5-86077c898e7e-67b1fd7f3a5bd.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/9ebbd370-5a9d-4802-9ff5-86077c898e7e-67b20b6441d89.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Capture-d-ecran-2024-08-12-195754-67b4e7a0af5d7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Capture-d-ecran-2024-08-12-195754-67b4e7f98eb0b.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Capture-d-ecran-2024-08-14-124007-67b46b28c98f6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Capture-d-ecran-2024-08-14-124007-67b5ed8a5a46d.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Capture-d-ecran-2024-08-23-175638-67b46aec7acc5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Edit-sur-la-planete-67bf62065a9fd.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Edit-sur-la-planete-67bf62691c78d.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Edit-sur-la-planete-67bf62e76d9ac.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Pollution-eau-67bccae6516f6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Pollution-eau-67bccb94ee6de.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Pollution-eau-67bccbd4325d7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Screenshot-11404-20240114-1631-1747-67ae64458b5d6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Screenshot-2023-10-14-164151-67af20b52a5dd.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Screenshot-2024-11-25-232333-67af049d925d7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Screenshot-2025-02-13-234018-67af0051a4abb.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Screenshot-2025-02-13-234018-67af41302504a.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Screenshot-2025-02-13-234018-67af4147d1b12.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Screenshot-2025-02-14-093801-67af109ce39ab.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Screenshot-2025-02-14-093801-67af11ed393ad.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Screenshot-2025-02-14-093801-67af128f08889.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Screenshot-2025-02-14-093801-67af12d081fb6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Screenshot-2025-02-14-093801-67af12e71e812.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Screenshot-2025-02-14-093801-67af15b69678e.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Screenshot-2025-02-14-093801-67af15e5367f1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Screenshot-2025-02-14-093801-67af16348f453.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Screenshot-2025-02-14-093801-67af1bbd7e3c4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/Screenshot-7496-20230522-1245-2072-67ae64602606e.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/aziz-benaissa-67b605457c574.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/aziz-benaissa-67b605987ac21.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/ebde3at-67b080c04a623.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/ebde3at-67b12a7ab0635.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/ebde3at-67b12b0cacadb.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/ebde3at-67b131923f8a2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/ebde3at-67b1e93a197f5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/ebde3at-67b1ef95b1647.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/hany-67af486e8612f.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/hany-67af4907449dd.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/post-67b5ec30b903d.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/post-67b5ef43b3901.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/public/uploads/qq-67ae5a3567650.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/symfony.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/educo_platform/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/commande/confirmation.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/commande/confirmation.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/commande/mes_commandes.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/commande/mes_commandes.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/commande/paiement.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/commande/paiement.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/commande/paiement_carte.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/commande/paiement_carte.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/commande/paiement_livraison.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/commande/paiement_livraison.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/eleve/consultermoneleve.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/eleve/consultermoneleve.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/evenement/liste.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/evenement/liste.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/inscription_evenement/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/inscription_evenement/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/inscription_evenement/reservations.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/inscription_evenement/reservations.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/panier/view.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/panier/view.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/produit/boutique.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/produit/boutique.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/produit/detailsProduit_parent.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/produit/detailsProduit_parent.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/reclamation/ReclamationsParent.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/reclamation/ReclamationsParent.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/reclamation/mes_reclamations.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/reclamation/mes_reclamations.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/reclamation/parent_add_recl.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/reclamation/parent_add_recl.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/matiere/list.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/matiere/list.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -333,10 +383,17 @@
       <path value="$PROJECT_DIR$/educo_platform/vendor/knplabs/knp-snappy-bundle" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/knplabs/knp-components" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/knplabs/knp-paginator-bundle" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/php-http/multipart-stream-builder" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/php-http/discovery" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/smalot/pdfparser" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/nyholm/psr7" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/openai-php/client" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/psr/http-client" />
     </include_path>
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
@@ -408,7 +465,7 @@
       <workItem from="1740425331326" duration="2273000" />
       <workItem from="1740485694684" duration="1041000" />
       <workItem from="1740510293318" duration="1448000" />
-      <workItem from="1740586600716" duration="10030000" />
+      <workItem from="1740586600716" duration="14246000" />
     </task>
     <task id="LOCAL-00001" summary="gestion ventev2">
       <option name="closed" value="true" />
@@ -522,7 +579,31 @@
       <option name="project" value="LOCAL" />
       <updated>1740427371712</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="fix_some_error">
+      <option name="closed" value="true" />
+      <created>1740596932339</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1740596932339</updated>
+    </task>
+    <task id="LOCAL-00016" summary="fix_some_error">
+      <option name="closed" value="true" />
+      <created>1740596974073</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1740596974073</updated>
+    </task>
+    <task id="LOCAL-00017" summary="fix_some_error">
+      <option name="closed" value="true" />
+      <created>1740597079212</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1740597079212</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -552,6 +633,7 @@
     <MESSAGE value="last" />
     <MESSAGE value="vente_dashbord" />
     <MESSAGE value="add_bundle_pagination+fix_paieement" />
-    <option name="LAST_COMMIT_MESSAGE" value="add_bundle_pagination+fix_paieement" />
+    <MESSAGE value="fix_some_error" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix_some_error" />
   </component>
 </project>

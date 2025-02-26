@@ -110,6 +110,7 @@ public function mesReclamations(Request $request,ReclamationRepository $reposito
         $this->addFlash('success', 'Réclamation modifiée avec succès !');
         return $this->redirectToRoute('reclamation');
     }
+    $reclamationService->traiterReclamation($reclamation);
     return $this->render('reclamation/modifier.html.twig', [
         'form' => $form->createView(),
         'reclamation' => $reclamation,

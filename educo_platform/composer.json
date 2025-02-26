@@ -12,6 +12,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.4",
         "doctrine/orm": "^3.3",
         "gesdinet/jwt-refresh-token-bundle": "^1.4",
+        "knplabs/knp-components": "^5.1",
         "lexik/jwt-authentication-bundle": "^2.18",
         "paypal/rest-api-sdk-php": "^1.6",
         "payum/payum-bundle": "*",

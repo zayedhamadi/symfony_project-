@@ -5,7 +5,6 @@
         "This file is @generated automatically"
     ],
     "content-hash": "e31138986ef2d7ef9c58d0c806f604c6",
-    "content-hash": "271bd06a98c5753fde4dcc2484132c34",
     "packages": [
         {
             "name": "alcohol/iso4217",

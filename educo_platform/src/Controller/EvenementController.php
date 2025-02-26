@@ -22,26 +22,50 @@ class EvenementController extends AbstractController
             'evenements' => $evenementRepository->findAll(),
         ]);
     }
+    #[Route('/evenement/liste', name: 'evenement_liste', methods: ['GET'])]
+public function liste(EvenementRepository $evenementRepository): Response
+{
+    return $this->render('evenement/liste.html.twig', [
+        'evenements' => $evenementRepository->findAll(),
+    ]);
+}
 
-    #[Route('/evenement/new', name: 'evenement_new')]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $evenement = new Evenement();
-        $form = $this->createForm(EvenementType::class, $evenement);
-         $form->handleRequest($request);
+#[Route('/evenement/new', name: 'evenement_new')]
+public function new(Request $request, EntityManagerInterface $entityManager): Response
+{
+    
+    $evenement = new Evenement();
 
-        if ($form->isSubmitted() && $form->isValid()) {
+    
+    $form = $this->createForm(EvenementType::class, $evenement);
+
+    
+    $form->handleRequest($request);
+
+    
+    if ($form->isSubmitted()) {
+        
+        if (!$form->isValid()) {
             
+            $this->addFlash('error', 'Veuillez corriger les erreurs dans le formulaire.');
+        } else {
+           
             $entityManager->persist($evenement);
             $entityManager->flush();
 
+            
+            $this->addFlash('success', 'L\'événement a été créé avec succès.');
+
+            
             return $this->redirectToRoute('evenement_index');
         }
-
-        return $this->render('evenement/new.html.twig', [
-            'form' => $form->createView(),
-        ]);
     }
+
+    
+    return $this->render('evenement/new.html.twig', [
+        'form' => $form->createView(),
+    ]);
+}
     
     #[Route('/evenement/{id}/edit', name: 'evenement_edit', methods: ['GET','POST'])]
     public function edit(int $id, Request $request, EntityManagerInterface $entityManager, EvenementRepository $evenementRepository): Response

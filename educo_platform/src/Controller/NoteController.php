@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 class NoteController extends AbstractController
 {
     #[Route('/list', name: 'note_list', methods: ['GET'])]
-    #[IsGranted('ROLE_ENSEIGNANT')]
     public function list(NoteRepository $noteRepository): Response
     {
         $notes = $noteRepository->findAll();

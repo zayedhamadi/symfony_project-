@@ -22,7 +22,15 @@ final class EleveController extends AbstractController
         return $this->render('eleve/index.html.twig', [  
             'eleves' => $eleveRepository->findAll(),  
         ]);  
-    }  
+    }
+
+        #[Route('/elvvv',name: 'showeleve', methods: ['GET'])]
+    public function showeleve(EleveRepository $eleveRepository): Response
+    {
+        return $this->render('eleve/consultermoneleve.html.twig', [
+            'eleves' => $eleveRepository->findAll(),
+        ]);
+    }
 
     #[Route('/new', name: 'app_eleve_new', methods: ['GET', 'POST'])]  
     public function new(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer): Response  

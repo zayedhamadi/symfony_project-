@@ -53,6 +53,7 @@ class Matiere
     private Collection $ideleve;
 
     #[ORM\ManyToOne(inversedBy: 'matieres')]
+
     private ?User $idEnsg = null;
 
     #[Assert\Callback('validateSubjectNotAlreadyAssigned')] // Add this line

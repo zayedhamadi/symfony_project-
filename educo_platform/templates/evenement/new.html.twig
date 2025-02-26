@@ -1,39 +1,94 @@
-{# templates/evenement/new.html.twig #}
-
-{% extends 'base.html.twig' %}
+{% extends 'side-bar.html.twig' %}
 
 {% block title %}Créer un événement{% endblock %}
+
 {% block body %}
+<div class="card shadow-sm p-4 mt-4">
     <h1>Créer un événement</h1>
 
-    {{ form_start(form) }}
-        {{ form_row(form.titre) }}
-        {{ form_row(form.description) }}
-        {{ form_row(form.dateDebut) }}
-        {{ form_row(form.dateFin) }}
-        {{ form_row(form.lieu) }}
-        {{ form_row(form.inscriptionRequise) }}
-        {{ form_row(form.nombrePlaces) }}
-        {{ form_row(form.type) }}
-        <button class="btn btn-success">Créer</button>
-    {{ form_end(form) }}
+    {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let checkbox = document.getElementById("evenement_inscriptionRequise");
-            let nombrePlacesField = document.getElementById("evenement_nombrePlaces");
+    <div class="mb-3">
+        {{ form_label(form.titre, 'Titre de l\'événement', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+        {{ form_widget(form.titre, {'attr': {'class': form.titre.vars.errors|length > 0 ? 'form-control is-invalid' : 'form-control', 'placeholder': 'Saisir le titre de l\'événement'}}) }}
+        <div class="invalid-feedback">{{ form_errors(form.titre) }}</div>
+    </div>
 
-            function toggleNombrePlaces() {
-                if (checkbox.checked) {
-                    nombrePlacesField.disabled = false;
-                } else {
-                    nombrePlacesField.disabled = true;
-                    nombrePlacesField.value = ''; // Réinitialiser si décoché
-                }
+    <div class="mb-3">
+        {{ form_label(form.description, 'Description de l\'événement', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+        {{ form_widget(form.description, {'attr': {'class': form.description.vars.errors|length > 0 ? 'form-control is-invalid' : 'form-control', 'placeholder': 'Décrire l\'événement'}}) }}
+        <div class="invalid-feedback">{{ form_errors(form.description) }}</div>
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.dateDebut, 'Date de début', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+        {{ form_widget(form.dateDebut, {'attr': {'class': form.dateDebut.vars.errors|length > 0 ? 'form-control is-invalid' : 'form-control', 'placeholder': 'Sélectionner la date de début'}}) }}
+        <div class="invalid-feedback">{{ form_errors(form.dateDebut) }}</div>
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.dateFin, 'Date de fin', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+        {{ form_widget(form.dateFin, {'attr': {'class': form.dateFin.vars.errors|length > 0 ? 'form-control is-invalid' : 'form-control', 'placeholder': 'Sélectionner la date de fin'}}) }}
+        <div class="invalid-feedback">{{ form_errors(form.dateFin) }}</div>
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.lieu, 'Lieu de l\'événement', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+        {{ form_widget(form.lieu, {'attr': {'class': form.lieu.vars.errors|length > 0 ? 'form-control is-invalid' : 'form-control', 'placeholder': 'Saisir le lieu de l\'événement'}}) }}
+        <div class="invalid-feedback">{{ form_errors(form.lieu) }}</div>
+    </div>
+
+    <div class="mb-3 form-check">
+        {{ form_label(form.inscriptionRequise, 'Inscription requise', {
+            'label_attr': {'class': 'form-check-label fw-bold me-2'}
+        }) }}
+        {{ form_widget(form.inscriptionRequise, {
+            'attr': {
+                'class': (form.inscriptionRequise.vars.errors|length > 0 ? 'form-check-input is-invalid' : 'form-check-input')
             }
+        }) }}
+        <div class="invalid-feedback">{{ form_errors(form.inscriptionRequise) }}</div>
+    </div>
 
-            toggleNombrePlaces(); // Exécuter au chargement si déjà coché
-            checkbox.addEventListener("change", toggleNombrePlaces);
-        });
-    </script>
+    <div class="mb-3">
+        {{ form_label(form.nombrePlaces, 'Nombre de places', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+        {{ form_widget(form.nombrePlaces, {'attr': {'class': form.nombrePlaces.vars.errors|length > 0 ? 'form-control is-invalid' : 'form-control', 'placeholder': 'Saisir le nombre de places disponibles'}}) }}
+        <div class="invalid-feedback">{{ form_errors(form.nombrePlaces) }}</div>
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.type, 'Type d\'événement', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+        {{ form_widget(form.type, {'attr': {'class': form.type.vars.errors|length > 0 ? 'form-control is-invalid' : 'form-control'}}) }}
+        <div class="invalid-feedback">{{ form_errors(form.type) }}</div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <a href="{{ path('evenement_index') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left"></i> Retour à la liste
+        </a>
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> Créer
+        </button>
+    </div>
+
+    {{ form_end(form) }}
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let checkbox = document.getElementById("evenement_inscriptionRequise");
+        let nombrePlacesField = document.getElementById("evenement_nombrePlaces");
+
+        function toggleNombrePlaces() {
+            nombrePlacesField.disabled = !checkbox.checked;
+            if (!checkbox.checked) {
+                nombrePlacesField.value = ''; // Réinitialiser si décoché
+            }
+        }
+
+        toggleNombrePlaces(); // Exécuter au chargement si déjà coché
+        checkbox.addEventListener("change", toggleNombrePlaces);
+    });
+</script>
+
 {% endblock %}

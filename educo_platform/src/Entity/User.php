@@ -12,6 +12,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -27,41 +29,63 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 
     #[ORM\Column(length: 180)]
+    #[Assert\NotBlank(message: "L'email est obligatoire")]
+    #[Assert\Email(message: "Veuillez entrer une adresse email valide.")]
     private ?string $email = null;
 
 
     #[ORM\Column(length: 180, nullable: true)]
+    #[Assert\NotBlank(message: "Le nom est obligatoire")]
+    #[Assert\Length(min: 2, minMessage: "Le nom doit contenir au moins {{ limit }} caractères.")]
+    #[Assert\Regex(pattern: "/^[^0-9]*$/", message: "Le nom ne doit pas contenir de chiffres.")]
+
     private ?string $nom = null;
 
 
     #[ORM\Column(length: 180, nullable: true)]
+    #[Assert\NotBlank(message: "Le prénom est obligatoire")]
+    #[Assert\Length(min: 2, minMessage: "Le prénom doit contenir au moins {{ limit }} caractères.")]
+    #[Assert\Regex(pattern: "/^[^0-9]*$/", message: "Le prénom ne doit pas contenir de chiffres.")]
     private ?string $prenom = null;
 
 
     #[ORM\Column(length: 180, nullable: true)]
+    #[Assert\NotBlank(message: "L'adresse est obligatoire")]
     private ?string $adresse = null;
 
     #[ORM\Column(length: 300, nullable: true)]
+    #[Assert\NotBlank(message: "La description est obligatoire")]
+    #[Assert\Length(max: 500, maxMessage: "La description ne doit pas dépasser {{ limit }} caractères.")]
     private ?string $description = null;
 
 
     #[ORM\Column(nullable: true)]
+    #[Assert\NotBlank(message: "Le numéro de téléphone est obligatoire")]
+    #[Assert\Length(min: 8, max: 8, exactMessage: "Le numéro de téléphone doit contenir {{ limit }} caractères.")]
+    #[Assert\Regex(pattern: "/^(5|2|9)\d{7}$/", message: "Le numéro de téléphone doit commencer par 5, 2 ou 9.")]
     private ?int $num_tel = null;
 
     #[ORM\Column(type: 'string', nullable: true, enumType: Genre::class)]
+    #[Assert\NotBlank(message: "Le genre est obligatoire")]
     private ?Genre $genre = null;
 
     #[ORM\Column(type: 'string', nullable: true, enumType: EtatCompte::class)]
+    #[Assert\NotBlank(message: "L'état du compte est obligatoire")]
     private ?EtatCompte $etatCompte = null;
 
 
     #[ORM\Column(type: 'date', nullable: true)]
+    #[Assert\NotBlank(message: "La date de naissance est obligatoire")]
+    #[Assert\LessThanOrEqual("-18 years", message: "Vous devez avoir au moins 18 ans.")]
+    #[Assert\LessThanOrEqual("today", message: "La date de naissance ne peut pas être supérieure à la date actuelle.")]
     private ?DateTimeInterface $dateNaissance = null;
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le mot de passe est obligatoire")]
+    #[Assert\Regex(pattern: "/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[\W_]).+$/", message: "Le mot de passe doit contenir au minimum un chiffre, une lettre et un caractère spécial.")]
     private ?string $password = null;
 
     /**
@@ -72,7 +96,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(targetEntity: Reclamation::class, mappedBy: 'user')]
     private Collection $reclamations;
-
 
 
     /**
@@ -88,7 +111,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $matieres;
 
 
-
     /**
      * @var Collection<int, Commande>
      */
@@ -98,8 +120,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Rolee[] The user roles
      */
     #[ORM\Column(type: "json")]
+    #[Assert\NotBlank(message: "Le role  est obligatoire")]
     private array $roles = [];
-
 
 
     public function __construct()
@@ -192,7 +214,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
 
-        if (empty(array_intersect($roles, [Rolee::Admin->value, Rolee::User->value]))) {
+        if (empty(array_intersect($roles, [Rolee::Admin->value]))) {
             return $roles;
         }
 
@@ -266,34 +288,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
- * @return Collection<int, Reclamation>
- */
-public function getReclamations(): Collection
-{
-    return $this->reclamations;
-}
-
-public function addReclamation(Reclamation $reclamation): static
-{
-    if (!$this->reclamations->contains($reclamation)) {
-        $this->reclamations->add($reclamation);
-        $reclamation->setUser($this);
+     * @return Collection<int, Reclamation>
+     */
+    public function getReclamations(): Collection
+    {
+        return $this->reclamations;
     }
 
-    return $this;
-}
-
-public function removeReclamation(Reclamation $reclamation): static
-{
-    if ($this->reclamations->removeElement($reclamation)) {
-        // set the owning side to null (unless already changed)
-        if ($reclamation->getUser() === $this) {
-            $reclamation->setUser(null);
+    public function addReclamation(Reclamation $reclamation): static
+    {
+        if (!$this->reclamations->contains($reclamation)) {
+            $this->reclamations->add($reclamation);
+            $reclamation->setUser($this);
         }
+
+        return $this;
     }
 
-    return $this;
-}
+    public function removeReclamation(Reclamation $reclamation): static
+    {
+        if ($this->reclamations->removeElement($reclamation)) {
+            // set the owning side to null (unless already changed)
+            if ($reclamation->getUser() === $this) {
+                $reclamation->setUser(null);
+            }
+        }
+
+        return $this;
+    }
 
 
     public function getReclamation(): ?Reclamation
@@ -308,7 +330,6 @@ public function removeReclamation(Reclamation $reclamation): static
         return $this;
     }
 
-    
 
     /**
      * @return Collection<int, Eleve>
@@ -453,7 +474,7 @@ public function removeReclamation(Reclamation $reclamation): static
 
         return $this;
     }
-  
+
 
     public function getDateNaissance(): ?DateTimeInterface
     {

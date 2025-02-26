@@ -1,13 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'side-bar.html.twig' %}
 
-{% block title %}Modifier une Réclamation{% endblock %}
+{% block title %}Modifier le statut de la réclamation{% endblock %}
 
 {% block body %}
-    <h1>Modifier une Réclamation</h1>
-    
+<div class="container" style="margin-top: 100px !important; padding: 0 15px !important;">
+    <h1 class="mb-4">Modifier le statut de la réclamation #{{ reclamation.id }}</h1>
+
+    <p><strong>Titre:</strong> {{ reclamation.titre }}</p>
+    <p><strong>Description:</strong> {{ reclamation.description }}</p>
+
+    <h3>Modifier le statut</h3>
+
     {{ form_start(form) }}
-        {{ form_row(form.titre) }}
-        {{ form_row(form.description) }}
-        <button type="submit" class="btn btn-primary">Modifier</button>
+        {{ form_row(form.statut) }}
+        <button type="submit" class="btn btn-primary">Modifier le statut</button>
     {{ form_end(form) }}
+
+    <a href="{{ path('reclamation') }}">Retour à la liste des réclamations</a>
+</div>
 {% endblock %}

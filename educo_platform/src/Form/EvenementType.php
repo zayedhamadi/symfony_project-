@@ -46,9 +46,9 @@ class EvenementType extends AbstractType
                 'mapped' => true,
             ])
             ->add('nombrePlaces', IntegerType::class, [
-                'required' => false, // ⚠️ Rendre optionnel au début
+                'required' => false, 
                 'attr' => ['min' => 1],
-                'disabled' => true, // 🔹 Désactivé par défaut
+                'disabled' => true, 
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $form = $event->getForm();

@@ -1,14 +1,10 @@
-{% extends 'side-bar.html.twig' %}
+{% extends 'side-bar-ensg.html.twig' %}
 
 {% block title %}Liste des Questions{% endblock %}
 
 {% block body %}
 <div class="container" style="margin-top: 100px !important; padding: 0 15px !important;">
     <h1 class="mb-4">Liste des Questions</h1>
-
-    <div class="d-flex justify-content-end mb-3" style="padding-right: 40px;">
-        <a href="{{ path('question_new') }}" class="btn btn-primary">Créer une nouvelle question</a>
-    </div>
 
     <div class="table-responsive">
         <table class="table table-striped">

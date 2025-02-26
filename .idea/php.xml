@@ -277,6 +277,10 @@
       <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/clock" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/cache-contracts" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/cache" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/knplabs/knp-snappy" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/knplabs/knp-snappy-bundle" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/knplabs/knp-components" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/knplabs/knp-paginator-bundle" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

@@ -5,6 +5,10 @@ namespace App\Controller;
 use App\Entity\Eleve;
 use App\Entity\Quiz;
 use App\Form\QuizType;
+use App\Service\PdfExtractorService;
+use App\Service\QuizGeneratorService;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use App\Repository\QuizRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -79,6 +83,7 @@ class QuizController extends AbstractController
 
         return $this->redirectToRoute('quiz_index');
     }
- 
+
+   
 
 }

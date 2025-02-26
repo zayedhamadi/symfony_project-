@@ -1,0 +1,153 @@
+{% extends 'side-bar.html.twig' %}
+
+{% block title %}Résultat du Quiz{% endblock %}
+
+{% block body %}
+    <div class="result-container">
+        <h1>Résultat du Quiz</h1>
+
+        <div class="score">
+            <p>Votre note : <span class="score-value">{{ note.score }} / 20</span></p>
+
+            <p class="feedback">
+                {% if note.score >= 10 %}
+                    <span class="success">Félicitations ! Vous avez réussi le quiz. 🎉</span>
+                {% else %}
+                    <span class="failure">Désolé, vous n'avez pas réussi. Essayez à nouveau ! 💪</span>
+                {% endif %}
+            </p>
+        </div>
+
+        {# Display the message and button if the quiz was just completed #}
+            <div class="download-prompt">
+                <p>Souhaitez-vous télécharger votre résultat en PDF ?</p>
+                <a href="{{ path('parent_quiz_result_pdf', {'id': note.id}) }}" class="download-button">Télécharger le PDF</a>
+            </div>
+
+        <div class="actions">
+            <a href="{{ path('parent_quiz_list') }}" class="back-button">Retour à la liste des quizzes</a>
+        </div>
+    </div>
+
+    <style>
+        .result-container {
+            padding: 40px;
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .score {
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            color: #34495e;
+        }
+
+        .score-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3498db;
+            animation: bounce 0.5s ease-in-out;
+        }
+
+        .feedback {
+            font-size: 1.3rem;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .success {
+            color: #27ae60;
+            font-weight: bold;
+            background-color: #e8f6ef;
+            padding: 10px 20px;
+            border-radius: 8px;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        .failure {
+            color: #e74c3c;
+            font-weight: bold;
+            background-color: #f9ebea;
+            padding: 10px 20px;
+            border-radius: 8px;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        .download-prompt {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+
+        .download-button {
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            color: white;
+            background-color: #3498db;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+        }
+
+        .download-button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .actions {
+            margin-top: 30px;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            color: white;
+            background-color: #3498db;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+{% endblock %}

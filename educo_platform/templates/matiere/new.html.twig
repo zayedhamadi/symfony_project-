@@ -8,27 +8,60 @@
 
         <div class="container">
             <h1>Add New Subject</h1>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
 
             {{ form_start(form) }}
             <div class="form-group">
                 {{ form_label(form.nom ,'Nom de Matiere' )}}
                 {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.nom) }} {# Display validation errors #}
+                <div class="invalid-feedback d-block text-danger ">
+                    {{ form_errors(form.nom) }} {# Display validation errors #}
+
+                </div>
 
             </div>
             <div class="form-group">
                 {{ form_label(form.coefficient) }}
                 {{ form_widget(form.coefficient, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.coefficient) }} {# Display validation errors #}
+                <div class="invalid-feedback d-block text-danger ">
+                    {{ form_errors(form.coefficient) }} {# Display validation errors #}
+                </div>
+            </div>
+                <div class="form-group">
+                    <label for="enseignant">Enseignant</label>
+                    {{ form_widget(form.idEnsg, {'attr': {'class': 'form-control select2'}}) }}
+                    <div class="invalid-feedback d-block text-danger">
+                        {{ form_errors(form.idEnsg) }} {# Display validation errors #}
+                    </div>
+                </div>
 
-            </div>
-            <div class="form-group">
-                <label for="enseignant">Enseignant</label>
-                {{ form_widget(form.idEnsg, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.idEnsg) }}
-            </div>
+                    {#            <div class="form-group">#}
+{#                <label for="enseignant">Enseignant</label>#}
+{#                {{ form_widget(form.idEnsg, {'attr': {'class': 'form-control'}}) }}#}
+{#                <div class="invalid-feedback d-block text-danger ">#}
+{#                    {{ form_errors(form.idEnsg) }}#}
+{#                    <div>#}
+
+{#            </div>#}
             <button type="submit" class="btn btn-primary">Save</button>
             {{ form_end(form) }}
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Select2 for the idEnsg dropdown
+        $('#{{ form.idEnsg.vars.id }}').select2({
+            placeholder: 'Search for a teacher...', // Placeholder text
+            allowClear: true, // Allow clearing the selection
+            width: '100%', // Make the dropdown full width
+        });
+    });
+</script>
 {% endblock %}

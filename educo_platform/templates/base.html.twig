@@ -10,9 +10,15 @@
         <link rel="icon" href="{{ asset('imges/kaiadmin/favicon.ico') }}" type="image/x-icon" />
         <!-- SweetAlert2 CSS -->
 
+        <!-- Add these lines in the <head> section -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
+        <!-- Add this line before the closing </body> tag -->
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
         <!-- Fonts and icons -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
         <script src="{{ asset('js/plugin/webfont/webfont.min.js') }}"></script>
         <script>
             WebFont.load({
@@ -70,37 +76,190 @@
     <body>
     <!-- Navbar Start -->
     {% block navbar %}
-        <div class="container-fluid bg-light position-relative shadow">
-            <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5">
-                <a href="" class="navbar-brand font-weight-bold text-secondary" style="font-size: 50px;">
-                    <i class="flaticon-043-teddy-bear"></i>
-                    <span class="text-primary">Educo learning </span>
-                </a>
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    <div class="navbar-nav font-weight-bold mx-auto py-0">
-                        <a href="{{ path('app_home') }}" class="nav-item nav-link ">Home</a>
-                         <a href="{{ path('app_about') }}" class="nav-item nav-link">About</a>
-                        <a href="{{ path('app_gallery') }}" class="nav-item nav-link">Gallery</a>
-                        <a href="{{ path('app_contact') }}" class="nav-item nav-link">Contact</a>
+{#        <div class="container-fluid bg-light position-relative shadow">#}
+{#            <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5">#}
+{#                <a href="" class="navbar-brand font-weight-bold text-secondary" style="font-size: 50px;">#}
+{#                    <i class="flaticon-043-teddy-bear"></i>#}
+{#                    <span class="text-primary">Educo learning </span>#}
+{#                </a>#}
+{#                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">#}
+{#                    <span class="navbar-toggler-icon"></span>#}
+{#                </button>#}
+{#                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">#}
+{#                    <div class="navbar-nav font-weight-bold mx-auto py-0">#}
+{#                        <a href="{{ path('app_home') }}" class="nav-item nav-link ">Home</a>#}
+{#                         <a href="{{ path('app_about') }}" class="nav-item nav-link">About</a>#}
+{#                        <a href="{{ path('app_gallery') }}" class="nav-item nav-link">Gallery</a>#}
+{#                        <a href="{{ path('app_contact') }}" class="nav-item nav-link">Contact</a>#}
 
-                        <!-- Navbar Pages Block -->
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <!-- <a href="blog.html" class="dropdown-item">Blog Grid</a> -->
-                                <!-- <a href="single.html" class="dropdown-item">Blog Detail</a> -->
+{#                        <!-- Navbar Pages Block -->#}
+{#                        <div class="nav-item dropdown">#}
+{#                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>#}
+{#                            <div class="dropdown-menu rounded-0 m-0">#}
+{#                                <!-- <a href="blog.html" class="dropdown-item">Blog Grid</a> -->#}
+{#                                <!-- <a href="single.html" class="dropdown-item">Blog Detail</a> -->#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        {% block navbar_pages %}{% endblock %}#}
+{#                    </div>#}
+{#                    <a href="{{ path('app_login') }}" class="btn btn-primary px-4">Login</a>#}
+{#                </div>#}
+{#            </nav>#}
+{#        </div>#}
+{#    {% endblock %}#}
+
+
+
+{#        {% if app.user %}#}
+            <!-- Navbar pour utilisateur connecté -->
+            <div class="container-fluid bg-white shadow-sm">
+                <nav class="navbar navbar-expand-lg navbar-light py-3 px-lg-5 mb-0">
+
+                    <div class="container-fluid d-flex justify-content-between align-items-center">
+                        <!-- Logo -->
+                        <a href="#" class="navbar-brand fw-bold text-primary" style="font-size: 40px;">
+                            <i class="flaticon-043-teddy-bear"></i>
+                            <span class="text-dark">Educo Learning</span>
+                        </a>
+
+                        <!-- Toggler Button (visible only in small screens) -->
+                        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <!-- Offcanvas Menu -->
+                        <div class="offcanvas offcanvas-end" tabindex="-1" id="navbarOffcanvas" aria-labelledby="navbarOffcanvasLabel">
+                            <div class="offcanvas-header">
+                                <h5 class="offcanvas-title text-dark" id="navbarOffcanvasLabel">Menu</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+                                <ul class="navbar-nav mx-auto">
+                                    <li class="nav-item">
+                                        <a href="{{ path('app_boutique') }}" class="nav-link text-dark fw-semibold">
+                                            <i class="fas fa-store me-2"></i> Boutique
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ path('showeleve') }}" class="nav-link text-dark fw-semibold">
+                                            <i class="fas fa-users me-2"></i> Mes enfants
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ path('parent_quiz_list') }}" class="nav-link text-dark fw-semibold">
+                                            <i class="fas fa-puzzle-piece me-2"></i> Quiz
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ path('student_courses') }}" class="nav-link text-dark fw-semibold">
+                                            <i class="fas fa-book"></i> Cours
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ path('app_mes_commandes') }}" class="nav-link text-dark fw-semibold position-relative">
+                                            <i class="fas fa-shopping-cart me-2"></i> Suivre commande
+{#                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger shadow-sm">3</span>#}
+                                        </a>
+                                    </li>
+
+                                    <!-- Dropdown "Événements" -->
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle text-dark fw-semibold" href="#" id="gestionEvenement" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-calendar-alt me-2"></i> Événements
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="gestionEvenement">
+                                            <li><a class="dropdown-item" href="{{ path('evenement_liste') }}"><i class="fas fa-calendar me-2"></i> Liste</a></li>
+                                            <li><a class="dropdown-item" href="{{ path('reservations_evenement') }}"><i class="fas fa-bookmark me-2"></i> Réservations</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <!-- Dropdown "Réclamation" -->
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle text-dark fw-semibold" href="#" id="gestionReclamation" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-file-alt me-2"></i> Réclamation
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="gestionReclamation">
+                                            <li><a class="dropdown-item" href="{{ path('parent_add_recl') }}"><i class="fas fa-edit me-2"></i> Déposer</a></li>
+                                            <li><a class="dropdown-item" href="{{ path('ReclamationsParent') }}"><i class="fas fa-eye me-2"></i> Suivre</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+
+                                <!-- Logout Button aligned to the right -->
+                                <a href="{{ path('app_logout') }}" class="btn btn-danger px-4 mt-3 ms-auto d-flex align-items-center">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                </a>
                             </div>
                         </div>
-                        {% block navbar_pages %}{% endblock %}
                     </div>
-                    <a href="{{ path('app_login') }}" class="btn btn-primary px-4">Login</a>
-                </div>
-            </nav>
-        </div>
+                </nav>
+            </div>
+                <!-- JavaScript pour dropdowns dans offcanvas -->
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        // Activer le comportement des dropdowns manuellement
+                        var dropdowns = document.querySelectorAll('.dropdown-toggle');
+                        dropdowns.forEach(function(dropdown) {
+                            dropdown.addEventListener('click', function(e) {
+                                var dropdownMenu = this.nextElementSibling;
+                                var isOpen = dropdownMenu.classList.contains('show');
+
+                                // Fermer tous les dropdowns ouverts
+                                document.querySelectorAll('.dropdown-menu.show').forEach(function(menu) {
+                                    menu.classList.remove('show');
+                                });
+
+                                // Ouvrir le menu du dropdown cliqué
+                                if (!isOpen) {
+                                    dropdownMenu.classList.add('show');
+                                }
+                            });
+                        });
+                    });
+                </script>
+
+                <!-- Assurez-vous que les scripts Bootstrap sont bien intégrés -->
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+                {#        {% else %}#}
+{#            <!-- Navbar pour utilisateur non connecté -->#}
+{#            <div class="container-fluid bg-light position-relative shadow">#}
+{#                            <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5">#}
+{#                                <a href="" class="navbar-brand font-weight-bold text-secondary" style="font-size: 50px;">#}
+{#                                    <i class="flaticon-043-teddy-bear"></i>#}
+{#                                    <span class="text-primary">Educo learning </span>#}
+{#                                </a>#}
+{#                                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">#}
+{#                                    <span class="navbar-toggler-icon"></span>#}
+{#                                </button>#}
+{#                                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">#}
+{#                                    <div class="navbar-nav font-weight-bold mx-auto py-0">#}
+{#                                        <a href="{{ path('app_home') }}" class="nav-item nav-link ">Home</a>#}
+{#                                         <a href="{{ path('app_about') }}" class="nav-item nav-link">About</a>#}
+{#                                        <a href="{{ path('app_gallery') }}" class="nav-item nav-link">Gallery</a>#}
+{#                                        <a href="{{ path('app_contact') }}" class="nav-item nav-link">Contact</a>#}
+
+{#                                        <!-- Navbar Pages Block -->#}
+{#                                        <div class="nav-item dropdown">#}
+{#                                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>#}
+{#                                            <div class="dropdown-menu rounded-0 m-0">#}
+{#                                                <!-- <a href="blog.html" class="dropdown-item">Blog Grid</a> -->#}
+{#                                                <!-- <a href="single.html" class="dropdown-item">Blog Detail</a> -->#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        {% block navbar_pages %}{% endblock %}#}
+{#                                    </div>#}
+{#                                    <a href="{{ path('app_login') }}" class="btn btn-primary px-4">Login</a>#}
+{#                                </div>#}
+{#                            </nav>#}
+{#            </div>#}
+{#        {% endif %}#}
+
+
     {% endblock %}
+
+
+
 
 
     <!-- Navbar End -->
@@ -240,6 +399,8 @@
 
     <!-- Chart Circle -->
     <script src="{{ asset('js/plugin/chart-circle/circles.min.js') }}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
 
     <!-- Datatables -->
     <script src="{{ asset('js/plugin/datatables/datatables.min.js') }}"></script>

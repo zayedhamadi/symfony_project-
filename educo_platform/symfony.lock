@@ -35,11 +35,9 @@
             "ref": "2390b4ed5c195e0b3f6dea45221f3b7c0af523a0"
         }
     },
-
     "knplabs/knp-paginator-bundle": {
         "version": "v6.6.1"
     },
-
     "knplabs/knp-snappy-bundle": {
         "version": "1.10",
         "recipe": {
@@ -95,6 +93,9 @@
             "./phpunit.xml.dist",
             "./tests/bootstrap.php"
         ]
+    },
+    "spraed/pdf-generator-bundle": {
+        "version": "v1.12.1"
     },
     "symfony/asset-mapper": {
         "version": "6.4",

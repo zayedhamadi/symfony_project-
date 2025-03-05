@@ -21,7 +21,7 @@
             </thead>
             <tbody>
             {% for item in items %}
-                <tr data-id="{{ item.produit.id }}">
+                <tr data-id="{{ item.produit.id }}" data-stock="{{ item.produit.stock }}">
                     <td><img src="{{ asset('uploads/' ~ item.produit.image) }}" width="50"></td>
                     <td>{{ item.produit.nom }}</td>
                     <td>
@@ -33,7 +33,7 @@
                                style="width: 60px;">
                     </td>
                     <td>{{ item.produit.prix }} dt</td>
-                    <td class="total-produit">{{ item.produit.prix * item.quantite }} dt</td>
+                    <td class="total-produit">{{ item.produit.prix * item.quantite }} </td>
                     <td>
                         <form action="{{ path('app_panier_remove', {'id': item.produit.id}) }}" method="post">
                             <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
@@ -65,15 +65,31 @@
             $(".update-quantite").on("change", function() {
                 let produitId = $(this).data("id");
                 let nouvelleQuantite = $(this).val();
+                let stockDisponible = $(this).closest("tr").data("stock");
+
+                // Validation: vérifier que la quantité ne dépasse pas le stock
+                if (nouvelleQuantite > stockDisponible) {
+                    alert("La quantité ne peut pas dépasser le stock disponible (" + stockDisponible + " articles).");
+                    $(this).val(stockDisponible);  // Réinitialiser à la quantité maximale disponible
+                    nouvelleQuantite = stockDisponible;  // Assurez-vous que la nouvelle quantité soit égale au stock
+                }
+
                 let row = $(this).closest("tr");
 
+                // Mise à jour du total localement sans faire une requête AJAX
+                let prixUnitaire = row.find("td:eq(3)").text(); // Récupère le prix unitaire dans la colonne
+                let totalProduit = prixUnitaire * nouvelleQuantite; // Calcule le nouveau total
+
+                row.find(".total-produit").text(totalProduit + " dt"); // Met à jour le total pour ce produit
+
+                // Maintenant, on envoie la mise à jour à l'API
                 $.ajax({
                     url: "{{ path('app_panier_update_quantite', {'id': 0}) }}".replace('0', produitId),
                     type: "POST",
                     data: { quantite: nouvelleQuantite },
                     success: function(response) {
                         if (response.success) {
-                            row.find(".total-produit").text(response.total_produit + " dt");
+                            // Met à jour le total global du panier
                             $("#total-panier").text(response.total_panier + " dt");
                         }
                     }
@@ -81,4 +97,5 @@
             });
         });
     </script>
+
 {% endblock %}

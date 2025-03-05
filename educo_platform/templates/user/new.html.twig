@@ -1,84 +1,84 @@
-{% extends 'side-bar.html.twig' %}
+    {% extends 'side-bar.html.twig' %}
 
-{% block title %}Nouvel utilisateur{% endblock %}
+    {% block title %}Nouvel utilisateur{% endblock %}
 
-{% block body %}
+    {% block body %}
 
-    {% block javascripts %}
-        <script src="http://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const form = document.querySelector('form');
-                if (form) {
-                    form.addEventListener('submit', function (event) {
-                        event.preventDefault();
+        {% block javascripts %}
+            <script src="http://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const form = document.querySelector('form');
+                    if (form) {
+                        form.addEventListener('submit', function (event) {
+                            event.preventDefault();
 
 
-                        fetch(form.action, {
-                            method: form.method,
-                            body: new FormData(form)
-                        })
-                            .then(response => {
-                                if (response.ok) {
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Succès',
-                                        text: 'Utilisateur créé avec succès!',
-                                        showConfirmButton: true
-                                    }).then(() => {
-                                        window.location.href = '{{ path('app_user_index') }}';
-                                    });
-                                } else {
-                                    throw new Error('Erreur lors de l\'enregistrement');
-                                }
+                            fetch(form.action, {
+                                method: form.method,
+                                body: new FormData(form)
                             })
-                            .catch(error => {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Erreur',
-                                    text: error.message,
-                                    showConfirmButton: true
+                                .then(response => {
+                                    if (response.ok) {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Succès',
+                                            text: 'Utilisateur créé avec succès!',
+                                            showConfirmButton: true
+                                        }).then(() => {
+                                            window.location.href = '{{ path('app_user_index') }}';
+                                        });
+                                    } else {
+                                        throw new Error('Erreur lors de l\'enregistrement');
+                                    }
+                                })
+                                .catch(error => {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Erreur',
+                                        text: error.message,
+                                        showConfirmButton: true
+                                    });
                                 });
-                            });
+                        });
+                    }
+                });
+            </script>
+        {% endblock %}
+
+        <div class="container mt-5">
+            <h1 class="text-center mb-4">Créer un nouvel utilisateur</h1>
+
+            {% for message in app.flashes('success') %}
+                <script>
+                    console.log("Success Message:", '{{ message }}');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Succès',
+                        text: '{{ message }}',
+                        showConfirmButton: true
                     });
-                }
-            });
-        </script>
+                </script>
+            {% endfor %}
+
+            {% for message in app.flashes('error') %}
+                <script>
+                    console.log("Error Message:", '{{ message }}');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erreur',
+                        text: '{{ message }}',
+                        showConfirmButton: true
+                    });
+                </script>
+            {% endfor %}
+
+            <div class="card p-4">
+                {{ include('user/_form.html.twig') }}
+            </div>
+
+            <div class="mt-3">
+                <a href="{{ path('app_user_index') }}" class="btn btn-secondary">Retour à la liste</a>
+            </div>
+        </div>
     {% endblock %}
-
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Créer un nouvel utilisateur</h1>
-
-        {% for message in app.flashes('success') %}
-            <script>
-                console.log("Success Message:", '{{ message }}');
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Succès',
-                    text: '{{ message }}',
-                    showConfirmButton: true
-                });
-            </script>
-        {% endfor %}
-
-        {% for message in app.flashes('error') %}
-            <script>
-                console.log("Error Message:", '{{ message }}');
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Erreur',
-                    text: '{{ message }}',
-                    showConfirmButton: true
-                });
-            </script>
-        {% endfor %}
-
-        <div class="card p-4">
-            {{ include('user/_form.html.twig') }}
-        </div>
-
-        <div class="mt-3">
-            <a href="{{ path('app_user_index') }}" class="btn btn-secondary">Retour à la liste</a>
-        </div>
-    </div>
-{% endblock %}

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 //#[ORM\Table(uniqueConstraints: [
 //    new UniqueConstraint(columns: ["name", "idEnsg"])
@@ -21,13 +22,14 @@ class Matiere
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255 , unique: true)]
+    #[ORM\Column(length: 255 )]
+    #[Assert\Callback([Matiere::class, 'validateFirstLetterUppercase'])]
     #[Assert\NotBlank(message: "The subject name cannot be blank.")] // Add this line
     #[Assert\Length(
         min: 3,
-        max: 50,
-        minMessage: "The subject name must be at least {{ 3 }} characters long.",
-        maxMessage: "The subject name cannot be longer than {{ 50 }} characters."
+        max: 30,
+        minMessage: "The subject name must be at least 3 characters long.",
+        maxMessage: "The subject name cannot be longer than 30 characters."
     )]
     private ?string $nom = null;
 
@@ -53,6 +55,26 @@ class Matiere
     #[ORM\ManyToOne(inversedBy: 'matieres')]
 
     private ?User $idEnsg = null;
+
+    #[Assert\Callback('validateSubjectNotAlreadyAssigned')] // Add this line
+    public static function validateSubjectNotAlreadyAssigned(Matiere $matiere, ExecutionContextInterface $context)
+    {
+        $user = $matiere->getIdEnsg();
+        $subjectName = $matiere->getNom();
+
+        if ($user && $subjectName) {
+            foreach ($user->getMatieres() as $existingMatiere) {
+                if ($existingMatiere->getNom() === $subjectName && $existingMatiere->getId() !== $matiere->getId()) {
+                    $context->buildViolation('The subject "{{ subject }}" is already assigned to this user.')
+                        ->setParameter('{{ subject }}', $subjectName)
+                        ->atPath('nom')
+                        ->addViolation();
+                    break;
+                }
+            }
+        }
+    }
+
 
     /**
      * @var Collection<int, Quiz>
@@ -195,4 +217,14 @@ class Matiere
 
         return $this;
     }
+    public static function validateFirstLetterUppercase($nom, ExecutionContextInterface $context)
+    {
+        if ($nom && !ctype_upper($nom[0])) {
+            $context->buildViolation('The subject name must start with an uppercase letter.')
+                ->atPath('nom')
+                ->addViolation();
+        }
+    }
+
+
 }

@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Enum\EtatCompte;
 use App\Entity\User;
+use App\Form\UserEditByAdminType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,23 +18,66 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 #[Route('/user')]
 final class UserController extends AbstractController
 {
-
     #[Route('/getAll', name: 'app_user_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
-        ]);
+        $search = $request->query->get('search');
+        $queryBuilder = $userRepository->createQueryBuilder('u');
+
+        if ($search) {
+            $queryBuilder->where('u.nom LIKE :search OR u.prenom LIKE :search OR u.email LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+
+        $query = $queryBuilder->getQuery();
+        $users = $paginator->paginate($query, $request->query->getInt('page', 1), 5);
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->json([
+                'content' => $this->renderView('user/_user_list.html.twig', ['users' => $users])
+            ]);
+        }
+
+        return $this->render('user/index.html.twig', ['users' => $users]);
+    }
+
+    #[Route('/', name: 'app_user_list')]
+    public function chercherUser(Request $request, UserRepository $userRepository, PaginatorInterface $paginator): Response
+    {
+        $search = $request->query->get('search');
+
+        if ($search && !preg_match('/^(?! )[ \p{L}-]+(?<! )$/u', $search)) {
+            return $this->json(['error' => 'Recherche invalide'], 400);
+        }
+
+        $queryBuilder = $userRepository->createQueryBuilder('u');
+
+        if ($search) {
+            $queryBuilder->where('u.nom LIKE :search OR u.prenom LIKE :search OR u.email LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+
+        $pagination = $paginator->paginate($queryBuilder->getQuery(), $request->query->getInt('page', 1), 10);
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->json([
+                'html' => $this->renderView('user/_user_table.html.twig', ['users' => $pagination])
+            ]);
+        }
+
+        return $this->render('user/index.html.twig', ['users' => $pagination]);
     }
 
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,
+    public function new(Request                     $request, EntityManagerInterface $entityManager,
                         UserPasswordHasherInterface $passwordHasher, MailerInterface $mailer,
-                        ParameterBagInterface $params, SluggerInterface $slugger): Response
+                        ParameterBagInterface       $params, SluggerInterface $slugger): Response
     {
         try {
             $user = new User();
@@ -126,12 +169,11 @@ final class UserController extends AbstractController
                 'user' => $user,
                 'form' => $form,
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addFlash('error', 'Une erreur est survenue lors de la création de l\'utilisateur.');
             return $this->redirectToRoute('app_user_index');
         }
     }
-
 
 
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
@@ -143,13 +185,12 @@ final class UserController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager,  UserPasswordHasherInterface $passwordHasher): Response
+    public function editUserByAdmin(Request $request, User $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserEditByAdminType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Gestion de l'upload d'image
             $imageFile = $form->get('image')->getData();
 
             if ($imageFile) {
@@ -158,15 +199,8 @@ final class UserController extends AbstractController
                     $this->getParameter('uploads_directory'),
                     $newFilename
                 );
-                $user->setImage($newFilename);
             }
-
-            $plainPassword = $form->get('password')->getData();
-            if ($plainPassword) {
-                $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
-                $user->setPassword($hashedPassword);
-            }
-
+            $user->setImage($newFilename);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
@@ -189,34 +223,5 @@ final class UserController extends AbstractController
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
-
-
-
-
-    #[Route('/', name: 'app_user_list')]
-    public function chercherUser(Request $request, UserRepository $userRepository)
-    {
-        $search = $request->query->get('search');
-
-        if ($search) {
-            $users = $userRepository->createQueryBuilder('u')
-                ->where('u.nom LIKE :search OR u.prenom LIKE :search OR u.email LIKE :search')
-                ->setParameter('search', '%' . $search . '%')
-                ->getQuery()
-                ->getResult();
-        } else {
-            $users = $userRepository->findAll();
-        }
-
-        return $this->render('user/index.html.twig', [
-            'users' => $users,
-        ]);
-    }
-
-
-
-
-
-
 
 }

@@ -1,0 +1,95 @@
+{% extends 'side-bar.html.twig' %}
+
+{% block title %}Statistiques{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Statistiques</h1>
+
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm p-3">
+                    <h3 class="text-center">Utilisateurs par rôle</h3>
+                    <div class="chart-container" style="position: relative; height:300px;">
+                        <canvas id="usersByRoleChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm p-3">
+                    <h3 class="text-center">Utilisateurs par genre</h3>
+                    <div class="chart-container" style="position: relative; height:300px;">
+                        <canvas id="usersByGenderChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="card shadow-sm p-3">
+                    <h3 class="text-center">Réclamations par mois</h3>
+                    <div class="chart-container" style="position: relative; height:300px;">
+                        <canvas id="reclamationsByMonthChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Affichage d'un spinner en attendant les données
+            function showLoading(chartId) {
+                const ctx = document.getElementById(chartId).getContext('2d');
+                ctx.font = "16px Arial";
+                ctx.fillText("Chargement...", 50, 50);
+            }
+
+            function fetchAndRenderChart(url, chartId, labelKey, dataKey, labelText, chartType = 'bar') {
+                showLoading(chartId);
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        const labels = data.map(item => item[labelKey]);
+                        const values = data.map(item => item[dataKey]);
+
+                        const ctx = document.getElementById(chartId).getContext('2d');
+                        new Chart(ctx, {
+                            type: chartType,
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: labelText,
+                                    data: values,
+                                    backgroundColor: [
+                                        'rgba(54, 162, 235, 0.5)',
+                                        'rgba(255, 99, 132, 0.5)',
+                                        'rgba(255, 206, 86, 0.5)',
+                                        'rgba(75, 192, 192, 0.5)'
+                                    ],
+                                    borderColor: 'rgba(54, 162, 235, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: {position: 'top'}
+                                },
+                                scales: {
+                                    y: chartType === 'bar' ? {beginAtZero: true} : undefined
+                                }
+                            }
+                        });
+                    })
+                    .catch(error => console.error("Erreur lors de la récupération des données:", error));
+            }
+
+            fetchAndRenderChart('/stats/users-by-role', 'usersByRoleChart', 'roles', 'count', 'Nombre d\'utilisateurs');
+            fetchAndRenderChart('/stats/users-by-gender', 'usersByGenderChart', 'genre', 'count', 'Nombre d\'utilisateurs', 'pie');
+            fetchAndRenderChart('/stats/reclamations-by-month', 'reclamationsByMonthChart', 'month', 'count', 'Nombre de réclamations');
+        });
+    </script>
+{% endblock %}

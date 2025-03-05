@@ -20,8 +20,28 @@ use Knp\Component\Pager\PaginatorInterface;
 #[Route('/produit')]
 final class ProduitController extends AbstractController
 {
+//    #[Route(name: 'app_produit_index', methods: ['GET'])]
+//    public function index(ProduitRepository $produitRepository,Request $request): Response
+//    {
+//        $search = $request->query->get('search');
+//
+//        $queryBuilder = $produitRepository->createQueryBuilder('p');
+//
+//        if ($search) {
+//            $queryBuilder->andWhere('p.nom LIKE :search OR p.description LIKE :search')
+//                ->setParameter('search', '%' . $search . '%');
+//        }
+//
+//        $produits = $queryBuilder->getQuery()->getResult();
+//
+//        return $this->render('produit/index.html.twig', [
+//            'produits' => $produits,
+//            'search' => $search, // Passer la recherche pour garder la valeur dans l'input
+//        ]);
+//    }
+
     #[Route(name: 'app_produit_index', methods: ['GET'])]
-    public function index(ProduitRepository $produitRepository,Request $request): Response
+    public function index(ProduitRepository $produitRepository, Request $request): Response
     {
         $search = $request->query->get('search');
 
@@ -34,11 +54,20 @@ final class ProduitController extends AbstractController
 
         $produits = $queryBuilder->getQuery()->getResult();
 
+        // Si la requête est AJAX, on retourne uniquement la liste partielle
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('produit/_produit_liste_admin.html.twig', [
+                'produits' => $produits,
+            ]);
+        }
+
+        // Sinon, on retourne la page complète avec les produits
         return $this->render('produit/index.html.twig', [
             'produits' => $produits,
             'search' => $search, // Passer la recherche pour garder la valeur dans l'input
         ]);
     }
+
 //    #[Route('/boutique', name: 'app_boutique', methods: ['GET'])]
 //    public function boutique(Request $request, ProduitRepository $produitRepository,PaginatorInterface $paginator, CategorieRepository $categorieRepository): Response
 //    {
@@ -81,6 +110,45 @@ final class ProduitController extends AbstractController
 //        ]);
 //    }
 
+//    #[Route('/boutique', name: 'app_boutique', methods: ['GET'])]
+//    public function boutique(
+//        Request $request,
+//        ProduitRepository $produitRepository,
+//        CategorieRepository $categorieRepository,
+//        PaginatorInterface $paginator
+//    ): Response {
+//        $search = $request->query->get('search');
+//        $category = $request->query->get('category');
+//        $categories = $categorieRepository->findAll();
+//
+//        // Création de la requête pour récupérer les produits
+//        $queryBuilder = $produitRepository->createQueryBuilder('p');
+//
+//        if ($category) {
+//            $queryBuilder->andWhere('p.categorie = :category')
+//                ->setParameter('category', $category);
+//        }
+//
+//        if ($search) {
+//            $queryBuilder->andWhere('p.nom LIKE :search')
+//                ->setParameter('search', '%' . $search . '%');
+//        }
+//
+//        // Appliquer la pagination
+//        $pagination = $paginator->paginate(
+//            $queryBuilder->getQuery(),  // Requête
+//            $request->query->getInt('page', 1), // Page actuelle
+//            6// Nombre d'éléments par page
+//        );
+//
+//        return $this->render('produit/boutique.html.twig', [
+//            'produits' => $pagination, // Doit être un objet `SlidingPaginationInterface`
+//            'search' => $search,
+//            'selectedCategory' => $category,
+//            'categories' => $categories,
+//        ]);
+//    }
+
     #[Route('/boutique', name: 'app_boutique', methods: ['GET'])]
     public function boutique(
         Request $request,
@@ -107,16 +175,25 @@ final class ProduitController extends AbstractController
 
         // Appliquer la pagination
         $pagination = $paginator->paginate(
-            $queryBuilder->getQuery(),  // Requête
-            $request->query->getInt('page', 1), // Page actuelle
-            9 // Nombre d'éléments par page
+            $queryBuilder->getQuery(),
+            $request->query->getInt('page', 1),
+            6
         );
 
+        // Vérifier si c'est une requête AJAX
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('produit/_produits_list.html.twig', [
+                'produits' => $pagination
+            ]);
+        }
+
         return $this->render('produit/boutique.html.twig', [
-            'produits' => $pagination, // Doit être un objet `SlidingPaginationInterface`
+            'produits' => $pagination,
             'search' => $search,
             'selectedCategory' => $category,
             'categories' => $categories,
+            'panier' => $request->getSession()->get('panier', []), // 🔥 Ajout du panier
+
         ]);
     }
     #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]

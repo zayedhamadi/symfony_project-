@@ -1,9 +1,9 @@
-{% extends 'side-bar-parentvf.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Ajouter une Réclamation{% endblock %}
 
 {% block body %}
-    <div style="margin-top: 200px;">
+    <div class="container" style="margin-top: 30px !important; padding: 0 15px !important;">
         <h1>Ajouter une Réclamation</h1>
 
         {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}

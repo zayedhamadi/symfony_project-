@@ -1,4 +1,4 @@
-{% extends 'side-bar-parentvf.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Liste des Élèves{% endblock %}
 
@@ -27,7 +27,7 @@
                         <td>{{ eleve.DateDeNaissance ? eleve.DateDeNaissance|date('Y-m-d') : '' }}</td>
                         <td>{{ eleve.DateInscription  ? eleve.DateInscription |date('Y-m-d') : '' }}</td>
                         <td>
-                            <a href="{{ path('app_eleve_show', {'id': eleve.id}) }}" class="btn btn-info btn-sm">Voir</a>
+{#                            <a href="{{ path('app_eleve_show', {'id': eleve.id}) }}" class="btn btn-info btn-sm">Voir</a>#}
                         </td>
                     </tr>
                 {% else %}

@@ -29,7 +29,7 @@ class Cours
     private ?string $name = null;
 
     #[ORM\ManyToOne(targetEntity: Matiere::class, inversedBy: 'cours', cascade: ['persist'])] // REMOVE 'remove'
-    #[ORM\JoinColumn(nullable: false, onDelete: 'SET NULL')] // Change CASCADE to SET NULL
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')] // Change CASCADE to SET NULL
     private ?Matiere $IdMatiere = null;
 
     #[ORM\OneToMany(targetEntity: Quiz::class, mappedBy: 'cours')]
@@ -43,13 +43,6 @@ class Cours
     #[ORM\Column(type: 'integer')]
     private ?int $chapterNumber = null;
 
-
-
-    //    /**
-//     * @var Collection<int, User>
-//     */
-//    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'cours')]
-//    private Collection $IdUser;
 
 
     public function __construct()
@@ -68,10 +61,7 @@ class Cours
     private $pdfFile;
 
 
-//    public function __construct()
-//    {
-//        $this->IdUser = new ArrayCollection();
-//    }
+
     #[ORM\ManyToOne(targetEntity: Classe::class, inversedBy: 'cours')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Classe $classe = null;
@@ -203,34 +193,4 @@ class Cours
         }
     }
 
-    
-//    /**
-//     * @return Collection<int, User>
-//     */
-//    public function getIdUser(): Collection
-//    {
-//        return $this->IdUser;
-//    }
-//
-//    public function addIdUser(User $idUser): static
-//    {
-//        if (!$this->IdUser->contains($idUser)) {
-//            $this->IdUser->add($idUser);
-//            $idUser->setCours($this);
-//        }
-//
-//        return $this;
-//    }
-//
-//    public function removeIdUser(User $idUser): static
-//    {
-//        if ($this->IdUser->removeElement($idUser)) {
-//            // set the owning side to null (unless already changed)
-//            if ($idUser->getCours() === $this) {
-//                $idUser->setCours(null);
-//            }
-//        }
-//
-//        return $this;
-//    }
 }

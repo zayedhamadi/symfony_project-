@@ -49,6 +49,26 @@ class Classe
     #[ORM\OneToMany(targetEntity: Quiz::class, mappedBy: 'classe')]
     private Collection $quizzes;
 
+
+
+    // Add the ManyToOne relationship to Cours
+    #[ORM\ManyToOne(targetEntity: Cours::class, inversedBy: 'classes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Cours $cours = null;
+
+    public function getCours(): ?Cours
+    {
+        return $this->cours;
+    }
+
+    public function setCours(?Cours $cours): self
+    {
+        $this->cours = $cours;
+        return $this;
+    }
+
+
+
     public function __construct()
     {
         $this->id_user = new ArrayCollection();

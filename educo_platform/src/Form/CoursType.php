@@ -23,7 +23,8 @@ class CoursType extends AbstractType
             ])
             ->add('IdMatiere', EntityType::class, [
                 'class' => Matiere::class,
-                'choice_label' => 'nom', // Replace 'nom' with the correct property of Matiere
+                'choices' => $options['matieres'], // Ensure this matches the key passed from the controller
+                'choice_label' => 'nom',
                 'placeholder' => 'Select a Matiere',
                 'attr' => ['class' => 'form-control'],
                 'required' => true,
@@ -60,6 +61,7 @@ class CoursType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Cours::class,
+            'matieres' => [], // Define the matieres option
         ]);
     }
 }

@@ -8,7 +8,6 @@
 
     <div class="container mt-4">
         <h1 class="mb-4">Create a New Course</h1>
-
         {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
 
         <div class="mb-3">
@@ -16,7 +15,6 @@
             {{ form_widget(form.name, { 'attr': {'class': 'form-control'} }) }}
             <div class="invalid-feedback d-block text-danger ">
                 {{ form_errors(form.name) }} {# Display validation errors #}
-
             </div>
         </div>
 

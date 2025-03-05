@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add Comment - {{ course.name }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Add a Comment for {{ course.name }}</h1>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary">Submit Comment</button>
+        {{ form_end(form) }}
+
+        <a href="{{ path('student_courses') }}" class="btn btn-secondary mt-3">Back to Courses</a>
+    </div>
+{% endblock %}

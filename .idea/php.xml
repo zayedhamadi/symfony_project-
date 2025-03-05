@@ -293,6 +293,8 @@
       <path value="$PROJECT_DIR$/educo_platform/vendor/dompdf/dompdf" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/spraed/pdf-generator-bundle" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/matthiasnoback/symfony-config-test" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/zircote/swagger-php" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/nelmio/api-doc-bundle" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

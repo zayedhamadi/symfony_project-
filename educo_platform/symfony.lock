@@ -35,6 +35,9 @@
             "ref": "2390b4ed5c195e0b3f6dea45221f3b7c0af523a0"
         }
     },
+    "gregwar/captcha-bundle": {
+        "version": "v1.0.0"
+    },
     "knplabs/knp-paginator-bundle": {
         "version": "v6.6.1"
     },
@@ -312,6 +315,15 @@
             "./templates/base.html.twig"
         ]
     },
+    "symfony/twilio-notifier": {
+        "version": "6.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "5.0",
+            "ref": "10af129fcac6d00ffc9bb23d039d997dee35e657"
+        }
+    },
     "symfony/ux-turbo": {
         "version": "2.22",
         "recipe": {
@@ -344,6 +356,18 @@
         "files": [
             "./config/packages/web_profiler.yaml",
             "./config/routes/web_profiler.yaml"
+        ]
+    },
+    "symfony/workflow": {
+        "version": "6.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "3.3",
+            "ref": "3b2f8ca32a07fcb00f899649053943fa3d8bbfb6"
+        },
+        "files": [
+            "./config/packages/workflow.yaml"
         ]
     },
     "symfonycasts/reset-password-bundle": {

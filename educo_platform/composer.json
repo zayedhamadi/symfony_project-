@@ -12,9 +12,10 @@
         "doctrine/doctrine-migrations-bundle": "^3.4",
         "doctrine/orm": "^3.3",
         "gesdinet/jwt-refresh-token-bundle": "^1.4",
+        "gregwar/captcha-bundle": "^2.3",
+        "knplabs/knp-components": "^5.1",
         "knplabs/knp-paginator-bundle": "^6.6",
         "knplabs/knp-snappy-bundle": "^1.10",
-        "knplabs/knp-components": "^5.1",
         "lexik/jwt-authentication-bundle": "^2.18",
         "paypal/rest-api-sdk-php": "^1.6",
         "payum/payum-bundle": "*",
@@ -37,7 +38,6 @@
         "symfony/mercure-bundle": "^0.3.9",
         "symfony/mime": "6.4.*",
         "symfony/monolog-bundle": "^3.0",
-        "symfony/notifier": "6.4.*",
         "symfony/process": "6.4.*",
         "symfony/property-access": "6.4.*",
         "symfony/property-info": "6.4.*",
@@ -48,13 +48,16 @@
         "symfony/string": "6.4.*",
         "symfony/translation": "6.4.*",
         "symfony/twig-bundle": "6.4.*",
+        "symfony/twilio-notifier": "6.4.*",
         "symfony/ux-turbo": "^2.22",
         "symfony/validator": "6.4.*",
         "symfony/web-link": "6.4.*",
+        "symfony/workflow": "6.4.*",
         "symfony/yaml": "6.4.*",
         "symfonycasts/reset-password-bundle": "^1.23",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "twilio/sdk": "^8.3"
     },
     "config": {
         "allow-plugins": {

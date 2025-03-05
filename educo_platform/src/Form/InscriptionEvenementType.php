@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 
 class InscriptionEvenementType extends AbstractType
 {
@@ -19,6 +20,13 @@ class InscriptionEvenementType extends AbstractType
                 'choices' => $options['enfants'], // Liste des enfants du parent
                 'choice_label' => 'nom', // Afficher le nom de l'enfant
                 'label' => 'Sélectionnez l\'enfant',
+            ])
+            ->add('captcha', CaptchaType::class, [
+                'label' => 'Captcha',
+                'width' => 200,
+                'height' => 50,
+                'length' => 6,
+                
             ]);
     }
 

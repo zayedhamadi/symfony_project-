@@ -2,9 +2,11 @@
 // src/Entity/Comment.php
 namespace App\Entity;
 
-use CommentRepository;
+use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
+#[ORM\HasLifecycleCallbacks] // Add this annotation
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment
 {
@@ -17,12 +19,15 @@ class Comment
     #[ORM\JoinColumn(nullable: false)]
     private $course;
 
-    #[ORM\ManyToOne(targetEntity: User::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    private $user;
 
     #[ORM\Column(type: 'text')]
     #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 5,
+        max: 1000,
+        minMessage: 'Your comment must be at least {{ 5 }} characters long.',
+        maxMessage: 'Your comment cannot be longer than {{ 1000 }} characters.'
+    )]
     private $content;
 
     #[ORM\Column(type: 'datetime')]
@@ -38,15 +43,16 @@ class Comment
         return $this->id;
     }
 
+
     public function getCourse(): ?Cours
     {
         return $this->course;
     }
 
+
     public function setCourse(?Cours $course): self
     {
         $this->course = $course;
-
         return $this;
     }
 
@@ -84,5 +90,10 @@ class Comment
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTime();
     }
 }

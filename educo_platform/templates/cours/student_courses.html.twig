@@ -112,25 +112,6 @@
                 </select>
             </div>
         </form>
-
-{#    #}{# Show courses if a class is selected #}
-{#    {% if courses is not empty %}#}
-{#        <div id="courses">#}
-{#            {% for course in courses %}#}
-{#                <div class="course">#}
-{#                    <h2>{{ course.name }}</h2>#}
-
-{#                    <p><strong>This is Chapter {{ course.chapterNumber }}</strong></p>#}
-
-{#                    <button class="show-pdf" data-pdf="{{ asset('uploads/pdfs/' ~ course.pdfFilename) }}">View PDF</button>#}
-{#                </div>#}
-{#            {% endfor %}#}
-
-{#        </div>#}
-{#    {% else %}#}
-
-{#        <p>No courses available for the selected class.</p>#}
-{#    {% endif %}#}
     {# Show courses grouped by Matiere #}
     {% if groupedCourses is not empty %}
         <div id="courses">
@@ -144,14 +125,17 @@
                             <p><strong>This is Chapter {{ course.chapterNumber }}</strong></p>
 
                             <button class="show-pdf" data-pdf="{{ asset('uploads/pdfs/' ~ course.pdfFilename) }}">View PDF</button>
-{#                            <button class="comment-btn" onclick="openCommentPopup({{ course.id }})">Add Comment</button>#}
+                            {# Comment Section for Everyone #}
+                            <div class="comment-section mt-3">
+                                <h4>Add a Comment:</h4>
+                                <textarea id="comment-textarea-{{ course.id }}" class="form-control" placeholder="Your comment..." required></textarea>
+                                <button type="button" class="btn btn-primary mt-2" onclick="submitComment({{ course.id }})">Submit Comment</button>
+                            </div>
 
-{#                            <!-- Conditional "Go to Comment Section" button for admin users -->#}
-{#                            {% if app.user and app.user.roles[0] == 'ROLE_ADMIN' %}#}
-{#                                <a href="{{ path('course_comments', {'id': course.id}) }}" class="go-to-comments">#}
-{#                                    Go to Comment Section#}
-{#                                </a>#}
-{#                            {% endif %}#}
+                            {# Link to View Comments #}
+                            <div class="mt-3">
+                                <a href="{{ path('course_view_comments', {'id': course.id}) }}" class="btn btn-info">View Comments</a>
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
@@ -179,15 +163,7 @@
     </div>
 
 
-{#    <!-- Comment Popup Overlay -->#}
-{#    <div id="popup-overlay" class="popup-overlay"></div>#}
 
-{#    <!-- Comment Popup -->#}
-{#    <div id="comment-popup" class="comment-popup">#}
-{#        <h3>Add your Comment</h3>#}
-{#        <textarea id="comment-textarea"></textarea>#}
-{#        <button id="submit-comment" onclick="submitComment()">Submit</button>#}
-{#    </div>#}
 
 </div>
 {% endblock %}
@@ -195,12 +171,13 @@
     {# Load PDF.js #}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {# Load PDF.js and jQuery #}
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const pdfViewer = document.getElementById('pdf-viewer');
             const pdfContainer = document.getElementById('pdf-container');
-            const exitButton = document.getElementById('exit-pdf'); // Exit button reference
+            const exitButton = document.getElementById('exit-pdf');
             let pdfDoc = null;
 
             // Handle the PDF button click
@@ -219,7 +196,7 @@
             // Close the viewer and clear content
             function closeViewer() {
                 pdfViewer.style.display = 'none';
-                pdfContainer.innerHTML = ''; // Clear previous PDFs
+                pdfContainer.innerHTML = '';
             }
 
             // Attach event listener to the exit button
@@ -228,7 +205,7 @@
             // Function to load the PDF
             function loadPDF(pdfUrl) {
                 pdfViewer.style.display = 'block';
-                pdfContainer.innerHTML = ''; // Clear any previously loaded PDFs
+                pdfContainer.innerHTML = '';
 
                 pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
                     console.log('PDF loaded successfully');
@@ -251,9 +228,9 @@
                     canvas.width = viewport.width;
                     canvas.height = viewport.height;
 
-                    pdfContainer.appendChild(canvas); // Add the canvas to the container
+                    pdfContainer.appendChild(canvas);
 
-                    const  context = canvas.getContext('2d');
+                    const context = canvas.getContext('2d');
                     page.render({
                         canvasContext: context,
                         viewport: viewport
@@ -261,69 +238,44 @@
                 });
             }
         });
-    </script>
 
-    <script>
-        // Initialize Select2 on the dropdown for a searchable experience
-        $(document).ready(function() {
-            // Make sure select2 is applied to your select element
-            $('#class_id').select2({
-                placeholder: "Select a class", // Placeholder text
-                allowClear: true // Allow the user to clear the selection
-            });
+        function submitComment(courseId) {
+            const comment = document.getElementById(`comment-textarea-${courseId}`).value;
+
+            if (!comment.trim()) {
+                alert('Comment cannot be empty.');
+                return;
+            }
+
+            // Send the comment to the server using an API
+            fetch(`/course/${courseId}/add-comment`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `comment=${encodeURIComponent(comment)}`
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Comment submitted successfully!');
+                        location.reload(); // Reload the page to show the new comment
+                    } else {
+                        alert('There was an error submitting your comment.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('There was an error submitting your comment.');
+                });
+        }
+
+        // Initialize Select2
+        $('#class_id').select2({
+            placeholder: "Select a class",
+            allowClear: true
         });
     </script>
-{#    <script>#}
-{#        // Open the comment popup#}
-{#        function openCommentPopup(courseId) {#}
-{#            document.getElementById('popup-overlay').style.display = 'block';#}
-{#            document.getElementById('comment-popup').style.display = 'block';#}
-{#            document.getElementById('comment-textarea').setAttribute('data-course-id', courseId);#}
-{#        }#}
-
-{#        // Close the comment popup#}
-{#        function closeCommentPopup() {#}
-{#            document.getElementById('popup-overlay').style.display = 'none';#}
-{#            document.getElementById('comment-popup').style.display = 'none';#}
-{#        }#}
-
-{#        // Submit the comment#}
-{#        function submitComment() {#}
-{#            const commentText = document.getElementById('comment-textarea').value;#}
-{#            const courseId = document.getElementById('comment-textarea').getAttribute('data-course-id');#}
-
-{#            if (!commentText.trim()) {#}
-{#                alert('Please write a comment!');#}
-{#                return;#}
-{#            }#}
-
-{#            // Send the comment to the server via AJAX#}
-{#            fetch(`/courses/comment/${courseId}`, {#}
-{#                method: 'POST',#}
-{#                headers: {#}
-{#                    'Content-Type': 'application/x-www-form-urlencoded',#}
-{#                },#}
-{#                body: `comment=${encodeURIComponent(commentText)}`#}
-{#            })#}
-{#                .then(response => response.json())#}
-{#                .then(data => {#}
-{#                    if (data.success) {#}
-{#                        alert('Comment submitted successfully!');#}
-{#                        closeCommentPopup();#}
-{#                    } else {#}
-{#                        alert('There was an error submitting your comment.');#}
-{#                    }#}
-{#                })#}
-{#                .catch(error => {#}
-{#                    console.error('Error:', error);#}
-{#                    alert('Error submitting the comment.');#}
-{#                });#}
-{#        }#}
-
-{#        // Close the comment popup when overlay is clicked#}
-{#        document.getElementById('popup-overlay').addEventListener('click', closeCommentPopup);#}
-{#    </script>#}
-
 
 
 {% endblock %}

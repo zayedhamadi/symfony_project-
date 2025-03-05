@@ -24,6 +24,14 @@ class MatiereRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function findByUser(int $userId): array
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.idEnsg = :userId') // Use the correct field name (idEnsg)
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+    }
 
     public function findBySearch(string $query)
     {

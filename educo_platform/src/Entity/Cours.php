@@ -44,12 +44,44 @@ class Cours
     private ?int $chapterNumber = null;
 
 
-
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'course', orphanRemoval: true)]
+    private Collection $comments;
     public function __construct()
     {
         $this->quizzes = new ArrayCollection();
         $this->classes = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setCourse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // Set the owning side to null (unless already changed)
+            if ($comment->getCourse() === $this) {
+                $comment->setCourse(null);
+            }
+        }
+
+        return $this;
+    }
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $pdfFilename = null;
 

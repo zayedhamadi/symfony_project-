@@ -20,7 +20,16 @@ class CoursRepository extends ServiceEntityRepository
     {
         return $this->find($courseId);
     }
-
+    public function findByEnseignant(int $enseignantId): array
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.IdMatiere', 'm') // Join the Matiere entity
+            ->andWhere('m.idEnsg = :enseignantId') // Filter by enseignant ID
+            ->setParameter('enseignantId', $enseignantId)
+            ->orderBy('c.chapterNumber', 'ASC') // Order by chapter number
+            ->getQuery()
+            ->getResult();
+    }
     //    /**
     //     * @return Cours[] Returns an array of Cours objects
     //     */

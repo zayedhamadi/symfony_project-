@@ -5,6 +5,7 @@ use App\Entity\Cours;
 use App\Form\CoursType;
 use App\Repository\ClasseRepository;
 use App\Repository\CoursRepository;
+use App\Repository\MatiereRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,32 +20,52 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class CoursController extends AbstractController
 {
     #[Route('/', name: 'app_cours_index', methods: ['GET'])]
-    public function index(Request $request,UserRepository $userRepository,CoursRepository $coursRepository): Response
+    public function index(Request $request, UserRepository $userRepository, CoursRepository $coursRepository): Response
     {
+        // Get the logged-in user's ID from the session
         $session = $request->getSession();
-        $userid = $session->get('user_id');
-        $user = $userRepository->find($userid);
+        $userId = $session->get('user_id');
+
+        // Fetch the logged-in user (enseignant)
+        $user = $userRepository->find($userId);
         if (!$user) {
             throw $this->createNotFoundException('Utilisateur non connecté.');
         }
 
+        // Fetch courses associated with the logged-in enseignant
+        $cours = $coursRepository->findByEnseignant($userId);
+
         return $this->render('cours/index.html.twig', [
-            'cours' => $coursRepository->findBy([], ['chapterNumber' => 'ASC']), // Correct way to order by chapterNumber
+            'cours' => $cours, // Pass the filtered courses to the template
         ]);
     }
     #[Route('/new', name: 'app_cours_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, MatiereRepository $matiereRepository): Response
     {
+        // Get the user ID from the session
+        $session = $request->getSession();
+        $userId = $session->get('user_id');
+
+        // Fetch matières related to the logged-in user using a custom query
+        $matieres = $matiereRepository->findByUser($userId);
+
+        // Create a new course
         $cour = new Cours();
-        $form = $this->createForm(CoursType::class, $cour);
+
+        // Create the form and pass the filtered matières
+        $form = $this->createForm(CoursType::class, $cour, [
+            'matieres' => $matieres, // Pass the filtered matières to the form
+        ]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Handle PDF file upload
             $pdfFile = $form->get('pdfFile')->getData();
             if ($pdfFile) {
                 $originalFilename = pathinfo($pdfFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$pdfFile->guessExtension();
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $pdfFile->guessExtension();
 
                 try {
                     $pdfFile->move(
@@ -57,6 +78,7 @@ class CoursController extends AbstractController
                 }
             }
 
+            // Save the course
             $entityManager->persist($cour);
             $entityManager->flush();
 
@@ -65,7 +87,7 @@ class CoursController extends AbstractController
 
         return $this->render('cours/new.html.twig', [
             'cour' => $cour,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -142,6 +164,7 @@ class CoursController extends AbstractController
         CoursRepository $coursRepository,
         ClasseRepository $classeRepository
     ): Response {
+
         // Get all classes for the dropdown
         $classes = $classeRepository->findAll();
 

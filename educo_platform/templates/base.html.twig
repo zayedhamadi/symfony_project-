@@ -45,11 +45,14 @@
 
 
         {% block stylesheets %}
+
         {% endblock %}
 
 
         {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
+            {% block importmap %}{{ importmap('app') }}
+
+            {% endblock %}
         {% endblock %}
 
         <!-- Favicon -->
@@ -136,6 +139,12 @@
                             <div class="offcanvas-body">
                                 <ul class="navbar-nav mx-auto">
                                     <li class="nav-item">
+                                        <a href="{{ path('testtttController') }}" class="nav-link text-dark fw-semibold">
+                                            <i class="fas fa-user-circle"></i>
+                                            <p>Mon Profil</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="{{ path('app_boutique') }}" class="nav-link text-dark fw-semibold">
                                             <i class="fas fa-store me-2"></i> Boutique
                                         </a>
@@ -148,6 +157,11 @@
                                     <li class="nav-item">
                                         <a href="{{ path('parent_quiz_list') }}" class="nav-link text-dark fw-semibold">
                                             <i class="fas fa-puzzle-piece me-2"></i> Quiz
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ path('student_courses') }}" class="nav-link text-dark fw-semibold">
+                                            <i class="fas fa-book"></i> Cours
                                         </a>
                                     </li>
                                     <li class="nav-item">

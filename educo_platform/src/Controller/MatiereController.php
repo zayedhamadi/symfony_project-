@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/matiere')]
 
+
 class MatiereController extends AbstractController
 {
 

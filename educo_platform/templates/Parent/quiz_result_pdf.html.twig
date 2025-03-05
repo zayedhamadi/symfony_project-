@@ -2,30 +2,99 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Quiz Result</title>
+    <title>Quiz Certificate</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        h1 { color: #007bff; }
-        .score { font-size: 1.2rem; }
-        .feedback { font-size: 1.1rem; }
-        .success { color: green; font-weight: bold; }
-        .failure { color: red; font-weight: bold; }
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .certificate {
+            background-color: #fff;
+            border: 20px solid #007bff;
+            padding: 50px;
+            text-align: center;
+            width: 800px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .certificate::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid #007bff;
+            z-index: -1;
+        }
+        h1 {
+            font-size: 3rem;
+            color: #007bff;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        .score {
+            font-size: 1.5rem;
+            margin: 20px 0;
+        }
+        .score-value {
+            font-size: 2rem;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .feedback {
+            font-size: 1.3rem;
+            margin: 20px 0;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        .failure {
+            color: red;
+            font-weight: bold;
+        }
+        .details {
+            font-size: 1.1rem;
+            margin-top: 30px;
+        }
+        .details p {
+            margin: 10px 0;
+        }
+        .signature {
+            margin-top: 40px;
+            font-style: italic;
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 <body>
-    <h1>Quiz Result</h1>
-    <div class="score">
-        <p>Your Score: <span class="score-value">{{ note.score }} / 20</span></p>
+    <div class="certificate">
+        <h1>Certificate of Achievement</h1>
+        <div class="score">
+            <p>Your Score: <span class="score-value">{{ note.score }} / 20</span></p>
+        </div>
+        <div class="feedback">
+            {% if note.score >= 10 %}
+                <p class="success">Congratulations! You have successfully passed the quiz.</p>
+            {% else %}
+                <p class="failure">Keep trying! You did not pass this time.</p>
+            {% endif %}
+        </div>
+        <div class="details">
+            <p><strong>Student Name:</strong> {{ note.eleve.nom }} {{ note.eleve.prenom }}</p> <!-- Display the student's name -->
+            <p><strong>Quiz Title:</strong> {{ note.quiz.titre }}</p>
+            <p><strong>Description:</strong> {{ note.quiz.description }}</p>
+            <p><strong>Certificate Date:</strong> {{ "now"|date("Y-m-d H:i:s") }}</p> <!-- Display the current system date -->
+        </div>
+        <div class="signature">
+            <p>Signed: <strong>Quiz Master</strong></p>
+        </div>
     </div>
-    <div class="feedback">
-        {% if note.score >= 10 %}
-            <p class="success">Congratulations! You passed the quiz.</p>
-        {% else %}
-            <p class="failure">Sorry, you did not pass. Try again!</p>
-        {% endif %}
-    </div>
-    <p><strong>Quiz Title:</strong> {{ note.quiz.titre }}</p>
-    <p><strong>Description:</strong> {{ note.quiz.description }}</p>
-    <p><strong>Date:</strong> {{ note.quiz.dateAjout|date('Y-m-d H:i:s') }}</p>
 </body>
 </html>

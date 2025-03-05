@@ -1,9 +1,9 @@
 knp_snappy:
     pdf:
         enabled: true
-        binary: '"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"' # Wrap the path in quotes
-        options:
-            encoding: 'utf-8'
+        binary: '"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"' # Ajoutez des guillemets
+        options: []
     image:
         enabled: true
-        binary: '"C:\Program Files\wkhtmltopdf\bin\wkhtmltoimage.exe"' # Wrap the path in quotes
+        binary: '"C:\Program Files\wkhtmltopdf\bin\wkhtmltoimage.exe"' # Ajoutez des guillemets
+        options: []

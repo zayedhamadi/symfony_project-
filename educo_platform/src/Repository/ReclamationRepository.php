@@ -15,6 +15,17 @@ class ReclamationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Reclamation::class);
     }
+    public function findByStatut(?Statut $statut): array
+{
+    $qb = $this->createQueryBuilder('r');
+
+    if ($statut) {
+        $qb->andWhere('r.statut = :statut')
+           ->setParameter('statut', $statut);
+    }
+
+    return $qb->getQuery()->getResult();
+}
 
     //    /**
     //     * @return Reclamation[] Returns an array of Reclamation objects

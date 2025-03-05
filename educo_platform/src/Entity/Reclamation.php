@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ReclamationRepository::class)]
 class Reclamation
@@ -16,6 +17,7 @@ class Reclamation
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['reclamation'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -26,6 +28,7 @@ class Reclamation
     minMessage: "Le titre doit contenir au moins {{ limit }} caractères.",
     maxMessage: "Le titre ne doit pas dépasser {{ limit }} caractères."
      )]
+     #[Groups(['reclamation'])]
     private ?string $titre = null;
 
     #[ORM\Column(length: 255)]
@@ -34,14 +37,17 @@ class Reclamation
         min: 10,
         minMessage: "La description doit contenir au moins {{ limit }} caractères."
     )]
+    #[Groups(['reclamation'])]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Assert\NotNull(message: "La date de création est obligatoire.")]
+    #[Groups(['reclamation'])]
     private ?\DateTimeInterface $dateDeCreation = null;
 
     #[ORM\Column(type: 'string' , enumType: Statut::class)]
     #[Assert\NotNull(message: "Le statut est obligatoire.")]
+    #[Groups(['reclamation'])]
     private Statut $statut ;
     public function getStatut(): ?Statut
     {

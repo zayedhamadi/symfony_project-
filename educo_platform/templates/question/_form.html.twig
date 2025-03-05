@@ -40,18 +40,7 @@
         </div>
     </div>
 
-   <div class="mb-3">
-    {{ form_label(form.quiz, 'Quiz', {'label_attr': {'class': 'form-label fw-bold'}}) }}
-    {{ form_widget(form.quiz, {
-        'attr': {
-            'class': 'form-control' ~ (form.quiz.vars.errors|length > 0 ? ' is-invalid' : ''),
-            'placeholder': 'Sélectionnez un quiz'
-        }
-    }) }}
-    <div class="invalid-feedback">
-        {{ form_errors(form.quiz) }}
-    </div>
-</div>
+
 
 
     <div class="d-flex justify-content-between">

@@ -57,7 +57,6 @@ class Question
 
     #[ORM\ManyToOne(targetEntity: Quiz::class, inversedBy: 'questions')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Assert\NotNull(message: 'Chaque question doit être associée à un quiz.')]
     private Quiz $quiz;
 
     public function __construct()

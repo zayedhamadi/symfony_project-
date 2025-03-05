@@ -1,55 +1,58 @@
 {% extends 'side-bar.html.twig' %}
-{% block title %}Categorie index{% endblock %}
+
+{% block title %}Catégories{% endblock %}
 
 {% block body %}
     <div class="container" style="margin-top: 100px !important; padding: 0 15px !important;">
-        <h1 class="mb-4">Categorie index</h1>
-        <form action="{{ path('app_categorie_index') }}" method="get" class="d-flex mb-3">
-            <input type="text" name="search" class="form-control me-2" placeholder="Rechercher une catégorie..." value="{{ search }}" style="max-width: 250px;" >
+        <h1 class="mb-4">Liste des Catégories</h1>
+
+        <!-- Formulaire de recherche -->
+        <form id="search-form" action="{{ path('app_categorie_index') }}" method="get" class="d-flex mb-3">
+            <input type="text" name="search" id="search-input" class="form-control me-2" placeholder="Rechercher une catégorie..." value="{{ search }}" style="max-width: 250px;" >
             <button type="submit" class="btn btn-primary">
                 <i class="fas fa-search"></i> Rechercher
             </button>
         </form>
-        <!-- Utilisation de d-flex et justify-content-end pour aligner à droite avec un espacement -->
+
+        <!-- Bouton d'ajout aligné à droite -->
         <div class="d-flex justify-content-end mb-3" style="padding-right: 40px;">
             <a href="{{ path('app_categorie_new') }}" class="btn btn-primary">Ajouter une catégorie</a>
         </div>
 
-        <table class="table table-striped">
-            <thead class="table-dark">
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for categorie in categories %}
-                <tr>
-                    <td>{{ categorie.id }}</td>
-                    <td>{{ categorie.nom }}</td>
-                    <td>{{ categorie.description }}</td>
-                    <td>
-                    <span style="display: flex; gap: 10px;">
-                        <a href="{{ path('app_categorie_show', {'id': categorie.id}) }}" class="btn btn-info btn-sm" title="Voir">
-                            <i class="fas fa-eye"></i>
-                        </a>
-
-                        <a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}" class="btn btn-warning btn-sm" title="Modifier">
-                            <i class="fas fa-edit"></i>
-                        </a>
-
-                        {{ include('categorie/_delete_form.html.twig') }}
-                    </span>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="4">no records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        <!-- Conteneur AJAX des catégories -->
+        <div id="categories-container">
+            {% include 'categorie/_categories_list.html.twig' %}
+        </div>
     </div>
+
+    <!-- SCRIPT AJAX -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('search-form');
+            const searchInput = document.getElementById('search-input');
+            const categoriesContainer = document.getElementById('categories-container');
+
+            function fetchCategories(query) {
+                fetch("{{ path('app_categorie_index') }}?" + query, {
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                })
+                    .then(response => response.text())
+                    .then(html => {
+                        categoriesContainer.innerHTML = html;
+                    })
+                    .catch(error => console.error('Erreur AJAX:', error));
+            }
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // Empêche le rechargement de la page
+                const queryString = new URLSearchParams(new FormData(form)).toString();
+                fetchCategories(queryString);
+                history.pushState({}, '', "?" + queryString);
+            });
+
+            window.addEventListener('popstate', function () {
+                fetchCategories(window.location.search.substring(1));
+            });
+        });
+    </script>
 {% endblock %}

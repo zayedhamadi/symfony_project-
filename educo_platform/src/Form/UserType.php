@@ -18,11 +18,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\Date;
-use Symfony\Component\Validator\Constraints\GreaterThan;
 
 
 class UserType extends AbstractType
@@ -44,6 +39,7 @@ class UserType extends AbstractType
             ])
             ->add('password', PasswordType::class, [
                 'label' => 'Mot de passe',
+                'required' => false,
                 'attr' => ['placeholder' => 'Entrez votre mot de passe']
             ])
             ->add('email', EmailType::class, [
@@ -81,25 +77,25 @@ class UserType extends AbstractType
                 'choice_value' => fn(?Genre $choice) => $choice?->value,
                 'label' => 'Genre',
                 'placeholder' => 'Sélectionnez votre genre'
-            ])
-            ->add('etatCompte', ChoiceType::class, [
-                'choices' => EtatCompte::cases(),
-                'choice_label' => fn(EtatCompte $choice) => $choice->name,
-                'choice_value' => fn(?EtatCompte $choice) => $choice?->value,
-                'label' => 'État du compte',
-                'placeholder' => 'Sélectionnez un état'
-            ])
-            ->add('roles', ChoiceType::class, [
-                'choices' => array_combine(
-                    array_map(fn(Rolee $role) => $role->name, array_filter(Rolee::cases(), fn(Rolee $role) => $role !== Rolee::Admin)),
-                    array_map(fn(Rolee $role) => $role->value, array_filter(Rolee::cases(), fn(Rolee $role) => $role !== Rolee::Admin))
-                ),
-                'choice_label' => fn($choice) => $choice,
-                'choice_value' => fn($choice) => (string)$choice,
-                'label' => 'Roles',
-                'multiple' => true,
-                'expanded' => true
             ]);
+//            ->add('etatCompte', ChoiceType::class, [
+//                'choices' => EtatCompte::cases(),
+//                'choice_label' => fn(EtatCompte $choice) => $choice->name,
+//                'choice_value' => fn(?EtatCompte $choice) => $choice?->value,
+//                'label' => 'État du compte',
+//                'placeholder' => 'Sélectionnez un état'
+//            ])
+//            ->add('roles', ChoiceType::class, [
+//                'choices' => array_combine(
+//                    array_map(fn(Rolee $role) => $role->name, array_filter(Rolee::cases(), fn(Rolee $role) => $role !== Rolee::Admin)),
+//                    array_map(fn(Rolee $role) => $role->value, array_filter(Rolee::cases(), fn(Rolee $role) => $role !== Rolee::Admin))
+//                ),
+//                'choice_label' => fn($choice) => $choice,
+//                'choice_value' => fn($choice) => (string)$choice,
+//                'label' => 'Roles',
+//                'multiple' => true,
+//                'expanded' => true
+//            ]);
     }
 
 

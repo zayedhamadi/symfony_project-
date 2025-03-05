@@ -267,7 +267,6 @@
       <path value="$PROJECT_DIR$/educo_platform/vendor/payum/iso4217" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/payum/payum-bundle" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/php-http/message" />
-      <path value="$PROJECT_DIR$/educo_platform/vendor/paypal/rest-api-sdk-php" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/phpunit/php-file-iterator" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/browser-kit" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/asset-mapper" />
@@ -277,6 +276,23 @@
       <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/clock" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/cache-contracts" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/cache" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/knplabs/knp-snappy" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/knplabs/knp-snappy-bundle" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/knplabs/knp-components" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/knplabs/knp-paginator-bundle" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/php-http/multipart-stream-builder" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/php-http/discovery" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/smalot/pdfparser" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/nyholm/psr7" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/openai-php/client" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/dompdf/php-svg-lib" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/sabberworm/php-css-parser" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/dompdf/php-font-lib" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/dompdf/dompdf" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/spraed/pdf-generator-bundle" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/matthiasnoback/symfony-config-test" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

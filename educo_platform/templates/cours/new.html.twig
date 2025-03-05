@@ -1,35 +1,11 @@
-{#{% extends 'side-bar.html.twig' %}#}
-
-{#{% block title %} New Course {% endblock %}#}
-
-{#{% block body %}#}
-{#    <div class="container mt-4">#}
-{#        <h1 class="mb-4">Create a New Course</h1>#}
-
-{#        {{ form_start(form) }}#}
-{#        <div class="mb-3">#}
-{#            {{ form_label(form.name, 'Course Name') }}#}
-{#            {{ form_widget(form.name, { 'attr': {'class': 'form-control'} }) }}#}
-{#        </div>#}
-
-{#        <div class="mb-3">#}
-{#            {{ form_label(form.IdMatiere, 'Select Matiere') }}#}
-{#            {{ form_widget(form.IdMatiere, { 'attr': {'class': 'form-control'} }) }}#}
-{#        </div>#}
-
-
-{#        <button type="submit" class="btn btn-primary">Save</button>#}
-{#        {{ form_end(form) }}#}
-
-{#        <a href="{{ path('app_cours_index') }}" class="btn btn-secondary mt-3">Back to List</a>#}
-{#    </div>#}
-{#{% endblock %}#}
 
 {% extends 'side-bar-ensg.html.twig' %}
 
 {% block title %} New Course {% endblock %}
 
 {% block body %}
+<div style="margin-top: 100px; margin-left: 0;">
+
     <div class="container mt-4">
         <h1 class="mb-4">Create a New Course</h1>
 
@@ -44,6 +20,10 @@
             {{ form_label(form.IdMatiere, 'Select Matiere') }}
             {{ form_widget(form.IdMatiere, { 'attr': {'class': 'form-control'} }) }}
         </div>
+        <div class="mb-3">
+            {{ form_label(form.classe, 'Select Class') }}
+            {{ form_widget(form.classe, { 'attr': {'class': 'form-control'} }) }}
+        </div>
 
         <!-- PDF Upload Field -->
         <div class="mb-3">
@@ -56,4 +36,5 @@
 
         <a href="{{ path('app_cours_index') }}" class="btn btn-secondary mt-3">Back to List</a>
     </div>
+</div>
 {% endblock %}

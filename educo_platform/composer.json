@@ -11,15 +11,21 @@
         "doctrine/doctrine-bundle": "^2.13",
         "doctrine/doctrine-migrations-bundle": "^3.4",
         "doctrine/orm": "^3.3",
+        "dompdf/dompdf": "^3.1",
         "endroid/qr-code": "^5.1",
         "gesdinet/jwt-refresh-token-bundle": "^1.4",
+        "knplabs/knp-paginator-bundle": "^6.6",
         "knplabs/knp-snappy-bundle": "^1.10",
         "lexik/jwt-authentication-bundle": "^2.18",
-        "paypal/rest-api-sdk-php": "^1.6",
+        "nelmio/api-doc-bundle": "^4.37",
+        "nyholm/psr7": "^1.8",
+        "openai-php/client": "^0.10.3",
         "payum/payum-bundle": "*",
         "phpdocumentor/reflection-docblock": "^5.6",
         "phpoffice/phpspreadsheet": "^4.0",
         "phpstan/phpdoc-parser": "^2.0",
+        "smalot/pdfparser": "^2.11",
+        "spraed/pdf-generator-bundle": "^1.12",
         "stripe/stripe-php": "^16.5",
         "symfony/asset": "6.4.*",
         "symfony/asset-mapper": "6.4.*",
@@ -60,7 +66,8 @@
         "allow-plugins": {
             "php-http/discovery": true,
             "symfony/flex": true,
-            "symfony/runtime": true
+            "symfony/runtime": true,
+            "endroid/installer": true
         },
         "sort-packages": true
     },
@@ -101,7 +108,7 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": true,
             "require": "6.4.*"
         }
     },

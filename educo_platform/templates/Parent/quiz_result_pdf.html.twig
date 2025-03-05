@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Result</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        h1 { color: #007bff; }
+        .score { font-size: 1.2rem; }
+        .feedback { font-size: 1.1rem; }
+        .success { color: green; font-weight: bold; }
+        .failure { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Quiz Result</h1>
+    <div class="score">
+        <p>Your Score: <span class="score-value">{{ note.score }} / 20</span></p>
+    </div>
+    <div class="feedback">
+        {% if note.score >= 10 %}
+            <p class="success">Congratulations! You passed the quiz.</p>
+        {% else %}
+            <p class="failure">Sorry, you did not pass. Try again!</p>
+        {% endif %}
+    </div>
+    <p><strong>Quiz Title:</strong> {{ note.quiz.titre }}</p>
+    <p><strong>Description:</strong> {{ note.quiz.description }}</p>
+    <p><strong>Date:</strong> {{ note.quiz.dateAjout|date('Y-m-d H:i:s') }}</p>
+</body>
+</html>

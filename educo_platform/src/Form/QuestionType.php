@@ -28,16 +28,8 @@ class QuestionType extends AbstractType
     ->add('reponse', TextType::class, [
         'label' => 'Bonne réponse',
         'attr' => ['class' => 'form-control'],
-    ])
-    ->add('quiz', EntityType::class, [
-        'class' => Quiz::class,
-        'choice_label' => 'titre', // Utilise le bon champ pour afficher le titre du quiz
-        'label' => 'Quiz associé',
-        'placeholder' => 'Sélectionnez un quiz', // Ajoute un placeholder comme pour "matiere"
-        'attr' => [
-            'class' => 'form-control',
-        ],
     ]);
+    
     
 
         // Transform the options field (JSON <-> String)

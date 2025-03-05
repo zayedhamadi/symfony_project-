@@ -24,11 +24,11 @@ class Note
     )]
     private float $score;
 
-    #[ORM\ManyToOne(targetEntity: Eleve::class, inversedBy: 'notes')]
+    #[ORM\ManyToOne(targetEntity: Eleve::class, inversedBy: 'notes', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull(message: 'Un élève doit être associé à la note.')]
     private Eleve $eleve;
-
+    
     #[ORM\ManyToOne(targetEntity: Quiz::class, inversedBy: 'notes')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull(message: 'Un quiz doit être associé à la note.')]

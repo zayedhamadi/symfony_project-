@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -75,6 +76,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'date', nullable: true)]
     #[Assert\NotBlank(message: "La date de naissance est obligatoire")]
+    #[Assert\LessThanOrEqual("-18 years", message: "Vous devez avoir au moins 18 ans.")]
     #[Assert\LessThanOrEqual("today", message: "La date de naissance ne peut pas être supérieure à la date actuelle.")]
     private ?DateTimeInterface $dateNaissance = null;
 
@@ -83,6 +85,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     #[Assert\NotBlank(message: "Le mot de passe est obligatoire")]
+    #[Assert\Regex(pattern: "/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[\W_]).+$/", message: "Le mot de passe doit contenir au minimum un chiffre, une lettre et un caractère spécial.")]
     private ?string $password = null;
 
     /**
@@ -104,7 +107,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Matiere>
      */
-    #[ORM\OneToMany(targetEntity: Matiere::class, mappedBy: 'idEnsg')]
+    #[ORM\OneToMany(targetEntity: Matiere::class, mappedBy: 'idEnsg' ,cascade: ['remove'])]
     private Collection $matieres;
 
 

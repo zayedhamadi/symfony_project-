@@ -40,6 +40,23 @@ public function mesReclamations(Request $request,ReclamationRepository $reposito
         'reclamations' => $reclamations,
     ]);
 }
+    #[Route('/ReclamationsParent', name: 'ReclamationsParent', methods: ['GET'])]
+    public function ReclamationsParent(Request $request,ReclamationRepository $repository,UserRepository $userRepository): Response
+    {
+        $session = $request->getSession();
+        $userid = $session->get('user_id');
+        $user = $userRepository->find($userid);
+
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour voir vos réclamations.');
+        }
+
+        $reclamations = $repository->findBy(['user' => $user]);
+
+        return $this->render('reclamation/ReclamationsParent.html.twig', [
+            'reclamations' => $reclamations,
+        ]);
+    }
 
     #[Route('/ajouter', name: 'ajouter_reclamation', methods: ['GET','POST'])]
     public function ajouter(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
@@ -112,6 +129,44 @@ public function mesReclamations(Request $request,ReclamationRepository $reposito
         }
     
         return $this->redirectToRoute('reclamation');
+    }
+
+
+
+
+    #[Route('/parent_add_recl', name: 'parent_add_recl', methods: ['GET','POST'])]
+    public function parent_add_recl(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    {
+        $reclamation = new Reclamation();
+        $form = $this->createForm(ReclamationType::class, $reclamation);
+        $form->handleRequest($request);
+
+        $session = $request->getSession();
+        $userid = $session->get('user_id');
+        $user = $userRepository->find($userid);
+
+        if (!$user) {
+            throw $this->createNotFoundException('User not found.');
+        }
+
+        if ($form->isSubmitted()) {
+            dump($form->getErrors());  // Debug validation errors
+
+            if ($form->isValid()) {
+                $reclamation->setDateDeCreation(new \DateTime());
+                $reclamation->setStatut(Statut::EN_ATTENTE);
+                $reclamation->setUser($user);
+
+                $entityManager->persist($reclamation);
+                $entityManager->flush();
+                $this->addFlash('success', 'Votre réclamation a été envoyée avec succès !');
+                return $this->redirectToRoute('ReclamationsParent');
+            }
+        }
+
+        return $this->render('reclamation/parent_add_recl.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
 }

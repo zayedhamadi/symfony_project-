@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+{% block title %}Mes Réclamations{% endblock %}
+
+{% block body %}
+        <div class="container" style="margin-top: 30px !important; padding: 0 15px !important;">
+
+        <h1 class="text-center my-4">Mes Réclamations</h1>
+        <div class="d-flex justify-content-end mb-3" style="padding-right: 40px;">
+            <a href="{{ path('ajouter_reclamation') }}" class="btn btn-primary">Ajouter une reclamation</a>
+        </div>
+
+        {% if reclamations is empty %}
+            <p class="text-center">Aucune réclamation trouvée.</p>
+        {% else %}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>Date de création</th>
+                    <th>Statut</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for reclamation in reclamations %}
+                    <tr>
+                        <td>{{ reclamation.titre }}</td>
+                        <td>{{ reclamation.description }}</td>
+                        <td>{{ reclamation.dateDeCreation|date('d/m/Y') }}</td>
+                        <td>
+                        <span class="badge
+                            {% if reclamation.statut.value == 'En attente' %}
+                                bg-warning
+                            {% elseif reclamation.statut.value == 'En cours' %}
+                                bg-primary
+                            {% else %}
+                                bg-success
+                            {% endif %}
+                        ">
+                            {{ reclamation.statut.value }}
+                        </span>
+                        </td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}

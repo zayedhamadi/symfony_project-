@@ -155,7 +155,7 @@ class InscriptionEvenementController extends AbstractController
     }
 
 
-    #[Route('/reservations/{id}/supprimer', name: 'supp_reservation', methods: ['POST'])]
+    #[Route('/reservattions/{id}/supprimer', name: 'supp_reservation', methods: ['POST'])]
     public function suppReservation(
         InscriptionEvenement $inscription,
         EntityManagerInterface $entityManager

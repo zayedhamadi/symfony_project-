@@ -14,11 +14,29 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/categorie')]
 final class CategorieController extends AbstractController
 {
+//    #[Route(name: 'app_categorie_index', methods: ['GET'])]
+//    public function index(Request $request, CategorieRepository $categorieRepository): Response
+//    {
+//        $search = $request->query->get('search');
+//
+//        $queryBuilder = $categorieRepository->createQueryBuilder('c');
+//
+//        if ($search) {
+//            $queryBuilder->andWhere('c.nom LIKE :search')
+//                ->setParameter('search', '%' . $search . '%');
+//        }
+//
+//        $categories = $queryBuilder->getQuery()->getResult();
+//
+//        return $this->render('categorie/index.html.twig', [
+//            'categories' => $categories,
+//            'search' => $search,
+//        ]);
+//    }
     #[Route(name: 'app_categorie_index', methods: ['GET'])]
     public function index(Request $request, CategorieRepository $categorieRepository): Response
     {
         $search = $request->query->get('search');
-
         $queryBuilder = $categorieRepository->createQueryBuilder('c');
 
         if ($search) {
@@ -28,12 +46,18 @@ final class CategorieController extends AbstractController
 
         $categories = $queryBuilder->getQuery()->getResult();
 
+        // Vérifier si la requête est AJAX
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('categorie/_categories_list.html.twig', [
+                'categories' => $categories,
+            ]);
+        }
+
         return $this->render('categorie/index.html.twig', [
             'categories' => $categories,
             'search' => $search,
         ]);
     }
-
     #[Route('/new', name: 'app_categorie_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {

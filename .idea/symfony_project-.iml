@@ -174,12 +174,17 @@
       <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/bacon/bacon-qr-code" />
       <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/dasprid/enum" />
       <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/endroid/qr-code" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/gregwar/captcha" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/gregwar/captcha-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/maennchen/zipstream-php" />
       <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/markbaker/complex" />
       <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/markbaker/matrix" />
       <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/nelmio/api-doc-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/phpoffice/phpspreadsheet" />
       <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/psr/simple-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/symfony/twilio-notifier" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/symfony/workflow" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/twilio/sdk" />
       <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/zircote/swagger-php" />
     </content>
     <orderEntry type="inheritedJdk" />

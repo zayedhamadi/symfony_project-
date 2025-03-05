@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="gestion vente qq modif+bundlepdf+pagination...">
+    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="fix errors">
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/symfony_project-.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/symfony_project-.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/.env" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/educo_platform/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/DashboardParent.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/DashboardParent.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/EleveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/EleveController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -339,6 +338,11 @@
       <path value="$PROJECT_DIR$/educo_platform/vendor/phpoffice/phpspreadsheet" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/dasprid/enum" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/gregwar/captcha" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/gregwar/captcha-bundle" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/workflow" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/twilio-notifier" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/twilio/sdk" />
     </include_path>
   </component>
   <component name="ProblemsViewState">
@@ -426,7 +430,7 @@
       <workItem from="1741100569790" duration="3741000" />
       <workItem from="1741104362295" duration="938000" />
       <workItem from="1741123110546" duration="9931000" />
-      <workItem from="1741169704707" duration="2477000" />
+      <workItem from="1741169704707" duration="5824000" />
     </task>
     <task id="LOCAL-00001" summary="gestion ventev2">
       <option name="closed" value="true" />
@@ -580,7 +584,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741134573170</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="fix errors">
+      <option name="closed" value="true" />
+      <created>1741173480861</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1741173480861</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -612,6 +624,7 @@
     <MESSAGE value="add_bundle_pagination+fix_paieement" />
     <MESSAGE value="fix_some_error" />
     <MESSAGE value="gestion vente qq modif+bundlepdf+pagination..." />
-    <option name="LAST_COMMIT_MESSAGE" value="gestion vente qq modif+bundlepdf+pagination..." />
+    <MESSAGE value="fix errors" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix errors" />
   </component>
 </project>

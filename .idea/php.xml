@@ -303,6 +303,11 @@
       <path value="$PROJECT_DIR$/educo_platform/vendor/phpoffice/phpspreadsheet" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/dasprid/enum" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/gregwar/captcha" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/gregwar/captcha-bundle" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/workflow" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/twilio-notifier" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/twilio/sdk" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

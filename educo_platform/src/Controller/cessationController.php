@@ -9,6 +9,7 @@ use App\Repository\CessationRepository;
 use App\Repository\UserRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,15 +34,7 @@ class cessationController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route('getAllCessation', name: 'get_all_cessations', methods: ['GET'])]
-    public function getAllCessations(): Response
-    {
-        $cessations = $this->cessationRepository->findAll();
 
-        return $this->render('cessation/all_cessations.html.twig', [
-            'cessations' => $cessations
-        ]);
-    }
 
 
     #[Route('createCessation/{userId}', name: 'create_cessation', methods: ['POST'])]
@@ -184,6 +177,44 @@ class cessationController extends AbstractController
     }
 
 
+    #[Route('getAllCessation', name: 'get_all_cessations', methods: ['GET'])]
+    public function getAllCessations(): Response
+    {
+        $cessations = $this->cessationRepository->findAll();
+
+        return $this->render('cessation/all_cessations.html.twig', [
+            'cessations' => $cessations
+        ]);
+    }
+
+    #[Route('/', name: 'app_chercherCessation_list')]
+    public function chercherCessation(Request $request, CessationRepository $cessationRepository): Response
+    {
+        $search = $request->query->get('search');
+
+        if ($search && !preg_match('/^(?! )[ \p{L}-]+(?<! )$/u', $search)) {
+            return $this->json(['error' => 'Recherche invalide'], 400);
+        }
+
+        $queryBuilder = $cessationRepository->createQueryBuilder('c')
+            ->leftJoin('c.idUser', 'u')
+            ->addSelect('u');
+
+        if ($search) {
+            $queryBuilder->where('u.nom LIKE :search OR u.prenom LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+
+        $cessations = $queryBuilder->getQuery()->getResult();
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->json([
+                'html' => $this->renderView('cessation/_cessation_list.html.twig', ['cessations' => $cessations])
+            ]);
+        }
+
+        return $this->render('cessation/all_cessations.html.twig', ['cessations' => $cessations]);
+    }
 
 
 

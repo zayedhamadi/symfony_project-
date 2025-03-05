@@ -19,6 +19,7 @@
         "knplabs/knp-paginator-bundle": "^6.6",
         "knplabs/knp-snappy-bundle": "^1.10",
         "lexik/jwt-authentication-bundle": "^2.18",
+        "maennchen/zipstream-php": "2.1",
         "nelmio/api-doc-bundle": "^4.37",
         "nyholm/psr7": "^1.8",
         "openai-php/client": "^0.10.3",

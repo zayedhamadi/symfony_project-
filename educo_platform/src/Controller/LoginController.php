@@ -3,10 +3,8 @@
 namespace App\Controller;
 
 
-use App\Entity\Enum\EtatCompte;
 use App\Entity\Enum\Rolee;
 use App\Entity\User;
-use Symfony\Component\HttpFoundation\Request;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +19,7 @@ class LoginController extends AbstractController
     #[Route('/', name: 'homepage')]
     public function home(): Response
     {
-        return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute('app_login');
     }
 
     #[Route('/login', name: 'app_login')]
@@ -34,6 +32,10 @@ class LoginController extends AbstractController
     {
         if ($this->getUser()) {
             $user = $this->getUser();
+            if ($user->getEtatCompte()?->name === 'inactive') {
+                $this->addFlash('danger', 'Votre compte est inactif. Contactez l’administrateur.');
+                return $this->redirectToRoute('app_login');
+            }
             $token = $jwtManager->create($user);
             $userId = $user->getId();
 
@@ -51,9 +53,9 @@ class LoginController extends AbstractController
             if (in_array(Rolee::Admin->value, $user->getRoles())) {
                 return $this->redirectToRoute('admin_dashboard');
             } elseif (in_array(Rolee::Enseignant->value, $user->getRoles())) {
-                return $this->redirectToRoute('app_cours_index');
+                return $this->redirectToRoute('EnseignantControllerr');
             } elseif (in_array(Rolee::Parent->value, $user->getRoles())) {
-                return $this->redirectToRoute('app_boutique');
+                return $this->redirectToRoute('testtttController');
             }
             return $this->redirectToRoute('app_dashboardAdmin');
         }

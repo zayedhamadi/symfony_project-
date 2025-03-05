@@ -40,6 +40,11 @@
                             {% endfor %}
                             </tbody>
                         </table>
+                        <div class="text-center mt-4">
+                            <a href="{{ path('app_commande_facture', {id: commande.id}) }}" class="btn btn-success btn-lg">
+                                <i class="fas fa-file-pdf"></i> Télécharger la Facture
+                            </a>
+                        </div>
 
                         <div class="text-center mt-4">
                             <a href="{{ path('app_boutique') }}" class="btn btn-primary btn-lg d-flex align-items-center gap-2 justify-content-center">

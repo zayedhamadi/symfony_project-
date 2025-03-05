@@ -7,3 +7,6 @@ api_login_check:
     path: /api/login_check
 api_refresh_token:
     path: /api/token/refresh
+##gregwar_captcha_generate:
+  ##  path: /captcha/generate
+    ##defaults: { _controller: gregwar_captcha.controller.captcha:generateCaptchaAction }

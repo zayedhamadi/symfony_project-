@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Commande;
 use App\Entity\CommandeProduit;
 use App\Entity\Produit;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\UserRepository;
+use Twig\Environment;
 
 
 final class CommandeController extends AbstractController
@@ -141,10 +144,8 @@ final class CommandeController extends AbstractController
     #[Route('/commande/valider', name: 'app_commande_valider')]
     public function validerCommande(Request $request, SessionInterface $session,UserRepository $userRepository): Response
     {
-        $session = $request->getSession();
-        // Récupérer l'utilisateur connecté
-        $user = $this->getUser();
-       
+
+
         // Récupérer le panier de la session
         $panier = $session->get('panier', []);
         $session = $request->getSession();
@@ -224,7 +225,33 @@ final class CommandeController extends AbstractController
             'commande' => $commande,
         ]);
     }
+    #[Route('/commande/facture/{id}', name: 'app_commande_facture')]
+    public function generateFacture(Environment $twig, int $id): Response
+    {
+        // Récupérer la commande
+        $commande = $this->entityManager->getRepository(Commande::class)->find($id);
 
+        if (!$commande) {
+            throw $this->createNotFoundException('Commande non trouvée');
+        }
+
+        // Utiliser Twig pour générer le HTML de la facture
+        $html = $twig->render('facture/facture.html.twig', ['commande' => $commande]);
+
+        // Configuration de DomPDF
+        $options = new Options();
+        $options->set('defaultFont', 'Arial');
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        // Retourner le PDF généré
+        return new Response($dompdf->output(), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="facture_'.$commande->getId().'.pdf"',
+        ]);
+    }
     #[Route('/commande/paiement/carte/traiter', name: 'app_paiement_carte_traiter')]
     public function traiterPaiementCarte(int $id): Response
     {

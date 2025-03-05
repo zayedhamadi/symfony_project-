@@ -1,6 +1,7 @@
 <?php
 namespace App\Form;
 
+use App\Entity\Classe;
 use App\Entity\Cours;
 use App\Entity\Matiere;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -30,15 +31,21 @@ class CoursType extends AbstractType
                 'label' => 'Upload PDF',
                 'mapped' => false, // Not mapped to entity property
                 'required' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '5M',
-                        'mimeTypes' => ['application/pdf'],
-                        'mimeTypesMessage' => 'Please upload a valid PDF file.',
-                    ])
-                ],
-                'attr' => ['class' => 'form-control'],
+//                'constraints' => [
+//                    new File([
+//                        'maxSize' => '5M',
+//                        'mimeTypes' => ['application/pdf'],
+//                        'mimeTypesMessage' => 'Please upload a valid PDF file.',
+//                    ])
+//                ],
+//                'attr' => ['class' => 'form-control'],
 
+            ])
+            ->add('classe', EntityType::class, [
+                'class' => Classe::class,
+                'choice_label' => 'nom_classe', // Show class name in the dropdown
+                'label' => 'Select Class',
+                'attr' => ['class' => 'form-control']
             ]);
     }
 

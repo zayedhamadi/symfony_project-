@@ -1,0 +1,11 @@
+gregwar_captcha:
+    width: 200
+    height: 50
+    length: 6
+    quality: 90
+    background_color: [255, 255, 255]
+    text_color: [0, 0, 0]
+    interpolation: true
+    distortion: true
+    max_front_lines: 0
+    max_behind_lines: 0

@@ -37,12 +37,19 @@ class MatiereType extends AbstractType
                 'multiple' => false,  // This ensures only one teacher is selected
                 'expanded' => false,  // This creates a dropdown (select box)
                 'query_builder' => function (EntityRepository $er) {
-                return $er->createQueryBuilder('u')
+                    return $er->createQueryBuilder('u')
                         ->where('u.roles LIKE :role')
                         ->setParameter('role', '%Enseignant%');
-                }
-
+                },
             ]);
+//            ->add('enseignants', EntityType::class, [
+//                'class' => User::class,
+//                'choice_label' => 'nom', // Display teacher's name
+//                'multiple' => true,  // Allow multiple selections
+//                'expanded' => false, // Use a dropdown
+//                'label' => 'Select Teachers',
+//                'attr' => ['class' => 'form-control'],
+//            ]);
 
     }
 

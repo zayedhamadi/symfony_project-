@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facture - Commande {{ commande.id }}</title>
+    <style>
+        /* Style général de la page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Conteneur principal */
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 30px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex-grow: 1;
+        }
+
+        /* En-tête de la facture */
+        .header {
+            text-align: center;
+            margin-top: -50px;
+            margin-bottom: 30px;
+        }
+
+        .header img {
+            width: 120px;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: #2c3e50;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            color: #7f8c8d;
+        }
+
+        /* Informations de la facture */
+        .invoice-info {
+            margin-top: 20px;
+            border-top: 2px solid #e74c3c;
+            padding-top: 20px;
+        }
+
+        .invoice-info h2 {
+            color: #2c3e50;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+        }
+
+        .invoice-info p {
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+
+        .invoice-info strong {
+            color: #e74c3c;
+        }
+
+        /* Table des produits commandés */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th,
+        table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #e74c3c;
+            color: #fff;
+        }
+
+        table td {
+            background-color: #f9f9f9;
+        }
+
+        /* Total à payer */
+        .total {
+            margin-top: 30px;
+            text-align: right;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+            padding: 10px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- En-tête de la facture -->
+    <div class="header">
+        <h1>Educo School</h1>
+        <p>Cite el ghazela, Ariana| Téléphone : +216 00 000 000</p>
+        <p>Email : contact@educo.com | Site Web : www.educo.com</p>
+    </div>
+
+    <!-- Informations de la facture -->
+    <div class="invoice-info">
+        <h2>Facture pour la Commande N° {{ commande.id }}</h2>
+        <p><strong>Date de la commande :</strong> {{ commande.dateCommande|date("d/m/Y H:i") }}</p>
+        <p><strong>Client :</strong> {{ commande.getParent().getNom() }} {{ commande.getParent().getPrenom() }}</p>
+        <p><strong>Montant Total :</strong> {{ commande.montantTotal }} dt</p>
+        <p><strong>Mode de Paiement :</strong> {{ commande.modePaiement }}</p>
+    </div>
+
+    <!-- Liste des produits commandés -->
+    <h3>Produits Commandés</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Produit</th>
+            <th>Prix</th>
+            <th>Quantité</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for produit in commande.commandeProduits %}
+            <tr>
+                <td>{{ produit.nom }}</td>
+                <td>{{ produit.prix }} dt</td>
+                <td>{{ produit.quantite }}</td>
+                <td>{{ produit.prix * produit.quantite }} dt</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Total à payer -->
+    <div class="total">
+        <strong>Total à Payer : {{ commande.montantTotal }} dt</strong>
+    </div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <p>Merci de votre confiance. Si vous avez des questions, n'hésitez pas à nous contacter.</p>
+    <p>&copy; 2025 Educo School. Tous droits réservés.</p>
+</div>
+
+</body>
+</html>

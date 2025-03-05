@@ -6,6 +6,9 @@ use App\Repository\CoursRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
 #[ORM\Entity(repositoryClass: CoursRepository::class)]
 class Cours
 {
@@ -15,10 +18,18 @@ class Cours
     private ?int $id = null;
 
     #[ORM\Column(length: 255)] // New 'name' attribute
+    #[Assert\Callback([Matiere::class, 'validateFirstLetterUppercase'])]
+    #[Assert\NotBlank(message: "The subject name cannot be blank.")] // Add this line
+    #[Assert\Length(
+        min: 3,
+        max: 30,
+        minMessage: "The subject name must be at least 3 characters long.",
+        maxMessage: "The subject name cannot be longer than 30 characters."
+    )]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Matiere::class, inversedBy: 'cours', cascade: ['persist'])] // REMOVE 'remove'
+    #[ORM\JoinColumn(nullable: false, onDelete: 'SET NULL')] // Change CASCADE to SET NULL
     private ?Matiere $IdMatiere = null;
 
     #[ORM\OneToMany(targetEntity: Quiz::class, mappedBy: 'cours')]
@@ -26,7 +37,12 @@ class Cours
 
     #[ORM\OneToMany(mappedBy: 'cours', targetEntity: Classe::class)]
     private Collection $classes;
-    
+
+    #[Assert\NotBlank(message: "Le Numero de Chapitre est obligatoire.")]
+    #[Assert\Positive(message: "Le  Numero de Chapitre doit être un nombre positif.")]
+    #[ORM\Column(type: 'integer')]
+    private ?int $chapterNumber = null;
+
 
 
     //    /**
@@ -34,6 +50,7 @@ class Cours
 //     */
 //    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'cours')]
 //    private Collection $IdUser;
+
 
     public function __construct()
     {
@@ -75,6 +92,16 @@ class Cours
         return $this->id;
     }
 
+    public function getChapterNumber(): ?int
+    {
+        return $this->chapterNumber;
+    }
+
+    public function setChapterNumber(int $chapterNumber): self
+    {
+        $this->chapterNumber = $chapterNumber;
+        return $this;
+    }
 
     public function getName(): ?string
     {
@@ -166,7 +193,15 @@ class Cours
     }
         return $this;
     }
-    
+
+    public static function validateFirstLetterUppercase($nom, ExecutionContextInterface $context)
+    {
+        if ($nom && !ctype_upper($nom[0])) {
+            $context->buildViolation('The subject name must start with an uppercase letter.')
+                ->atPath('nom')
+                ->addViolation();
+        }
+    }
 
     
 //    /**

@@ -24,6 +24,18 @@ class MatiereRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findBySearch(string $query)
+    {
+        return $this->createQueryBuilder('m')
+            ->leftJoin('m.idEnsg', 'e')
+            ->where('m.nom LIKE :query')
+            ->orWhere('e.nom LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
+            ->orderBy('m.nom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
     // src/Repository/MatiereRepository.php
     public function findAllEnseignants(): array
     {

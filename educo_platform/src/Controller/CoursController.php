@@ -21,7 +21,7 @@ class CoursController extends AbstractController
     public function index(CoursRepository $coursRepository): Response
     {
         return $this->render('cours/index.html.twig', [
-            'cours' => $coursRepository->findAll(),
+            'cours' => $coursRepository->findBy([], ['chapterNumber' => 'ASC']), // Correct way to order by chapterNumber
         ]);
     }
     #[Route('/new', name: 'app_cours_new', methods: ['GET', 'POST'])]
@@ -140,53 +140,31 @@ class CoursController extends AbstractController
         // Get selected class from request
         $selectedClassId = $request->query->get('class_id');
         $courses = [];
+        $groupedCourses = []; // Initialize groupedCourses here
 
         if ($selectedClassId) {
-            $courses = $coursRepository->findBy(['classe' => $selectedClassId]);
+            $courses = $coursRepository->findBy(['classe' => $selectedClassId],
+            ['chapterNumber' => 'ASC']);
+
+            // Group courses by Matiere
+//            $groupedCourses = [];
+            foreach ($courses as $course) {
+                $matiere = $course->getIdMatiere(); // Get Matiere associated with the course
+                if ($matiere) {
+                    $groupedCourses[$matiere->getNom()][] = $course; // Group courses by Matiere name
+                }
+            }
         }
 
         return $this->render('cours/student_courses.html.twig', [
             'classes' => $classes,
-            'courses' => $courses,
+            'groupedCourses' => $groupedCourses, // Pass grouped courses
+//            'courses' => $courses,
             'selectedClassId' => $selectedClassId
         ]);
     }
 
-}
-//    #[Route('/new', name: 'app_cours_new', methods: ['GET', 'POST'])]
-//    public function new(Request $request, EntityManagerInterface $entityManager): Response
-//    {
-//        $cour = new Cours();
-//        $form = $this->createForm(CoursType::class, $cour);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $entityManager->persist($cour);
-//            $entityManager->flush();
-//
-//            return $this->redirectToRoute('app_cours_index');
-//        }
-//
-//        return $this->render('cours/new.html.twig', [
-//            'cour' => $cour,
-//            'form' => $form,
-//        ]);
-//    }
 
-//    #[Route('/{id}/edit', name: 'app_cours_edit', methods: ['GET', 'POST'])]
-//    public function edit(Request $request, Cours $cour, EntityManagerInterface $entityManager): Response
-//    {
-//        $form = $this->createForm(CoursType::class, $cour);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $entityManager->flush();
-//
-//            return $this->redirectToRoute('app_cours_index');
-//        }
-//
-//        return $this->render('cours/edit.html.twig', [
-//            'cour' => $cour,
-//            'form' => $form,
-//        ]);
-//    }
+}
+
+

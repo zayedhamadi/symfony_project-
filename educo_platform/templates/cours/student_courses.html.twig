@@ -97,19 +97,6 @@
 <div style="margin-top: 100px; margin-left: 0;">
 
     <h1>Courses</h1>
-
-    {# Dropdown to select a class #}
-{#    <form method="get" action="{{ path('student_courses') }}">#}
-{#        <label for="class_id">Select Class:</label>#}
-{#        <select name="class_id" id="class_id" onchange="this.form.submit()">#}
-{#            <option value="">-- Choose a class --</option>#}
-{#            {% for classe in classes %}#}
-{#                <option value="{{ classe.id }}" {% if classe.id == selectedClassId %}selected{% endif %}>#}
-{#                    {{ classe.nomClasse  }}#}
-{#                </option>#}
-{#            {% endfor %}#}
-{#        </select>#}
-{#    </form>#}
     <h1>Select Class</h1>
         <form method="get" action="{{ path('student_courses') }}">
             <div class="form-group">
@@ -125,24 +112,55 @@
             </div>
         </form>
 
-    {# Show courses if a class is selected #}
-    {% if courses is not empty %}
+{#    #}{# Show courses if a class is selected #}
+{#    {% if courses is not empty %}#}
+{#        <div id="courses">#}
+{#            {% for course in courses %}#}
+{#                <div class="course">#}
+{#                    <h2>{{ course.name }}</h2>#}
+
+{#                    <p><strong>This is Chapter {{ course.chapterNumber }}</strong></p>#}
+
+{#                    <button class="show-pdf" data-pdf="{{ asset('uploads/pdfs/' ~ course.pdfFilename) }}">View PDF</button>#}
+{#                </div>#}
+{#            {% endfor %}#}
+
+{#        </div>#}
+{#    {% else %}#}
+
+{#        <p>No courses available for the selected class.</p>#}
+{#    {% endif %}#}
+    {# Show courses grouped by Matiere #}
+    {% if groupedCourses is not empty %}
         <div id="courses">
-            {% for course in courses %}
-                <div class="course">
-                    <h2>{{ course.name }}</h2>
-                    <button class="show-pdf" data-pdf="{{ asset('uploads/pdfs/' ~ course.pdfFilename) }}">View PDF</button>
+            {% for matiereName, coursesInMatiere in groupedCourses %}
+                <div class="matiere-group">
+                    <h2>{{ matiereName }}</h2>  <!-- Display Matiere name -->
+
+                    {% for course in coursesInMatiere %}
+                        <div class="course">
+                            <h3>{{ course.name }}</h3>
+                            <p><strong>This is Chapter {{ course.chapterNumber }}</strong></p>
+
+                            <button class="show-pdf" data-pdf="{{ asset('uploads/pdfs/' ~ course.pdfFilename) }}">View PDF</button>
+{#                            <button class="comment-btn" onclick="openCommentPopup({{ course.id }})">Add Comment</button>#}
+
+{#                            <!-- Conditional "Go to Comment Section" button for admin users -->#}
+{#                            {% if app.user and app.user.roles[0] == 'ROLE_ADMIN' %}#}
+{#                                <a href="{{ path('course_comments', {'id': course.id}) }}" class="go-to-comments">#}
+{#                                    Go to Comment Section#}
+{#                                </a>#}
+{#                            {% endif %}#}
+                        </div>
+                    {% endfor %}
                 </div>
             {% endfor %}
-
         </div>
     {% else %}
         <p>No courses available for the selected class.</p>
     {% endif %}
 
 
-    {# Placeholder for the PDF viewer #}
-    {# PDF Viewer Section #}
     {# PDF Viewer Section #}
     <div id="pdf-viewer" style="display:none; position: fixed; top: 10%; left: 57%;
         transform: translateX(-50%); width: 80%; height: 80vh; overflow-y: scroll;
@@ -159,6 +177,16 @@
         <div id="pdf-container"></div>
     </div>
 
+
+{#    <!-- Comment Popup Overlay -->#}
+{#    <div id="popup-overlay" class="popup-overlay"></div>#}
+
+{#    <!-- Comment Popup -->#}
+{#    <div id="comment-popup" class="comment-popup">#}
+{#        <h3>Add your Comment</h3>#}
+{#        <textarea id="comment-textarea"></textarea>#}
+{#        <button id="submit-comment" onclick="submitComment()">Submit</button>#}
+{#    </div>#}
 
 </div>
 {% endblock %}
@@ -224,7 +252,7 @@
 
                     pdfContainer.appendChild(canvas); // Add the canvas to the container
 
-                    const context = canvas.getContext('2d');
+                    const  context = canvas.getContext('2d');
                     page.render({
                         canvasContext: context,
                         viewport: viewport
@@ -244,6 +272,59 @@
             });
         });
     </script>
+{#    <script>#}
+{#        // Open the comment popup#}
+{#        function openCommentPopup(courseId) {#}
+{#            document.getElementById('popup-overlay').style.display = 'block';#}
+{#            document.getElementById('comment-popup').style.display = 'block';#}
+{#            document.getElementById('comment-textarea').setAttribute('data-course-id', courseId);#}
+{#        }#}
+
+{#        // Close the comment popup#}
+{#        function closeCommentPopup() {#}
+{#            document.getElementById('popup-overlay').style.display = 'none';#}
+{#            document.getElementById('comment-popup').style.display = 'none';#}
+{#        }#}
+
+{#        // Submit the comment#}
+{#        function submitComment() {#}
+{#            const commentText = document.getElementById('comment-textarea').value;#}
+{#            const courseId = document.getElementById('comment-textarea').getAttribute('data-course-id');#}
+
+{#            if (!commentText.trim()) {#}
+{#                alert('Please write a comment!');#}
+{#                return;#}
+{#            }#}
+
+{#            // Send the comment to the server via AJAX#}
+{#            fetch(`/courses/comment/${courseId}`, {#}
+{#                method: 'POST',#}
+{#                headers: {#}
+{#                    'Content-Type': 'application/x-www-form-urlencoded',#}
+{#                },#}
+{#                body: `comment=${encodeURIComponent(commentText)}`#}
+{#            })#}
+{#                .then(response => response.json())#}
+{#                .then(data => {#}
+{#                    if (data.success) {#}
+{#                        alert('Comment submitted successfully!');#}
+{#                        closeCommentPopup();#}
+{#                    } else {#}
+{#                        alert('There was an error submitting your comment.');#}
+{#                    }#}
+{#                })#}
+{#                .catch(error => {#}
+{#                    console.error('Error:', error);#}
+{#                    alert('Error submitting the comment.');#}
+{#                });#}
+{#        }#}
+
+{#        // Close the comment popup when overlay is clicked#}
+{#        document.getElementById('popup-overlay').addEventListener('click', closeCommentPopup);#}
+{#    </script>#}
+
+
+
 {% endblock %}
 
 

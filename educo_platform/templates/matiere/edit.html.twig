@@ -13,11 +13,7 @@
             {{ form_widget(form.nom, { 'attr': {'class': 'form-control'} }) }}
         </div>
 
-        <!-- Assign Teacher Field -->
-{#        <div class="mb-3">#}
-{#            {{ form_label(form.idEnsg, 'Assign Teacher') }}#}
-{#            {{ form_widget(form.idEnsg, { 'attr': {'class': 'form-control'} }) }}#}
-{#        </div>#}
+
         <div class="mb-3">
             {{ form_label(form.idEnsg, 'Assign Teacher') }}
             {% if form.idEnsg.vars.value %}
@@ -43,6 +39,6 @@
         {{ form_end(form) }}  {# End the form here #}
 
         <!-- Cancel Button outside the form -->
-        <a href="{{ path('app_matiere_list') }}" class="btn btn-secondary mt-3">Cancel</a>
-    </div>
+        {# Cancel Button #}
+        <a href="{{ path('app_matiere_list', {'search': app.request.query.get('search')}) }}" class="btn btn-secondary mt-3">Cancel</a>    </div>
 {% endblock %}

@@ -1,0 +1,33 @@
+{% for teacher, matieres in groupedMatieres %}
+    <h3>{{ teacher }}</h3> <!-- Display Teacher's Name -->
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom de la Matière</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for matiere in matieres %}
+            <tr>
+                <td>{{ matiere.id }}</td>
+                <td>{{ matiere.nom }}</td>
+
+                <td>
+                    <a href="{{ path('app_matiere_edit', {'id': matiere.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                </td>
+                <td>
+                    <form action="{{ path('app_matiere_delete', {'id': matiere.id}) }}" method="post" class="d-inline"
+                          onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette matière ?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ matiere.id) }}">
+                        <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Aucune matière trouvée.</p>
+{% endfor %}

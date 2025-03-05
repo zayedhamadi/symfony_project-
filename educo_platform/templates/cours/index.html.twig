@@ -25,6 +25,7 @@
                     <tr>
                         <th>#</th>
                         <th>Course Name</th>
+                        <th>Numero de Chapitre </th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -33,6 +34,8 @@
                         <tr>
                             <td>{{ cour.id }}</td>
                             <td>{{ cour.name }}</td>
+                            <td>
+                                    Chapter {{ cour.chapterNumber }}
                             <td>
                                 <a href="{{ path('app_cours_show', {'id': cour.id}) }}" class="btn btn-info btn-sm">View</a>
                                 <a href="{{ path('app_cours_edit', {'id': cour.id}) }}" class="btn btn-warning btn-sm">Edit</a>
@@ -56,42 +59,5 @@
 </div>
 {% endblock %}
 
-{#{% extends 'side-bar.html.twig' %}#}
 
-{#{% block title %} Courses List {% endblock %}#}
 
-{#{% block body %}#}
-{#    <div class="container mt-4">#}
-{#        <h1 class="mb-4">Courses List</h1>#}
-
-{#        <table class="table table-striped">#}
-{#            <thead>#}
-{#            <tr>#}
-{#                <th>#</th>#}
-{#                <th>Course Name</th>#}
-{#                <th>Matiere</th>#}
-{#                <th>Actions</th>#}
-{#            </tr>#}
-{#            </thead>#}
-{#            <tbody>#}
-{#            {% for cour in cours %}#}
-{#                <tr>#}
-{#                    <td>{{ cour.id }}</td>#}
-{#                    <td>{{ cour.name }}</td>#}
-{#                    <td>{{ cour.IdMatiere.nom }}</td>#}
-{#                    <td>#}
-{#                        <a href="{{ path('app_cours_show', {'id': cour.id}) }}" class="btn btn-info btn-sm">View</a>#}
-{#                        <a href="{{ path('app_cours_edit', {'id': cour.id}) }}" class="btn btn-warning btn-sm">Edit</a>#}
-{#                    </td>#}
-{#                </tr>#}
-{#            {% else %}#}
-{#                <tr>#}
-{#                    <td colspan="4" class="text-center">No courses available.</td>#}
-{#                </tr>#}
-{#            {% endfor %}#}
-{#            </tbody>#}
-{#        </table>#}
-
-{#        <a href="{{ path('app_cours_new') }}" class="btn btn-primary mt-3">Add New Course</a>#}
-{#    </div>#}
-{#{% endblock %}#}

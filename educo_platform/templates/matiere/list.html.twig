@@ -1,41 +1,4 @@
-{#{% extends 'side-bar.html.twig' %}#}
 
-{#{% block title %} Liste des Matières {% endblock %}#}
-
-{#{% block body %}#}
-{#    <div class="container mt-4">#}
-{#        <h1 class="mb-4">Liste des Matières</h1>#}
-
-{#        <table class="table table-striped">#}
-{#            <thead>#}
-{#            <tr>#}
-{#                <th>ID</th>#}
-{#                <th>Nom de la Matière</th>#}
-{#                <th>Enseignant</th>#}
-{#            </tr>#}
-{#            </thead>#}
-{#            <tbody>#}
-{#            {% for matiere in matieres %}#}
-{#                <tr>#}
-{#                    <td>{{ matiere.id }}</td>#}
-{#                    <td>{{ matiere.nom }}</td>#}
-{#                    <td>#}
-{#                        {% if matiere.idEnsg %}#}
-{#                            {{ matiere.idEnsg.nom }}#}
-{#                        {% else %}#}
-{#                            <span class="text-danger">Aucun enseignant</span>#}
-{#                        {% endif %}#}
-{#                    </td>#}
-{#                </tr>#}
-{#            {% else %}#}
-{#                <tr>#}
-{#                    <td colspan="3" class="text-center">Aucune matière trouvée.</td>#}
-{#                </tr>#}
-{#            {% endfor %}#}
-{#            </tbody>#}
-{#        </table>#}
-{#    </div>#}
-{#{% endblock %}#}
 
 {% extends 'side-bar.html.twig' %}
 
@@ -43,75 +6,105 @@
 
 {% block body %}
 <div style="margin-top: 100px; margin-left: 0;">
+    <a href="{{ path('app_matiere_new') }}" class="btn btn-success mb-3">Ajouter une Matière</a>
+
 
     <div class="container mt-4">
         <h1 class="mb-4">Liste des Matières</h1>
         <!-- Search Form -->
-        <form method="GET" action="{{ path('app_matiere_list') }}" class="mb-3">
+        <form id="search-form" method="GET" action="{{ path('app_matiere_list') }}" class="mb-3">
             <div class="input-group">
-                <input type="text" name="search" class="form-control" placeholder="Rechercher un enseignant..." value="{{ app.request.get('search') }}">
+                <input type="text" id="search-input" name="search" class="form-control" placeholder="Rechercher un enseignant..." value="{{ app.request.get('search') }}">
                 <button type="submit" class="btn btn-primary">Rechercher</button>
             </div>
         </form>
 
-        {% for teacher, matieres in groupedMatieres %}
-            <h3>{{ teacher }}</h3> <!-- Display Teacher's Name -->
+        <!-- Matieres List Table -->
+        <div id="matiere-list">
+            {% include 'matiere/ajax_list.html.twig' %}
+        </div>
 
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nom de la Matière</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for matiere in matieres %}
-                    <tr>
-                        <td>{{ matiere.id }}</td>
-                        <td>{{ matiere.nom }}</td>
+{#        {% for teacher, matieres in groupedMatieres %}#}
+{#            <h3>{{ teacher }}</h3> <!-- Display Teacher's Name -->#}
 
-                        <td>
-                            <a href="{{ path('app_matiere_edit', {'id': matiere.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
-                        </td>
-                        <td>
-                            <form action="{{ path('app_matiere_delete', {'id': matiere.id}) }}" method="post" class="d-inline"
-                                  onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette matière ?');">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ matiere.id) }}">
-                                <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
-                            </form>
-                        </td>
+{#            <table class="table table-striped">#}
+{#                <thead>#}
+{#                <tr>#}
+{#                    <th>ID</th>#}
+{#                    <th>Nom de la Matière</th>#}
+{#                    <th>Actions</th>#}
+{#                </tr>#}
+{#                </thead>#}
+{#                <tbody>#}
+{#                {% for matiere in matieres %}#}
+{#                    <tr>#}
+{#                        <td>{{ matiere.id }}</td>#}
+{#                        <td>{{ matiere.nom }}</td>#}
+
+{#                        <td>#}
+{#                            <a href="{{ path('app_matiere_edit', {'id': matiere.id}) }}" class="btn btn-warning btn-sm">Modifier</a>#}
+{#                        </td>#}
+{#                        <td>#}
+{#                            <form action="{{ path('app_matiere_delete', {'id': matiere.id}) }}" method="post" class="d-inline"#}
+{#                                  onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette matière ?');">#}
+{#                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ matiere.id) }}">#}
+{#                                <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>#}
+{#                            </form>#}
+{#                        </td>#}
 
 
 
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        {% else %}
-            <p>Aucune matière trouvée.</p>
-        {% endfor %}
+{#                    </tr>#}
+{#                {% endfor %}#}
+{#                </tbody>#}
+{#            </table>#}
+{#        {% else %}#}
+{#            <p>Aucune matière trouvée.</p>#}
+{#        {% endfor %}#}
+
     </div>
+
 </div>
 {% endblock %}
-{% block javascripts %}
-{% endblock %}
-{#{% block javascripts %}#}
-{#    {{ parent() }} #}{# Include parent JavaScript files #}
-{#    <script>#}
-{#        document.addEventListener('DOMContentLoaded', function() {#}
-{#            // Initialize Select2 for the teacher dropdown#}
-{#            $('#teacher').select2({#}
-{#                placeholder: 'Rechercher un enseignant...', // Placeholder text#}
-{#                allowClear: true, // Allow clearing the selection#}
-{#                width: '100%', // Make the dropdown full width#}
-{#            });#}
 
-{#            // Reinitialize Select2 if a teacher is already selected#}
-{#            const selectedTeacherId = "{{ selectedTeacherId }}";#}
-{#            if (selectedTeacherId) {#}
-{#                $('#teacher').val(selectedTeacherId).trigger('change');#}
-{#            }#}
-{#        });#}
-{#    </script>#}
-{#{% endblock %}#}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function initializeSearch() {
+            const searchInput = document.getElementById("search-input");
+            const matiereList = document.getElementById("matiere-list");
+            let timer;
+
+            if (searchInput && matiereList) {
+                searchInput.addEventListener("keyup", function () {
+                    clearTimeout(timer); // Clear any existing timer
+                    const query = searchInput.value.trim(); // Remove leading/trailing spaces
+
+                    timer = setTimeout(() => {
+                        // Update the browser's URL with the search query
+                        const url = new URL(window.location.href);
+                        url.searchParams.set("search", query);
+                        window.history.replaceState({}, "", url);
+
+                        fetch("{{ path('app_matiere_list') }}?search=" + encodeURIComponent(query) + "&_=" + Date.now(), {
+                            headers: { "X-Requested-With": "XMLHttpRequest" } // Identify as AJAX request
+                        })
+                            .then(response => response.text())
+                            .then(data => {
+                                matiereList.innerHTML = data; // Update matiere list
+                            })
+                            .catch(error => console.error("Erreur lors du filtrage :", error));
+                    }, 300); // Wait 300ms before sending the request
+                });
+            }
+        }
+
+        // Initialize search on page load
+        document.addEventListener("DOMContentLoaded", initializeSearch);
+
+        // Re-initialize search if the page is loaded dynamically (e.g., via TurboLinks or similar)
+        if (typeof Turbo !== "undefined") {
+            document.addEventListener("turbo:load", initializeSearch);
+        }
+    </script>
+{% endblock %}

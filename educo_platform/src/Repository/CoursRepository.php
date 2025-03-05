@@ -16,6 +16,11 @@ class CoursRepository extends ServiceEntityRepository
         parent::__construct($registry, Cours::class);
     }
 
+    public function findCourseById($courseId)
+    {
+        return $this->find($courseId);
+    }
+
     //    /**
     //     * @return Cours[] Returns an array of Cours objects
     //     */

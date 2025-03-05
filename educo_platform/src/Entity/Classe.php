@@ -34,7 +34,7 @@ class Classe
      * @var Collection<int, User>
      */
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'classes')]
-    #[Assert\Count(min: 1, minMessage: 'Veuillez sélectionner au moins un utilisateur.')]  
+    #[Assert\Count(min: 1, minMessage: 'Veuillez sélectionner au moins un utilisateur.')]
     private Collection $id_user;
 
     /**
@@ -48,26 +48,6 @@ class Classe
      */
     #[ORM\OneToMany(targetEntity: Quiz::class, mappedBy: 'classe')]
     private Collection $quizzes;
-
-
-
-    // Add the ManyToOne relationship to Cours
-    #[ORM\ManyToOne(targetEntity: Cours::class, inversedBy: 'classes')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Cours $cours = null;
-
-    public function getCours(): ?Cours
-    {
-        return $this->cours;
-    }
-
-    public function setCours(?Cours $cours): self
-    {
-        $this->cours = $cours;
-        return $this;
-    }
-
-
 
     public function __construct()
     {

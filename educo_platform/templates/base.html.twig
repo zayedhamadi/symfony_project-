@@ -41,11 +41,14 @@
 
 
         {% block stylesheets %}
+
         {% endblock %}
 
 
         {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
+            {% block importmap %}{{ importmap('app') }}
+
+            {% endblock %}
         {% endblock %}
 
         <!-- Favicon -->

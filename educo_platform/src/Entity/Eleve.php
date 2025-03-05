@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use Symfony\Component\Security\Core\Security;
 
 use App\Repository\EleveRepository;
 use Doctrine\Common\Collections\ArrayCollection;

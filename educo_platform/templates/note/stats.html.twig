@@ -1,0 +1,122 @@
+{% extends 'side-bar-ensg.html.twig' %}
+
+{% block title %}Statistiques des Quiz{% endblock %}
+
+{% block body %}
+    <h1>Statistiques Globales des Quiz</h1>
+
+    <div class="stats-container">
+        {% for stat in stats %}
+            <div class="stat-card">
+                <h2>{{ stat.quiz.titre }}</h2>
+                <div class="stat-details">
+                    <p><strong>Élèves ayant passé:</strong> {{ stat.totalEleves }}</p>
+                    <p><strong>Réussite:</strong> {{ stat.totalReussite }}</p>
+                    <p><strong>Échec:</strong> {{ stat.totalEchec }}</p>
+                    <p><strong>Moyenne:</strong> {{ stat.moyenne }}/20</p>
+                </div>
+                <canvas id="chart-{{ stat.quiz.id }}" width="400" height="200"></canvas>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        /* Charte graphique générale */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;  /* Fond léger gris-bleu */
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            color: #003366;  /* Bleu marine foncé */
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2em;
+            font-weight: 700;
+        }
+
+        /* Container for cards */
+        .stats-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        /* Card styling */
+        .stat-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .stat-card h2 {
+            color: #007bff;  /* Bleu principal */
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .stat-details p {
+            margin: 10px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .stat-details p strong {
+            color: #003366;  /* Bleu marine foncé */
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .stat-card {
+                width: 100%;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            {% for stat in stats %}
+                var ctx = document.getElementById('chart-{{ stat.quiz.id }}').getContext('2d');
+                var chart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Réussite', 'Échec'],
+                        datasets: [{
+                            label: 'Statistiques',
+                            data: [{{ stat.totalReussite }}, {{ stat.totalEchec }}],
+                            backgroundColor: [
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(255, 99, 132, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(255, 99, 132, 1)'
+                            ],
+                            borderWidth: 1
+                            
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            {% endfor %}
+        });
+    </script>
+{% endblock %}

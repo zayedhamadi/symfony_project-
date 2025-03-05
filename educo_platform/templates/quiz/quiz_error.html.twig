@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Quiz Attempt Limit Exceeded{% endblock %}
+
+{% block body %}
+    <div class="alert alert-danger">
+        <h2>Quiz Attempt Limit Exceeded</h2>
+        <p>{{ message }}</p>
+        <p>You have reached the maximum number of quiz attempts for today. Please try again later.</p>
+        <a href="{{ path('parent_quiz_list') }}" class="btn btn-primary">Back to Quiz List</a>
+    </div>
+{% endblock %}

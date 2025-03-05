@@ -144,7 +144,7 @@ final class CommandeController extends AbstractController
         $session = $request->getSession();
         // Récupérer l'utilisateur connecté
         $user = $this->getUser();
-
+       
         // Récupérer le panier de la session
         $panier = $session->get('panier', []);
         $session = $request->getSession();

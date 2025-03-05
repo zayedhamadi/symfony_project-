@@ -1,38 +1,51 @@
 <?php
-namespace App\Security ;
+namespace App\Security;
 
+use App\Entity\Enum\Rolee;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\HttpFoundation\Response;
 
-class LoginSuccessHandler  implements AuthenticationSuccessHandlerInterface
+class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface
 {
-    private $jwtManager;
-    private $router;
-    private $session;
+    private JWTTokenManagerInterface $jwtManager;
+    private RouterInterface $router;
 
-    public function __construct(JWTTokenManagerInterface $jwtManager, RouterInterface $router, SessionInterface $session)
+
+    public function __construct(JWTTokenManagerInterface $jwtManager, RouterInterface $router)
     {
         $this->jwtManager = $jwtManager;
         $this->router = $router;
-        $this->session = $session;
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token): RedirectResponse
+    /**
+     * Méthode exécutée après une authentification réussie.
+     * Cette méthode redirige l'utilisateur en fonction de son rôle.
+     *
+     * @param Request $request
+     * @param TokenInterface $token
+     * @return Response
+     */
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token): Response
     {
         $user = $token->getUser();
+        $jwt = $this->jwtManager->create($user);
 
-        $jwtToken = $this->jwtManager->create($user);
-        $userId = $user->getId();
 
-        $this->session->set('jwt_token', $jwtToken);
-        $this->session->set('user_id', $userId);
+        if (in_array(Rolee::Admin->value, $user->getRoles())) {
+            $url = $this->router->generate('admin_dashboard');
+        } elseif (in_array(Rolee::Enseignant->value, $user->getRoles())) {
+            $url = $this->router->generate('EnseignantControllerr');
+        } elseif (in_array(Rolee::Parent->value, $user->getRoles())) {
+            $url = $this->router->generate('testtttController');
+        } else {
+            $url = $this->router->generate('app_dashboardAdmin');
+        }
 
-        return new RedirectResponse($this->router->generate('app_testing_login'));
+        return new RedirectResponse($url);
     }
 }
-

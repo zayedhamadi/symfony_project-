@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{bootstrap, bootstrap.bundle, chart.js, font-awesome, jquery, lineicons}" />
-    <file url="PROJECT" libraries="{bootstrap, bootstrap.bundle, font-awesome, jquery, jquery-3.4.1, jquery-3.6.0, pdf.js, select2}" />
-    <file url="PROJECT" libraries="{bootstrap, bootstrap.bundle, font-awesome, jquery}" />
+    <file url="PROJECT" libraries="{bootstrap, bootstrap-icons, bootstrap.bundle, font-awesome, jquery, sweetalert2}" />
   </component>
 </project>

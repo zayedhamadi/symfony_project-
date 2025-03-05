@@ -293,6 +293,16 @@
       <path value="$PROJECT_DIR$/educo_platform/vendor/dompdf/dompdf" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/spraed/pdf-generator-bundle" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/matthiasnoback/symfony-config-test" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/markbaker/matrix" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/zircote/swagger-php" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/markbaker/complex" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/nelmio/api-doc-bundle" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/bacon/bacon-qr-code" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/maennchen/zipstream-php" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/endroid/qr-code" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/phpoffice/phpspreadsheet" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/dasprid/enum" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/psr/simple-cache" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

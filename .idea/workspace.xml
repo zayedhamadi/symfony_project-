@@ -4,28 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="fix_some_error">
-      <change afterPath="$PROJECT_DIR$/educo_platform/templates/categorie/_categories_list.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/educo_platform/templates/facture/facture.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/educo_platform/templates/produit/_produit_liste_admin.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/educo_platform/templates/produit/_produits_list.html.twig" afterDir="false" />
+    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="gestion vente qq modif+bundlepdf+pagination...">
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/symfony_project-.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/symfony_project-.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/.env" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/educo_platform/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/CategorieController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/CategorieController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/CommandeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/CommandeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/ProduitController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/ProduitController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/symfony.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/categorie/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/categorie/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/commande/confirmation.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/commande/confirmation.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/panier/view.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/panier/view.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/produit/boutique.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/produit/boutique.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/produit/detailsProduit_parent.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/produit/detailsProduit_parent.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/templates/produit/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/produit/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/DashboardParent.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/DashboardParent.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/EleveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/EleveController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -344,6 +329,16 @@
       <path value="$PROJECT_DIR$/educo_platform/vendor/dompdf/dompdf" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/spraed/pdf-generator-bundle" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/matthiasnoback/symfony-config-test" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/markbaker/matrix" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/zircote/swagger-php" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/markbaker/complex" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/nelmio/api-doc-bundle" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/bacon/bacon-qr-code" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/maennchen/zipstream-php" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/endroid/qr-code" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/phpoffice/phpspreadsheet" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/dasprid/enum" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/psr/simple-cache" />
     </include_path>
   </component>
   <component name="ProblemsViewState">
@@ -430,7 +425,8 @@
       <workItem from="1741086590558" duration="699000" />
       <workItem from="1741100569790" duration="3741000" />
       <workItem from="1741104362295" duration="938000" />
-      <workItem from="1741123110546" duration="9606000" />
+      <workItem from="1741123110546" duration="9931000" />
+      <workItem from="1741169704707" duration="2477000" />
     </task>
     <task id="LOCAL-00001" summary="gestion ventev2">
       <option name="closed" value="true" />
@@ -576,7 +572,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740601584340</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="gestion vente qq modif+bundlepdf+pagination...">
+      <option name="closed" value="true" />
+      <created>1741134573170</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1741134573170</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -607,6 +611,7 @@
     <MESSAGE value="vente_dashbord" />
     <MESSAGE value="add_bundle_pagination+fix_paieement" />
     <MESSAGE value="fix_some_error" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix_some_error" />
+    <MESSAGE value="gestion vente qq modif+bundlepdf+pagination..." />
+    <option name="LAST_COMMIT_MESSAGE" value="gestion vente qq modif+bundlepdf+pagination..." />
   </component>
 </project>

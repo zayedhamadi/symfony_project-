@@ -4,13 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="fix errors">
+    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="fix errors classe">
+    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="fix_some_error">
+      <change afterPath="$PROJECT_DIR$/educo_platform/templates/cessation/_cessation_list.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/symfony_project-.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/symfony_project-.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/educo_platform/migrations/Version20250301230803.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/exams/exam_schedule.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/exams/exam_schedule.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/side-bar.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/side-bar.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/.env" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Controller/cessationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Controller/cessationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Entity/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/educo_platform/src/Form/UserType.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Form/UserType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/cessation/all_cessations.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/cessation/all_cessations.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/user/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/user/edit.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,17 +46,17 @@
     &quot;state&quot;: &quot;OPEN&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/zayedhamadi/symfony_project-.git&quot;,
-    &quot;accountId&quot;: &quot;e7238bff-e78a-43d5-9201-a0916fbb302b&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/zayedhamadi/symfony_project-.git",
+    "accountId": "64b14e0e-5cf3-4a95-bfed-422dd74017d3"
   }
-}</component>
+}]]></component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/educo_platform/templates/categorie/index.html.twig" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/educo_platform/templates/categorie/new.html.twig" root0="FORCE_HIGHLIGHTING" root1="SKIP_INSPECTION" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="E:\Xampp\php\php.exe">
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\xampp\php\php.exe">
     <include_path>
       <path value="$PROJECT_DIR$/educo_platform/vendor/lexik/jwt-authentication-bundle" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/webmozart/assert" />
@@ -350,6 +360,8 @@
       <path value="$PROJECT_DIR$/educo_platform/vendor/fakerphp/faker" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/lock" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/rate-limiter" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/zircote/swagger-php" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/nelmio/api-doc-bundle" />
     </include_path>
   </component>
   <component name="ProblemsViewState">
@@ -396,8 +408,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-PS-243.23654.168" />
-        <option value="bundled-php-predefined-a98d8de5180a-4c3855d0ab16-com.jetbrains.php.sharedIndexes-PS-243.23654.168" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-PS-243.25659.45" />
+        <option value="bundled-php-predefined-a98d8de5180a-1ec7b7818973-com.jetbrains.php.sharedIndexes-PS-243.25659.45" />
       </set>
     </attachedChunks>
   </component>
@@ -437,7 +449,9 @@
       <workItem from="1741100569790" duration="3741000" />
       <workItem from="1741104362295" duration="938000" />
       <workItem from="1741123110546" duration="9931000" />
-      <workItem from="1741169704707" duration="8365000" />
+      <workItem from="1741169704707" duration="14919000" />
+      <workItem from="1741123110546" duration="9606000" />
+      <workItem from="1741183516039" duration="301000" />
     </task>
     <task id="LOCAL-00001" summary="gestion ventev2">
       <option name="closed" value="true" />
@@ -607,7 +621,23 @@
       <option name="project" value="LOCAL" />
       <updated>1741181463928</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="fix errors">
+      <option name="closed" value="true" />
+      <created>1741184073674</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1741184073674</updated>
+    </task>
+    <task id="LOCAL-00023" summary="fix errors classe">
+      <option name="closed" value="true" />
+      <created>1741189238802</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1741189238802</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -640,6 +670,7 @@
     <MESSAGE value="fix_some_error" />
     <MESSAGE value="gestion vente qq modif+bundlepdf+pagination..." />
     <MESSAGE value="fix errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix errors" />
+    <MESSAGE value="fix errors classe" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix errors classe" />
   </component>
 </project>

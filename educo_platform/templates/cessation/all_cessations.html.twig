@@ -6,131 +6,83 @@
     <div class="container mt-5">
         <h1 class="text-center mb-4">Liste des cessations</h1>
 
-        <div class="row">
-            {% for cessation in cessations %}
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm border-light rounded">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="me-3">
-                                    {% if cessation.idUser.image %}
-                                        <img src="{{ asset('uploads/' ~ cessation.idUser.image) }}" alt="Image de {{ cessation.idUser.prenom }}" width="60" height="60" class="rounded-circle border border-2">
-                                    {% else %}
-                                        <img src="{{ asset('images/default-avatar.png') }}" alt="Image par défaut" width="60" height="60" class="rounded-circle border border-2">
-                                    {% endif %}
+        <div class="row mb-3">
+            <div class="col-md-6 offset-md-3">
+                <form method="get" action="{{ path('app_chercherCessation_list') }}" class="d-flex">
+                    <input type="text" name="search" class="form-control me-2" placeholder="Rechercher par nom ou prénom" value="{{ app.request.query.get('search') }}">
+                    <button type="submit" class="btn btn-primary">Rechercher</button>
+                </form>
+            </div>
+        </div>
+        <div id="cessation-list">
+            <div class="row">
+                {% for cessation in cessations %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm border-light rounded">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="me-3">
+                                        {% if cessation.idUser.image %}
+                                            <img src="{{ asset('uploads/' ~ cessation.idUser.image) }}" alt="Image de {{ cessation.idUser.prenom }}" width="60" height="60" class="rounded-circle border border-2">
+                                        {% else %}
+                                            <img src="{{ asset('images/default-avatar.png') }}" alt="Image par défaut" width="60" height="60" class="rounded-circle border border-2">
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-0">{{ cessation.idUser.prenom }} {{ cessation.idUser.nom }}</h5>
+                                        <p class="text-muted">{{ cessation.idUser.roles|join(', ') }}</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h5 class="mb-0">{{ cessation.idUser.prenom }} {{ cessation.idUser.nom }}</h5>
-                                    <p class="text-muted">{{ cessation.idUser.roles|join(', ') }}</p>
-                                </div>
-                            </div>
-                            <p><strong>Motif:</strong> {{ cessation.motif }}</p>
-                            <p><strong>Date de Cessation:</strong> {{ cessation.dateMotif|date('d/m/Y') }}</p>
+                                <p><strong>Motif:</strong> {{ cessation.motif }}</p>
+                                <p><strong>Date de Cessation:</strong> {{ cessation.dateMotif|date('d/m/Y') }}</p>
 
-                            <form action="{{ path('activate_account', {'id': cessation.id}) }}" method="POST">
-                                <button type="submit" class="btn btn-outline-success btn-sm w-100">Activer son compte</button>
-                            </form>
+                                <form action="{{ path('activate_account', {'id': cessation.id}) }}" method="POST">
+                                    <button type="submit" class="btn btn-outline-success btn-sm w-100">Activer son compte</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% else %}
-                <div class="col-12 text-center">
-                    <p>Aucune cessation trouvée</p>
-                </div>
-            {% endfor %}
-        </div>
-
-        <div class="d-flex justify-content-center">
-            <a href="{{ path('app_user_index') }}" class="btn btn-outline-secondary w-auto mb-3"
-               style="border-radius: 30px; font-weight: bold; padding: 12px 30px; font-size: 1rem; text-align: center;">
-                <i class="fas fa-arrow-left"></i> Retour à la page des utilisateurs
-            </a>
+                {% else %}
+                    <div class="col-12 text-center">
+                        <p>Aucune cessation trouvée</p>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}
 
-{% block stylesheets %}
-    <style>
-        .container {
-            padding-top: 50px;
-        }
 
-        h1 {
-            font-family: 'Arial', sans-serif;
-            font-size: 2rem;
-            font-weight: 600;
-            color: #333;
-        }
 
-        .card {
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
 
-        .card img {
-            border-radius: 50%;
-            border: 3px solid #007bff;
-            transition: transform 0.3s ease;
-        }
+{% block javascripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const searchInput = document.querySelector("input[name='search']");
+    const cessationList = document.querySelector("#cessation-list");
 
-        .card img:hover {
-            transform: scale(1.1);
-        }
+    searchInput.addEventListener("keyup", function() {
+        const searchQuery = searchInput.value.trim();
 
-        .card-body {
-            padding: 20px;
-        }
+        fetch("{{ path('app_chercherCessation_list') }}?search=" + encodeURIComponent(searchQuery), {
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Erreur lors du chargement des cessations");
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.html) {
+                    cessationList.innerHTML = data.html;
+                }
+            })
+            .catch(error => console.error(error));
+    });
+});
 
-        .card-body h5 {
-            font-size: 1.25rem;
-            font-weight: 500;
-            color: #333;
-        }
-
-        .card-body p {
-            color: #555;
-            font-size: 0.9rem;
-        }
-
-        .card-body .btn {
-            font-weight: 600;
-        }
-
-        .btn-outline-success {
-            color: #28a745;
-            border-color: #28a745;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .btn-outline-success:hover {
-            background-color: #28a745;
-            color: white;
-        }
-
-        .btn-outline-secondary {
-            color: #6c757d;
-            border-color: #6c757d;
-            font-weight: bold;
-            padding: 12px 30px;
-            font-size: 1rem;
-            border-radius: 30px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .btn-outline-secondary:hover {
-            background-color: #6c757d;
-            color: white;
-        }
-
-        @media (max-width: 768px) {
-            .card-body h5 {
-                font-size: 1.1rem;
-            }
-
-            .card-body p {
-                font-size: 0.85rem;
-            }
-        }
-    </style>
+    </script>
 {% endblock %}
+
+

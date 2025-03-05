@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="fix errors">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/symfony_project-.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/symfony_project-.iml" afterDir="false" />
+    <list default="true" id="ad0ff202-a0e4-4fda-9ad2-609a78caf326" name="Changes" comment="fix errors classe">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/educo_platform/migrations/Version20250301230803.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/src/Form/UserType.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Form/UserType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/exams/exam_schedule.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/exams/exam_schedule.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/templates/side-bar.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/templates/side-bar.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -437,7 +436,7 @@
       <workItem from="1741100569790" duration="3741000" />
       <workItem from="1741104362295" duration="938000" />
       <workItem from="1741123110546" duration="9931000" />
-      <workItem from="1741169704707" duration="8365000" />
+      <workItem from="1741169704707" duration="14919000" />
     </task>
     <task id="LOCAL-00001" summary="gestion ventev2">
       <option name="closed" value="true" />
@@ -607,7 +606,23 @@
       <option name="project" value="LOCAL" />
       <updated>1741181463928</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="fix errors">
+      <option name="closed" value="true" />
+      <created>1741184073674</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1741184073674</updated>
+    </task>
+    <task id="LOCAL-00023" summary="fix errors classe">
+      <option name="closed" value="true" />
+      <created>1741189238802</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1741189238802</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -640,6 +655,7 @@
     <MESSAGE value="fix_some_error" />
     <MESSAGE value="gestion vente qq modif+bundlepdf+pagination..." />
     <MESSAGE value="fix errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix errors" />
+    <MESSAGE value="fix errors classe" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix errors classe" />
   </component>
 </project>

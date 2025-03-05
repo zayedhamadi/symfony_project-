@@ -16,6 +16,16 @@ class EleveRepository extends ServiceEntityRepository
         parent::__construct($registry, Eleve::class);
     }
 
+    public function findByNomAndPrenom(string $searchTerm): array
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.Nom LIKE :searchTerm OR e.Prenom LIKE :searchTerm')
+            ->setParameter('searchTerm', '%' . $searchTerm . '%')
+            ->orderBy('e.Nom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Eleve[] Returns an array of Eleve objects
     //     */

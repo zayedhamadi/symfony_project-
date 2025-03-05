@@ -28,7 +28,8 @@ class Eleve
     private ?string $Prenom = null;  
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]  
-    #[Assert\NotBlank(message: "La date de naissance ne peut pas être vide.")]
+    #[Assert\NotBlank(message: "La date de naissance est obligatoire")]
+    #[Assert\LessThanOrEqual("today", message: "La date de naissance ne peut pas être supérieure à la date actuelle.")]
     private ?\DateTimeInterface $DateDeNaissance = null;  
 
     #[ORM\ManyToOne(inversedBy: 'eleves')]  
@@ -51,9 +52,13 @@ class Eleve
     private ?int $NbreAbscence = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Assert\NotBlank(message: "La date d'inscription ne peut pas être vide.")]
+    #[Assert\NotBlank(message: "La date de inscription est obligatoire")]
+    #[Assert\LessThanOrEqual("today", message: "La date de naissance ne peut pas être supérieure à la date actuelle.")]
+    
     private ?\DateTimeInterface $DateInscription = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $qrCodeDataUri = null;
     /**
      * @var Collection<int, Matiere>
      */
@@ -215,6 +220,20 @@ class Eleve
                 $note->setEleve(null);
             }
         }
+        return $this;
+    }
+    
+
+
+
+    public function getQrCodeDataUri(): ?string
+    {
+        return $this->qrCodeDataUri;
+    }
+
+    public function setQrCodeDataUri(string $qrCodeDataUri): self
+    {
+        $this->qrCodeDataUri = $qrCodeDataUri;
         return $this;
     }
 

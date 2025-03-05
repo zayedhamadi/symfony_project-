@@ -28,14 +28,23 @@ final class DashboardParent extends AbstractController
     {
         $user = $this->getUser();
 
-        // Vérifier si l'utilisateur a le rôle 'ROLE_PARENT'
-        if (in_array('ROLE_PARENT', $user->getRoles())) {
-            return $this->render('dashborad_parent/profile.html.twig', [
-                'user' => $user,
-            ]);
-        }
-
+    // Vérifier si l'utilisateur est connecté
+    if (!$user) {
         return $this->redirectToRoute('app_login');
+    }
+
+    // Vérifier si l'utilisateur a le rôle 'ROLE_PARENT'
+    if (!in_array('ROLE_PARENT', $user->getRoles(), true)) {
+        return $this->redirectToRoute('app_login');
+    }
+
+    // Récupérer les élèves liés au parent connecté
+    $eleves = $this->entityManager->getRepository(Eleve::class)->findBy(['parent' => $user]);
+
+    return $this->render('dashborad_parent/profile.html.twig', [
+        'user' => $user,
+        'eleves' => $eleves, // Passer les élèves au template
+    ]);
     }
 
     // Liste des élèves

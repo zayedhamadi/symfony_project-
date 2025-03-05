@@ -77,25 +77,25 @@ class UserType extends AbstractType
                 'choice_value' => fn(?Genre $choice) => $choice?->value,
                 'label' => 'Genre',
                 'placeholder' => 'Sélectionnez votre genre'
+            ])
+            ->add('etatCompte', ChoiceType::class, [
+                'choices' => EtatCompte::cases(),
+                'choice_label' => fn(EtatCompte $choice) => $choice->name,
+                'choice_value' => fn(?EtatCompte $choice) => $choice?->value,
+                'label' => 'État du compte',
+                'placeholder' => 'Sélectionnez un état'
+            ])
+            ->add('roles', ChoiceType::class, [
+                'choices' => array_combine(
+                    array_map(fn(Rolee $role) => $role->name, array_filter(Rolee::cases(), fn(Rolee $role) => $role !== Rolee::Admin)),
+                    array_map(fn(Rolee $role) => $role->value, array_filter(Rolee::cases(), fn(Rolee $role) => $role !== Rolee::Admin))
+                ),
+                'choice_label' => fn($choice) => $choice,
+                'choice_value' => fn($choice) => (string)$choice,
+                'label' => 'Roles',
+                'multiple' => true,
+                'expanded' => true
             ]);
-//            ->add('etatCompte', ChoiceType::class, [
-//                'choices' => EtatCompte::cases(),
-//                'choice_label' => fn(EtatCompte $choice) => $choice->name,
-//                'choice_value' => fn(?EtatCompte $choice) => $choice?->value,
-//                'label' => 'État du compte',
-//                'placeholder' => 'Sélectionnez un état'
-//            ])
-//            ->add('roles', ChoiceType::class, [
-//                'choices' => array_combine(
-//                    array_map(fn(Rolee $role) => $role->name, array_filter(Rolee::cases(), fn(Rolee $role) => $role !== Rolee::Admin)),
-//                    array_map(fn(Rolee $role) => $role->value, array_filter(Rolee::cases(), fn(Rolee $role) => $role !== Rolee::Admin))
-//                ),
-//                'choice_label' => fn($choice) => $choice,
-//                'choice_value' => fn($choice) => (string)$choice,
-//                'label' => 'Roles',
-//                'multiple' => true,
-//                'expanded' => true
-//            ]);
     }
 
 

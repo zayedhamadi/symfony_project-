@@ -8,8 +8,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/symfony_project-.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/symfony_project-.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/educo_platform/.env" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/educo_platform/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/migrations/Version20250301230803.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/educo_platform/src/Form/UserType.php" beforeDir="false" afterPath="$PROJECT_DIR$/educo_platform/src/Form/UserType.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -343,6 +344,12 @@
       <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/workflow" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/twilio-notifier" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/twilio/sdk" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/doctrine/doctrine-fixtures-bundle" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/doctrine/data-fixtures" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/tattali/calendar-bundle" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/fakerphp/faker" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/lock" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/rate-limiter" />
     </include_path>
   </component>
   <component name="ProblemsViewState">
@@ -430,7 +437,7 @@
       <workItem from="1741100569790" duration="3741000" />
       <workItem from="1741104362295" duration="938000" />
       <workItem from="1741123110546" duration="9931000" />
-      <workItem from="1741169704707" duration="5824000" />
+      <workItem from="1741169704707" duration="8365000" />
     </task>
     <task id="LOCAL-00001" summary="gestion ventev2">
       <option name="closed" value="true" />
@@ -592,7 +599,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741173480861</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="fix errors">
+      <option name="closed" value="true" />
+      <created>1741181463928</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1741181463928</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -308,6 +308,12 @@
       <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/workflow" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/twilio-notifier" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/twilio/sdk" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/doctrine/doctrine-fixtures-bundle" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/doctrine/data-fixtures" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/tattali/calendar-bundle" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/fakerphp/faker" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/lock" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/rate-limiter" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

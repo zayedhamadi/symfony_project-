@@ -5,7 +5,7 @@
 {% block body %}
 <div class="container" style="margin-top: 50px !important; padding: 0 15px !important;">
 
-    <div class="container mt-5">
+
      
      
 
@@ -105,7 +105,7 @@
                             $('#searchtab').show();
                             $.each(retour, function(i, obj) {
                                 let reservationBtn = obj.inscriptionRequise
-                                    ? `<a href="{{ path('inscription_evenement', {'id': '__ID__'}) }}".replace('__ID__', obj.id) class="btn btn-success w-100">Réserver</a>`
+                                    ? `<a href="/inscription/${obj.id}" class="btn btn-success w-100">Réserver</a>`
                                     : '';
 
                                 let places = obj.inscriptionRequise
@@ -155,7 +155,7 @@
                             $('#all').empty();
                             $.each(retour, function(i, obj) {
                                 let reservationBtn = obj.inscriptionRequise
-                                    ? `<a href="{{ path('inscription_evenement', {'id': '__ID__'}) }}".replace('__ID__', obj.id) class="btn btn-success w-100">Réserver</a>`
+                                    ? `<a href="/inscription/${obj.id}" class="btn btn-success w-100">Réserver</a>`
                                     : '';
 
                                 let places = obj.inscriptionRequise

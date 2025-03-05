@@ -76,11 +76,21 @@
 
                 let row = $(this).closest("tr");
 
-                // Mise à jour du total localement sans faire une requête AJAX
-                let prixUnitaire = row.find("td:eq(3)").text(); // Récupère le prix unitaire dans la colonne
+                // Récupérer le prix unitaire, enlever le texte " dt" et convertir en nombre
+                let prixUnitaireText = row.find("td:eq(3)").text().replace(' dt', '').trim();
+                let prixUnitaire = parseFloat(prixUnitaireText); // Convertir en nombre flottant
+
+                // Si le prix n'est pas un nombre valide, on l'ignore (ou on met à 0, selon ton choix)
+                if (isNaN(prixUnitaire)) {
+                    prixUnitaire = 0;
+                }
+
                 let totalProduit = prixUnitaire * nouvelleQuantite; // Calcule le nouveau total
 
-                row.find(".total-produit").text(totalProduit + " dt"); // Met à jour le total pour ce produit
+                // Formatage avec séparateur de milliers
+                let totalProduitFormatted = totalProduit.toLocaleString('fr-FR'); // Format français (avec point)
+
+                row.find(".total-produit").text(totalProduitFormatted); // Met à jour le total pour ce produit
 
                 // Maintenant, on envoie la mise à jour à l'API
                 $.ajax({
@@ -89,13 +99,17 @@
                     data: { quantite: nouvelleQuantite },
                     success: function(response) {
                         if (response.success) {
+                            // Formatage du total global du panier
+                            let totalPanierFormatted = response.total_panier.toLocaleString('fr-FR');
                             // Met à jour le total global du panier
-                            $("#total-panier").text(response.total_panier + " dt");
+                            $("#total-panier").text(totalPanierFormatted);
                         }
                     }
                 });
             });
         });
+
+
     </script>
 
 {% endblock %}

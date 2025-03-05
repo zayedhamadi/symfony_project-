@@ -8,6 +8,13 @@ parameters:
     pdf_directory: '%kernel.project_dir%/public/uploads/pdfs'
 
 services:
+
+    App\EventSubscriber\CalendarSubscriber:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'  # Make sure this argument is passed
+        tags:
+            - { name: 'kernel.event_subscriber' }
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

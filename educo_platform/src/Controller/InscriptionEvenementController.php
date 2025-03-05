@@ -56,62 +56,69 @@ class InscriptionEvenementController extends AbstractController
         
         $session = $request->getSession();
         $userid = $session->get('user_id');
-
+    
         if (!$userid) {
             $this->addFlash('danger', 'Vous devez être connecté pour inscrire un enfant.');
             return $this->redirectToRoute('app_login');
         }
-
+    
         
         $user = $userRepository->find($userid);
         if (!$user) {
             $this->addFlash('danger', 'Utilisateur non trouvé.');
             return $this->redirectToRoute('app_login');
         }
-
+    
         
         $enfants = $user->getEleves();
         if ($enfants->isEmpty()) {
             $this->addFlash('danger', 'Vous n\'avez pas d\'enfants enregistrés.');
             return $this->redirectToRoute('reservations_evenement');
         }
-
+    
         
         $inscription = new InscriptionEvenement();
         $inscription->setEvenement($evenement);
         $inscription->setDateInscription(new \DateTime());
-
+    
         
         $form = $this->createForm(InscriptionEvenementType::class, $inscription, [
             'enfants' => $enfants,
         ]);
         $form->handleRequest($request);
-
+    
+        // Si le formulaire est soumis mais invalide (captcha incorrect)
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('error', 'Le captcha est incorrect. Veuillez réessayer.');
+            return $this->redirectToRoute('inscription_evenement', ['id' => $evenement->getId()]);
+        }
+    
+        // Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
             
             $enfant = $form->get('enfant')->getData();
-
+    
             
             if (!$enfant) {
                 $this->addFlash('danger', 'Veuillez sélectionner un enfant.');
                 return $this->redirectToRoute('inscription_evenement', ['id' => $evenement->getId()]);
             }
-
+    
             
             $inscription->setEnfant($enfant);
-
+    
             
             $dejaInscrit = $entityManager->getRepository(InscriptionEvenement::class)->findOneBy([
                 'evenement' => $evenement,
                 'enfant' => $enfant
             ]);
-
+    
             if ($dejaInscrit) {
                 $this->addFlash('warning', 'Cet enfant est déjà inscrit à cet événement.');
                 return $this->redirectToRoute('reservations_evenement');
             }
-
-          
+    
+           
             if ($evenement->isInscriptionRequise() && $evenement->getNombrePlaces() !== null) {
                 $nombreInscriptions = $entityManager->getRepository(InscriptionEvenement::class)->count(['evenement' => $evenement]);
                 if ($nombreInscriptions >= $evenement->getNombrePlaces()) {
@@ -119,15 +126,15 @@ class InscriptionEvenementController extends AbstractController
                     return $this->redirectToRoute('reservations_evenement');
                 }
             }
-
+    
             
             $entityManager->persist($inscription);
             $entityManager->flush();
-
+    
             $this->addFlash('success', 'Inscription réussie !');
             return $this->redirectToRoute('reservations_evenement');
         }
-
+    
         return $this->render('inscription_evenement/new.html.twig', [
             'form' => $form->createView(),
             'evenement' => $evenement

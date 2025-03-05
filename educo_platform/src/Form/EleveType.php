@@ -20,9 +20,11 @@ class EleveType extends AbstractType
             ->add('Prenom')  
             ->add('DateDeNaissance', null, [  
                 'widget' => 'single_text',  
+                'data' => new \DateTime(),
             ])  
             ->add('DateInscription', null, [  
-                'widget' => 'single_text',  
+                'widget' => 'single_text',
+                'data' => new \DateTime(),  
             ])  
             ->add('IdClasse', EntityType::class, [  
                 'class' => Classe::class,  

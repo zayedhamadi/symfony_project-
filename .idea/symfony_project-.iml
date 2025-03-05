@@ -3,6 +3,7 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/educo_platform/src" isTestSource="false" packagePrefix="App\" />
+      <sourceFolder url="file://$MODULE_DIR$/educo_platform/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/educo_platform/tests" isTestSource="true" packagePrefix="App\Tests\" />
       <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/doctrine/cache" />
@@ -171,6 +172,27 @@
       <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/sabberworm/php-css-parser" />
       <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/matthiasnoback/symfony-config-test" />
       <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/spraed/pdf-generator-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/bacon/bacon-qr-code" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/dasprid/enum" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/endroid/qr-code" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/gregwar/captcha" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/gregwar/captcha-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/maennchen/zipstream-php" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/markbaker/complex" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/markbaker/matrix" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/nelmio/api-doc-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/phpoffice/phpspreadsheet" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/psr/simple-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/symfony/twilio-notifier" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/symfony/workflow" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/twilio/sdk" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/zircote/swagger-php" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/doctrine/data-fixtures" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/doctrine/doctrine-fixtures-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/fakerphp/faker" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/symfony/lock" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/symfony/rate-limiter" />
+      <excludeFolder url="file://$MODULE_DIR$/educo_platform/vendor/tattali/calendar-bundle" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

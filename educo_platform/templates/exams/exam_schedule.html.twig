@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Courses Exames Calender  {% endblock %}
+{% block stylesheets %}
+    <style>
+        .fc-event {
+            color: blue !important; /* Change event text color to blue */
+            background-color: #e6f7ff !important; /* Light blue background for better contrast */
+            border-color: #b3e0ff !important; /* Border color to match */
+        }
+
+        .fc-event-title {
+            font-weight: bold; /* Make event titles bold */
+        }
+
+        .fc-event-time {
+            color: darkblue !important; /* Darker blue for time */
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container" style="margin-top: 100px !important; padding: 0 15px !important;">
+
+<div style="margin-top: 100px; margin-left: 0;">
+        <h1>Exam Schedule</h1>
+
+        <div id="calendar-holder"></div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const calendarEl = document.getElementById('calendar-holder');
+
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                editable: true,
+                selectable: true,
+                eventSources: [
+                    {
+                        url: '/fc-load-events',
+                        method: 'POST',
+                        extraParams: {
+                            filters: JSON.stringify({})
+                        },
+                        failure: () => {
+                            console.error('Error fetching events from FullCalendar!');
+                        },
+                    },
+                ],
+                headerToolbar: {
+                    start: 'prev,next today',
+                    center: 'title',
+                    end: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                timeZone: 'UTC',
+            });
+
+            calendar.render();
+        });
+    </script>
+{% endblock %}

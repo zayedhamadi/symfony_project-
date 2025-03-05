@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="{{ asset('css/kaiadmin.min.css') }}" />
 
 
+
     {% block stylesheets %}
     {% endblock %}
 
@@ -97,7 +98,7 @@
             <div class="sidebar-content">
                 <ul class="nav nav-secondary">
                     <li class="nav-item active">
-                        <a href="{{ path('admin_dashboard') }}">
+                        <a href="">
                             <i class="fas fa-home"></i>
                             <p> Dashbord</p>
 
@@ -152,6 +153,12 @@
                         <a  href="{{ path('app_eleve_index') }}">
                             <i class="fas fa-user-graduate"></i>
                             <p>Gestion eleve</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('exam_new') }}">
+                            <i class="fas fa-school" style="display: inline-block;"></i>
+                            <p>Examen</p>
                         </a>
                     </li>
 

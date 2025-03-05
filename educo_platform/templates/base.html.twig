@@ -45,11 +45,14 @@
 
 
         {% block stylesheets %}
+
         {% endblock %}
 
 
         {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
+            {% block importmap %}{{ importmap('app') }}
+
+            {% endblock %}
         {% endblock %}
 
         <!-- Favicon -->
@@ -159,6 +162,11 @@
                                     <li class="nav-item">
                                         <a href="{{ path('student_courses') }}" class="nav-link text-dark fw-semibold">
                                             <i class="fas fa-book"></i> Cours
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ path('exam_schedule') }}" class="nav-link text-dark fw-semibold">
+                                            <i class="fas fa-book"></i> Calendrier
                                         </a>
                                     </li>
                                     <li class="nav-item">

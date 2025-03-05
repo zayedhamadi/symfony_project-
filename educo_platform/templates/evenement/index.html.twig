@@ -5,11 +5,38 @@
 {% block body %}
     <div class="container" style="margin-top: 100px !important; padding: 0 15px !important;">
         <h1 class="mb-4">Liste des événements</h1>
-        <div class="d-flex justify-content-end mb-3" style="padding-right: 40px;">
-            <a href="{{ path('evenement_new') }}" class="btn btn-primary">Créer un événement</a>
+
+        <!-- Div pour stocker les routes dynamiques -->
+        <div id="routes" 
+             data-edit-path="{{ path('evenement_edit', {'id': 'ID_PLACEHOLDER'}) }}"
+             data-delete-path="{{ path('evenement_delete', {'id': 'ID_PLACEHOLDER'}) }}"
+             data-consulter-path="{{ path('consulter_inscriptions', {'id': 'ID_PLACEHOLDER'}) }}">
         </div>
 
-        <table class="table table-striped">
+        <div class="d-flex justify-content-between align-items-center mb-4 p-3 bg-light rounded shadow-sm">
+    <!-- Barre de recherche -->
+    <div class="input-group" style="max-width: 300px;">
+        <input type="text" id="search" class="form-control rounded-pill border-0 shadow-sm" placeholder="Rechercher un événement...">
+        <span class="input-group-text bg-white border-0 rounded-pill" style="cursor: pointer;">
+            <i class="fas fa-search text-muted"></i> <!-- Icône de recherche -->
+        </span>
+    </div>
+
+    <!-- Filtre par type -->
+    <select name="type" id="typeFilter" class="form-select rounded-pill border-0 shadow-sm me-3" style="max-width: 200px;">
+        <option value="">Tous les types</option>
+        {% for type in eventTypes %}
+            <option value="{{ type }}" {% if type == selectedType %}selected{% endif %}>{{ type }}</option>
+        {% endfor %}
+    </select>
+
+    <!-- Bouton pour créer un nouvel événement -->
+    <a href="{{ path('evenement_new') }}" class="btn btn-primary rounded-pill shadow-sm">
+        <i class="fas fa-plus me-2"></i> Créer un événement
+    </a>
+</div>
+        <!-- Tableau des événements -->
+        <table class="table table-striped" id="eventTable">
             <thead class="table-dark">
                 <tr>
                     <th>Titre</th>
@@ -23,7 +50,7 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="all">
                 {% for evenement in evenements %}
                     <tr>
                         <td>{{ evenement.titre }}</td>
@@ -42,7 +69,6 @@
                                 <a href="{{ path('evenement_delete', {'id': evenement.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr ?')">
                                     <i class="fas fa-trash-alt"></i> Supprimer
                                 </a>
-                                
                                 {% if evenement.inscriptionRequise %}
                                     <a href="{{ path('consulter_inscriptions', {'id': evenement.id}) }}" class="btn btn-info btn-sm">
                                         <i class="fas fa-eye"></i> Consulter
@@ -57,6 +83,111 @@
                     </tr>
                 {% endfor %}
             </tbody>
+            <tbody id="searchtab" style="display: none;">
+                <!-- Les résultats de la recherche seront ajoutés ici -->
+            </tbody>
         </table>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Récupérer les routes dynamiques
+            const routes = {
+                edit: $('#routes').data('edit-path'),
+                delete: $('#routes').data('delete-path'),
+                consulter: $('#routes').data('consulter-path')
+            };
+
+            // Recherche AJAX
+            $("#search").keyup(function(e) {
+                var value = $(this).val();
+                if (value.trim() === '') {
+                    $('#searchtab').hide();
+                    $('#all').show();
+                    return;
+                }
+
+                $.ajax({
+                    url: "{{ path('event_search') }}",
+                    type: 'GET',
+                    data: { 'searchValue': value },
+                    dataType: 'json',
+                    success: function(retour) {
+                        if (retour && retour.length > 0) {
+                            $('#searchtab').empty();
+                            $('#all').hide();
+                            $('#searchtab').show();
+                            $.each(retour, function(i, obj) {
+                                // Générer les URLs dynamiquement
+                                const editUrl = routes.edit.replace('ID_PLACEHOLDER', obj.id);
+                                const deleteUrl = routes.delete.replace('ID_PLACEHOLDER', obj.id);
+                                const consulterUrl = routes.consulter.replace('ID_PLACEHOLDER', obj.id);
+
+                                const consulterButton = obj.inscriptionRequise
+                                    ? `<a href="${consulterUrl}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Consulter</a>`
+                                    : '';
+
+                                $('#searchtab').append('<tr><td>' +
+                                    obj.titre + '</td><td>' + obj.description + '</td><td>' +
+                                    obj.dateDebut + '</td><td>' + obj.dateFin + '</td><td>' +
+                                    obj.lieu + '</td><td>' + (obj.inscriptionRequise ? 'Oui' : 'Non') + '</td><td>' +
+                                    obj.nombrePlaces + '</td><td>' + obj.type + '</td><td>' +
+                                    '<span style="display: flex; gap: 10px;">' +
+                                    `<a href="${editUrl}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Modifier</a>` +
+                                    `<a href="${deleteUrl}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr ?')"><i class="fas fa-trash-alt"></i> Supprimer</a>` +
+                                    consulterButton +
+                                    '</span></td></tr>');
+                            });
+                        } else {
+                            $('#searchtab').empty();
+                            $('#all').hide();
+                            $('#searchtab').append('<tr><td colspan="9" class="text-center">Aucun événement trouvé</td></tr>');
+                            $('#searchtab').show();
+                        }
+                    },
+                    error: function() {
+                        alert('Erreur lors de la récupération des données !');
+                    }
+                });
+            });
+
+            // Filtrage par type
+            $('#typeFilter').change(function() {
+                const eventType = $(this).val();
+
+                $.ajax({
+                    url: "{{ path('event_filter_by_type') }}",
+                    type: 'GET',
+                    data: { type: eventType },
+                    dataType: 'json',
+                    success: function(retour) {
+                        if (retour && retour.length > 0) {
+                            $('#all').empty();
+                            $.each(retour, function(i, obj) {
+                                $('#all').append('<tr><td>' +
+                                    obj.titre + '</td><td>' + obj.description + '</td><td>' +
+                                    obj.dateDebut + '</td><td>' + obj.dateFin + '</td><td>' +
+                                    obj.lieu + '</td><td>' + (obj.inscriptionRequise ? 'Oui' : 'Non') + '</td><td>' +
+                                    obj.nombrePlaces + '</td><td>' + obj.type + '</td><td>' +
+                                    '<span style="display: flex; gap: 10px;">' +
+                                    `<a href="${routes.edit.replace('ID_PLACEHOLDER', obj.id)}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Modifier</a>` +
+                                    `<a href="${routes.delete.replace('ID_PLACEHOLDER', obj.id)}" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr ?')"><i class="fas fa-trash-alt"></i> Supprimer</a>` +
+                                    (obj.inscriptionRequise ? `<a href="${routes.consulter.replace('ID_PLACEHOLDER', obj.id)}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i> Consulter</a>` : '') +
+                                    '</span></td></tr>');
+                            });
+                        } else {
+                            $('#all').empty();
+                            $('#all').append('<tr><td colspan="9" class="text-center">Aucun événement trouvé</td></tr>');
+                        }
+                    },
+                    error: function() {
+                        alert('Erreur lors du filtrage des données !');
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}

@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/matiere')]
 
+
 class MatiereController extends AbstractController
 {
 
@@ -47,12 +48,44 @@ class MatiereController extends AbstractController
     {
         $this->matiereRepository = $matiereRepository;
     }
+//    #[Route('/show', name: 'app_matiere_list')]
+//    public function index(Request $request): Response
+//    {
+//        // Fetch all matieres, including their associated enseignants
+//        $matieres = $this->matiereRepository->findAllWithEnseignant();
+//        // i used the trim to make it accepts the space
+//        $search = trim($request->query->get('search', ''));
+//
+//        // Group matieres by teacher (idEnsg)
+//        $groupedMatieres = [];
+//        foreach ($matieres as $matiere) {
+//            $teacher = $matiere->getIdEnsg();
+//            $teacherName = $teacher ? $matiere->getIdEnsg()->getNom() : 'Aucun enseignant';
+//
+//            if ($search && stripos($teacherName, $search) === false) {
+//                continue; // Skip non-matching teachers
+//            }
+//            if (!isset($groupedMatieres[$teacherName])) {
+//                $groupedMatieres[$teacherName] = [];
+//            }
+//            $groupedMatieres[$teacherName][] = $matiere;
+//        }
+//
+//        return $this->render('matiere/list.html.twig', [
+//            'groupedMatieres' => $groupedMatieres,
+//            'search' => $search, // Pass search term to template
+//
+//        ]);
+//
+//    }
+
     #[Route('/show', name: 'app_matiere_list')]
     public function index(Request $request): Response
     {
         // Fetch all matieres, including their associated enseignants
         $matieres = $this->matiereRepository->findAllWithEnseignant();
-        // i used the trim to make it accepts the space
+
+        // Handle search term (if any)
         $search = trim($request->query->get('search', ''));
 
         // Group matieres by teacher (idEnsg)
@@ -70,12 +103,17 @@ class MatiereController extends AbstractController
             $groupedMatieres[$teacherName][] = $matiere;
         }
 
+        // If AJAX request, return JSON response
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('matiere/ajax_list.html.twig', [
+                'groupedMatieres' => $groupedMatieres,
+            ]);
+        }
+
         return $this->render('matiere/list.html.twig', [
             'groupedMatieres' => $groupedMatieres,
-            'search' => $search, // Pass search term to template
-
+            'search' => $search,
         ]);
-
     }
 
     #[Route('/{id}/edit', name: 'app_matiere_edit')]

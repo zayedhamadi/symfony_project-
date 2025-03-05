@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: EvenementRepository::class)]
 class Evenement
@@ -16,15 +17,18 @@ class Evenement
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['events'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Le titre est obligatoire.")]
     #[Assert\Length(max: 50, maxMessage: "Le titre ne doit pas dépasser {{ limit }} caractères.")]
+    #[Groups(['events'])]
     private ?string $titre = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Length(max: 500, maxMessage: "La description ne doit pas dépasser {{ limit }} caractères.")]
+    #[Groups(['events'])]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -33,26 +37,32 @@ class Evenement
         value: "now",
         message: "La date de début doit être superieur à la date et heure actuelles."
     )]
+    #[Groups(['events'])]
     private ?\DateTimeInterface $dateDebut = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Assert\GreaterThan(propertyPath: "dateDebut", message: "La date de fin doit être postérieure à la date de début.")]
+    #[Groups(['events'])]
     private ?\DateTimeInterface $dateFin = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Le lieu est obligatoire.")]
     #[Assert\Length(max: 255, maxMessage: "Le lieu ne doit pas dépasser {{ limit }} caractères.")]
+    #[Groups(['events'])]
     private ?string $lieu = null;
 
     #[ORM\Column]
+    #[Groups(['events'])]
     private ?bool $inscriptionRequise = false;
 
     #[ORM\Column(nullable: true)]
     #[Assert\Positive(message: "Le nombre de places doit être un nombre positif.")]
+    #[Groups(['events'])]
     private ?int $nombrePlaces = null;
 
     #[ORM\Column(type: "string", length: 255, enumType: EventType::class)]
     #[Assert\NotNull(message: "Le type d'événement est obligatoire.")]
+    #[Groups(['events'])]
     private ?EventType $type = null;
 
     public function getType(): ?EventType

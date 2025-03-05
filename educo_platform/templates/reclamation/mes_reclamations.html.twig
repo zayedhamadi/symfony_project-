@@ -2,49 +2,131 @@
 {% block title %}Mes Réclamations{% endblock %}
 
 {% block body %}
-<div style="margin-top: 200px;">
-
+<div style="margin-top: 150px; padding: 20px;">
     <h1 class="text-center my-4">Mes Réclamations</h1>
-    <div class="d-flex justify-content-end mb-3" style="padding-right: 40px;">
-            <a href="{{ path('ajouter_reclamation') }}" class="btn btn-primary">Ajouter une reclamation</a>
+
+    <!-- Conteneur pour le bouton et le filtre -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <!-- Filtre par statut -->
+        <div>
+            <select name="statut" id="statutFilter" class="form-select rounded-pill border-0 shadow-sm" style="max-width: 200px;">
+                <option value="">Tous les statuts</option>
+                {% for statut in statuts %}
+                    <option value="{{ statut }}" {% if statut == selectedStatut %}selected{% endif %}>
+                        {{ statut }}
+                    </option>
+                {% endfor %}
+            </select>
         </div>
 
-    {% if reclamations is empty %}
-        <p class="text-center">Aucune réclamation trouvée.</p>
-    {% else %}
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Titre</th>
-                <th>Description</th>
-                <th>Date de création</th>
-                <th>Statut</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for reclamation in reclamations %}
-                <tr>
-                    <td>{{ reclamation.titre }}</td>
-                    <td>{{ reclamation.description }}</td>
-                    <td>{{ reclamation.dateDeCreation|date('d/m/Y') }}</td>
-                    <td>
-                        <span class="badge 
-                            {% if reclamation.statut.value == 'En attente' %}
-                                bg-warning
-                            {% elseif reclamation.statut.value == 'En cours' %}
-                                bg-primary
-                            {% else %}
-                                bg-success
-                            {% endif %}
-                        ">
-                            {{ reclamation.statut.value }}
-                        </span>
-                    </td>
-                   
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
+        <!-- Bouton Ajouter une réclamation -->
+        <a href="{{ path('ajouter_reclamation') }}" class="btn btn-primary btn-lg">
+            <i class="fas fa-plus-circle"></i> Ajouter une réclamation
+        </a>
     </div>
+
+    <!-- Liste des réclamations -->
+    <div id="reclamationsContainer">
+        {% if reclamations is empty %}
+            <div class="alert alert-info text-center" role="alert">
+                <i class="fas fa-info-circle"></i> Aucune réclamation trouvée.
+            </div>
+        {% else %}
+            <div class="row">
+                {% for reclamation in reclamations %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ reclamation.titre }}</h5>
+                                <p class="card-text">{{ reclamation.description }}</p>
+                                <p class="card-text">
+                                    <small class="text-muted">Créée le {{ reclamation.dateDeCreation|date('d/m/Y') }}</small>
+                                </p>
+                                <span class="badge 
+                                    {% if reclamation.statut.value == 'En attente' %}
+                                        bg-warning
+                                    {% elseif reclamation.statut.value == 'En cours' %}
+                                        bg-primary
+                                    {% else %}
+                                        bg-success
+                                    {% endif %}
+                                ">
+                                    <i class="fas fa-circle"></i> {{ reclamation.statut.value }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const tbody = $('#reclamationsContainer');
+            const statutFilter = $('#statutFilter');
+
+            // Filtrage par statut
+            statutFilter.change(function() {
+                const statut = $(this).val();
+                fetchReclamations(statut);
+            });
+
+            // Fonction pour récupérer les réclamations filtrées
+            function fetchReclamations(statut) {
+                tbody.html('<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Chargement...</div>');
+
+                $.ajax({
+                    url: "{{ path('reclamation_filter_by_statut') }}",
+                    type: 'GET',
+                    data: { statut: statut },
+                    dataType: 'json',
+                    success: function(retour) {
+                        tbody.empty();
+
+                        if (retour && retour.length > 0) {
+                            const row = $('<div class="row"></div>');
+                            $.each(retour, function(i, obj) {
+                                let badgeClass = '';
+                                if (obj.statut === 'En attente') {
+                                    badgeClass = 'bg-warning';
+                                } else if (obj.statut === 'En cours') {
+                                    badgeClass = 'bg-primary';
+                                } else {
+                                    badgeClass = 'bg-success';
+                                }
+
+                                row.append(`
+                                    <div class="col-md-6 mb-4">
+                                        <div class="card shadow-sm h-100">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${obj.titre}</h5>
+                                                <p class="card-text">${obj.description}</p>
+                                                <p class="card-text">
+                                                    <small class="text-muted">Créée le ${obj.dateDeCreation}</small>
+                                                </p>
+                                                <span class="badge ${badgeClass}">
+                                                    <i class="fas fa-circle"></i> ${obj.statut}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `);
+                            });
+                            tbody.append(row);
+                        } else {
+                            tbody.html('<div class="alert alert-info text-center" role="alert"><i class="fas fa-info-circle"></i> Aucune réclamation trouvée.</div>');
+                        }
+                    },
+                    error: function() {
+                        tbody.html('<div class="alert alert-danger text-center" role="alert"><i class="fas fa-exclamation-circle"></i> Erreur lors du filtrage des données.</div>');
+                    }
+                });
+            }
+        });
+    </script>
 {% endblock %}

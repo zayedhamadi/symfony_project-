@@ -6,6 +6,7 @@ use App\Entity\Cours;
 use App\Entity\Matiere;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -46,6 +47,12 @@ class CoursType extends AbstractType
                 'choice_label' => 'nom_classe', // Show class name in the dropdown
                 'label' => 'Select Class',
                 'attr' => ['class' => 'form-control']
+            ]);
+        $builder
+            ->add('chapterNumber', IntegerType::class, [
+                'label' => 'Chapter Number',
+                'attr' => ['class' => 'form-control', 'min' => 1],
+                'required' => true
             ]);
     }
 

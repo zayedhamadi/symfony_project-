@@ -14,16 +14,30 @@
         <div class="mb-3">
             {{ form_label(form.name, 'Course Name') }}
             {{ form_widget(form.name, { 'attr': {'class': 'form-control'} }) }}
+            <div class="invalid-feedback d-block text-danger ">
+                {{ form_errors(form.name) }} {# Display validation errors #}
+
+            </div>
         </div>
 
         <div class="mb-3">
             {{ form_label(form.IdMatiere, 'Select Matiere') }}
             {{ form_widget(form.IdMatiere, { 'attr': {'class': 'form-control'} }) }}
+
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.chapterNumber, 'Chapter Number') }}
+            {{ form_widget(form.chapterNumber, { 'attr': {'class': 'form-control'} }) }}
+            <div class="invalid-feedback d-block text-danger">
+                {{ form_errors(form.chapterNumber) }}
+            </div>
         </div>
         <div class="mb-3">
             {{ form_label(form.classe, 'Select Class') }}
             {{ form_widget(form.classe, { 'attr': {'class': 'form-control'} }) }}
-        </div>
+
+            </div>
 
         <!-- PDF Upload Field -->
         <div class="mb-3">

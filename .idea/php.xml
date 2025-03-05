@@ -295,6 +295,28 @@
       <path value="$PROJECT_DIR$/educo_platform/vendor/matthiasnoback/symfony-config-test" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/zircote/swagger-php" />
       <path value="$PROJECT_DIR$/educo_platform/vendor/nelmio/api-doc-bundle" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/markbaker/matrix" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/zircote/swagger-php" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/markbaker/complex" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/nelmio/api-doc-bundle" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/bacon/bacon-qr-code" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/maennchen/zipstream-php" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/endroid/qr-code" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/phpoffice/phpspreadsheet" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/dasprid/enum" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/gregwar/captcha" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/gregwar/captcha-bundle" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/workflow" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/twilio-notifier" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/twilio/sdk" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/doctrine/doctrine-fixtures-bundle" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/doctrine/data-fixtures" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/tattali/calendar-bundle" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/fakerphp/faker" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/lock" />
+      <path value="$PROJECT_DIR$/educo_platform/vendor/symfony/rate-limiter" />
+>>>>>>> origin/branche_old
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />

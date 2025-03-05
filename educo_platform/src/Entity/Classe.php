@@ -34,7 +34,7 @@ class Classe
      * @var Collection<int, User>
      */
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'classes')]
-    #[Assert\Count(min: 1, minMessage: 'Veuillez sélectionner au moins un utilisateur.')]  
+    #[Assert\Count(min: 1, minMessage: 'Veuillez sélectionner au moins un utilisateur.')]
     private Collection $id_user;
 
     /**

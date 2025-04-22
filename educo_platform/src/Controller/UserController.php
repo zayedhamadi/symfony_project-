@@ -73,10 +73,11 @@ final class UserController extends AbstractController
         return $this->render('user/index.html.twig', ['users' => $pagination]);
     }
 
+
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
-    public function new(Request                     $request, EntityManagerInterface $entityManager,
+    public function new(Request $request, EntityManagerInterface $entityManager,
                         UserPasswordHasherInterface $passwordHasher, MailerInterface $mailer,
-                        ParameterBagInterface       $params, SluggerInterface $slugger): Response
+                        ParameterBagInterface $params, SluggerInterface $slugger): Response
     {
         try {
             $user = new User();
@@ -107,51 +108,51 @@ final class UserController extends AbstractController
 
                 $this->addFlash('success', 'Utilisateur créé avec succès.');
 
-                $projectDir = $params->get('kernel.project_dir');
-                $imagePath = $projectDir . '/public/images/educo.jpg';
-
+                $imagePath = $this->getParameter('kernel.project_dir') . '/public/images/educo.jpg';
                 if (!file_exists($imagePath)) {
                     throw new Exception("L'image educo.jpg n'a pas été trouvée dans le dossier public/images.");
                 }
 
+                // Contenu HTML de l'email
                 $htmlContent = "
-            <!DOCTYPE html>
-            <html lang='fr'>
-            <head>
-                <meta charset='UTF-8'>
-                <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-                <title>Bienvenue chez Educo</title>
-                <style>
-                    body { font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; }
-                    .container { max-width: 600px; background: #fff; padding: 20px; border-radius: 10px; margin: 20px auto; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
-                    .header img { max-width: 150px; margin-bottom: 20px; }
-                    h1 { color: #007BFF; }
-                    .info { background: #f8f8f8; padding: 15px; border-radius: 8px; margin: 20px 0; }
-                    .btn { display: inline-block; background: #007BFF; color: #fff; padding: 10px 15px; text-decoration: none; border-radius: 5px; margin-top: 15px; font-weight: bold; }
-                    .footer { font-size: 14px; color: #888; margin-top: 20px; }
-                </style>
-            </head>
-            <body>
-                <div class='container'>
-                    <div class='header'>
-                        <img src='cid:educo_logo' alt='Educo Logo'>
+                <!DOCTYPE html>
+                <html lang='fr'>
+                <head>
+                    <meta charset='UTF-8'>
+                    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                    <title>Bienvenue chez Educo</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; }
+                        .container { max-width: 600px; background: #fff; padding: 20px; border-radius: 10px; margin: 20px auto; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+                        .header img { max-width: 150px; margin-bottom: 20px; }
+                        h1 { color: #007BFF; }
+                        .info { background: #f8f8f8; padding: 15px; border-radius: 8px; margin: 20px 0; }
+                        .btn { display: inline-block; background: #007BFF; color: #fff; padding: 10px 15px; text-decoration: none; border-radius: 5px; margin-top: 15px; font-weight: bold; }
+                        .footer { font-size: 14px; color: #888; margin-top: 20px; }
+                    </style>
+                </head>
+                <body>
+                    <div class='container'>
+                        <div class='header'>
+                            <img src='cid:educo_logo' alt='Educo Logo'>
+                        </div>
+                        <h1>Bienvenue sur Educo !</h1>
+                        <p>Merci de vous être inscrit. Voici vos informations de connexion :</p>
+                        <div class='info'>
+                            <p><strong>Email :</strong> {$user->getEmail()}</p>
+                            <p><strong>Mot de passe :</strong> {$plainPassword}</p>
+                        </div>
+                        <p>Nous vous recommandons de modifier votre mot de passe dès votre première connexion.</p>
+                        <a href='https://127.0.0.1:8000/login' class='btn'>Se connecter</a>
+                        <div class='footer'>
+                            <p>&copy; " . date("Y") . " Educo. Tous droits réservés.</p>
+                        </div>
                     </div>
-                    <h1>Bienvenue sur Educo !</h1>
-                    <p>Merci de vous être inscrit. Voici vos informations de connexion :</p>
-                    <div class='info'>
-                        <p><strong>Email :</strong> {$user->getEmail()}</p>
-                        <p><strong>Mot de passe :</strong> {$plainPassword}</p>
-                    </div>
-                    <p>Nous vous recommandons de modifier votre mot de passe dès votre première connexion.</p>
-                    <a href='https://127.0.0.1:8000/login' class='btn'>Se connecter</a>
-                    <div class='footer'>
-                        <p>&copy; " . date("Y") . " Educo. Tous droits réservés.</p>
-                    </div>
-                </div>
-            </body>
-            </html>
+                </body>
+                </html>
             ";
 
+                // Création et envoi de l'email
                 $emailMessage = (new Email())
                     ->from('educolearning@educo.com')
                     ->to($user->getEmail())
@@ -174,6 +175,107 @@ final class UserController extends AbstractController
         }
     }
 
+//    #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
+//    public function new(Request                     $request, EntityManagerInterface $entityManager,
+//                        UserPasswordHasherInterface $passwordHasher, MailerInterface $mailer,
+//                        ParameterBagInterface       $params, SluggerInterface $slugger): Response
+//    {
+//        try {
+//            $user = new User();
+//            $form = $this->createForm(UserType::class, $user);
+//            $form->handleRequest($request);
+//
+//            if ($form->isSubmitted() && $form->isValid()) {
+//                $imageFile = $form->get('image')->getData();
+//                if ($imageFile) {
+//                    $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+//                    $safeFilename = $slugger->slug($originalFilename);
+//                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+//
+//                    try {
+//                        $imageFile->move($this->getParameter('uploads_directory'), $newFilename);
+//                        $user->setImage($newFilename);
+//                    } catch (FileException $e) {
+//                        throw new Exception("Erreur lors de l'upload de l'image.");
+//                    }
+//                }
+//
+//                $plainPassword = $user->getPassword();
+//                $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
+//                $user->setPassword($hashedPassword);
+//
+//                $entityManager->persist($user);
+//                $entityManager->flush();
+//
+//                $this->addFlash('success', 'Utilisateur créé avec succès.');
+//
+//                $projectDir = $params->get('kernel.project_dir');
+//                $imagePath = $projectDir . '/public/images/educo.jpg';
+//
+//                if (!file_exists($imagePath)) {
+//                    throw new Exception("L'image educo.jpg n'a pas été trouvée dans le dossier public/images.");
+//                }
+//
+//                $htmlContent = "
+//            <!DOCTYPE html>
+//            <html lang='fr'>
+//            <head>
+//                <meta charset='UTF-8'>
+//                <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+//                <title>Bienvenue chez Educo</title>
+//                <style>
+//                    body { font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; }
+//                    .container { max-width: 600px; background: #fff; padding: 20px; border-radius: 10px; margin: 20px auto; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+//                    .header img { max-width: 150px; margin-bottom: 20px; }
+//                    h1 { color: #007BFF; }
+//                    .info { background: #f8f8f8; padding: 15px; border-radius: 8px; margin: 20px 0; }
+//                    .btn { display: inline-block; background: #007BFF; color: #fff; padding: 10px 15px; text-decoration: none; border-radius: 5px; margin-top: 15px; font-weight: bold; }
+//                    .footer { font-size: 14px; color: #888; margin-top: 20px; }
+//                </style>
+//            </head>
+//            <body>
+//                <div class='container'>
+//                    <div class='header'>
+//                        <img src='cid:educo_logo' alt='Educo Logo'>
+//                    </div>
+//                    <h1>Bienvenue sur Educo !</h1>
+//                    <p>Merci de vous être inscrit. Voici vos informations de connexion :</p>
+//                    <div class='info'>
+//                        <p><strong>Email :</strong> {$user->getEmail()}</p>
+//                        <p><strong>Mot de passe :</strong> {$plainPassword}</p>
+//                    </div>
+//                    <p>Nous vous recommandons de modifier votre mot de passe dès votre première connexion.</p>
+//                    <a href='https://127.0.0.1:8000/login' class='btn'>Se connecter</a>
+//                    <div class='footer'>
+//                        <p>&copy; " . date("Y") . " Educo. Tous droits réservés.</p>
+//                    </div>
+//                </div>
+//            </body>
+//            </html>
+//            ";
+//
+//                $emailMessage = (new Email())
+//                    ->from('educolearning@educo.com')
+//                    ->to($user->getEmail())
+//                    ->subject('Bienvenue sur Educo')
+//                    ->html($htmlContent)
+//                    ->attachFromPath($imagePath, 'educo_logo', 'image/jpeg');
+//
+//                $mailer->send($emailMessage);
+//
+//                return $this->redirectToRoute('app_user_index');
+//            }
+//
+//            return $this->render('user/new.html.twig', [
+//                'user' => $user,
+//                'form' => $form,
+//            ]);
+//        } catch (Exception $e) {
+//            $this->addFlash('error', 'Une erreur est survenue lors de la création de l\'utilisateur.');
+//            return $this->redirectToRoute('app_user_index');
+//        }
+//    }
+
 
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user): Response
@@ -183,8 +285,10 @@ final class UserController extends AbstractController
         ]);
     }
 
+
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function editUserByAdmin(Request $request, User $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
+    public function editUserByAdmin(Request $request, User $user, EntityManagerInterface $entityManager,
+                                    UserPasswordHasherInterface $passwordHasher, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(UserEditByAdminType::class, $user);
         $form->handleRequest($request);
@@ -193,18 +297,24 @@ final class UserController extends AbstractController
             $imageFile = $form->get('image')->getData();
 
             if ($imageFile) {
-                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
-                $imageFile->move(
-                    $this->getParameter('uploads_directory'),
-                    $newFilename
-                );
-                $user->setImage($newFilename);
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('uploads_directory'),
+                        $newFilename
+                    );
+                    $user->setImage($newFilename);
+                } catch (FileException $e) {
+                    $this->addFlash('error', "Erreur lors de l'upload de l'image.");
+                }
             }
-
-
 
             $entityManager->flush();
 
+            $this->addFlash('success', "L'utilisateur a bien été modifié.");
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -213,6 +323,38 @@ final class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+//
+//    #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
+//    public function editUserByAdmin(Request $request, User $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
+//    {
+//        $form = $this->createForm(UserEditByAdminType::class, $user);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $imageFile = $form->get('image')->getData();
+//
+//            if ($imageFile) {
+//                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+//                $imageFile->move(
+//                    $this->getParameter('uploads_directory'),
+//                    $newFilename
+//                );
+//                $user->setImage($newFilename);
+//            }
+//
+//
+//
+//            $entityManager->flush();
+//
+//            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+//        }
+//
+//        return $this->render('user/edit.html.twig', [
+//            'user' => $user,
+//            'form' => $form->createView(),
+//        ]);
+//    }
 
 
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]

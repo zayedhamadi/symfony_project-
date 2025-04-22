@@ -9,7 +9,7 @@
             <div class="col-md-3 d-flex flex-column align-items-center text-center p-3">
                 <div class="d-flex justify-content-center">
                     {% if user.image %}
-                        <img src="{{ asset('uploads/' ~ user.image) }}"
+                        <img src="http://localhost/uploads/{{  user.image }}"
                              class="rounded-circle border border-primary shadow-lg" width="150px" alt="Profile Image"
                              style="transition: all 0.3s ease;">
                     {% else %}

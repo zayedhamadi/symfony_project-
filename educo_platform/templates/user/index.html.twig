@@ -48,7 +48,7 @@
                     <tr>
                         <td>
                             {% if user.image %}
-                                <img src="{{ asset('uploads/' ~ user.image) }}" alt="Image de profil"
+                                <img src="http://localhost/uploads/{{  user.image }}" alt="Image de profil"
                                      class="img-thumbnail" style="width: 50px; height: 50px;">
                             {% else %}
                                 <img src="{{ asset('images/default-avatar.png') }}" alt="Image de profil par défaut"

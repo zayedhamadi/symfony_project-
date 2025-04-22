@@ -190,21 +190,18 @@ final class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Récupérer le fichier de l'image téléchargée
             $imageFile = $form->get('image')->getData();
 
             if ($imageFile) {
-                // Si une nouvelle image est téléchargée, générer un nouveau nom de fichier
                 $newFilename = uniqid() . '.' . $imageFile->guessExtension();
                 $imageFile->move(
                     $this->getParameter('uploads_directory'),
                     $newFilename
                 );
-                $user->setImage($newFilename);  // Mettre à jour l'image de l'utilisateur
+                $user->setImage($newFilename);
             }
 
-            // Si aucune nouvelle image n'est téléchargée, l'image actuelle reste inchangée
-            // Pas besoin de faire quoi que ce soit ici, la variable $user->getImage() reste la même
+
 
             $entityManager->flush();
 

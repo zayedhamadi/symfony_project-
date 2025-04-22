@@ -24,7 +24,7 @@ class Produit
     )]
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
-
+    
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank(message: "La description est obligatoire.")]
     #[Assert\Length(max: 255, maxMessage: "La description ne peut pas dépasser 255 caractères.")]

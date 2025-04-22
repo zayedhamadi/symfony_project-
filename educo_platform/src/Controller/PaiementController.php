@@ -42,6 +42,7 @@ class PaiementController extends AbstractController
 
         $total = 0;
         $lineItems = [];
+        // Ajouter les produits du panier à la commande
 
         foreach ($panier as $produitId => $quantite) {
             $produit = $produitRepository->find($produitId);

@@ -1,33 +1,33 @@
-<div class="row">
-    {% for produit in produits %}
-        {% if produit.stock > 0 %}
-            <div class="col-md-4">
-            <div class="card mb-4">
-                <a href="{{ path('app_produit_details_parent', {'id': produit.id}) }}" class="text-decoration-none">
-                    <img src="{{ asset('uploads/' ~ produit.image) }}" class="card-img-top" alt="{{ produit.nom }}" style="height: 250px;">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">{{ produit.nom }}</h5>
-                        <p class="card-text">{{ produit.description|slice(0, 100) ~ '...' }}</p>
-                        <p class="text-primary"><strong>{{ produit.prix }} dt</strong></p>
+    <div class="row">
+        {% for produit in produits %}
+            {% if produit.stock > 0 %}
+                <div class="col-md-4">
+                <div class="card mb-4">
+                    <a href="{{ path('app_produit_details_parent', {'id': produit.id}) }}" class="text-decoration-none">
+                        <img src="{{ asset('http://localhost/uploads/' ~ produit.image) }}" class="card-img-top" alt="{{ produit.nom }}" style="height: 250px;">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ produit.nom }}</h5>
+                            <p class="card-text">{{ produit.description|slice(0, 100) ~ '...' }}</p>
+                            <p class="text-primary"><strong>{{ produit.prix }} dt</strong></p>
+                        </div>
+
+
+                    </a>
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="{{ path('app_produit_details_parent', {'id': produit.id}) }}" class="btn btn-primary mb-4">Voir Détails</a>
+                        <form action="{{ path('app_panier_add', {'id': produit.id}) }}" method="post" class="add-to-cart">
+                            <button type="submit" class="btn btn-success mb-2">🛒 Ajouter au Panier</button>
+                        </form>
                     </div>
-
-
-                </a>
-                <div class="d-flex justify-content-center gap-2">
-                    <a href="{{ path('app_produit_details_parent', {'id': produit.id}) }}" class="btn btn-primary mb-4">Voir Détails</a>
-                    <form action="{{ path('app_panier_add', {'id': produit.id}) }}" method="post" class="add-to-cart">
-                        <button type="submit" class="btn btn-success mb-2">🛒 Ajouter au Panier</button>
-                    </form>
                 </div>
             </div>
-        </div>
-        {% endif %}
+            {% endif %}
 
-    {% else %}
-        <p class="text-center">Aucun produit disponible.</p>
-    {% endfor %}
-</div>
+        {% else %}
+            <p class="text-center">Aucun produit disponible.</p>
+        {% endfor %}
+    </div>
 
-<div class="d-flex justify-content-center">
-    {{ knp_pagination_render(produits) }}
-</div>
+    <div class="d-flex justify-content-center">
+        {{ knp_pagination_render(produits) }}
+    </div>

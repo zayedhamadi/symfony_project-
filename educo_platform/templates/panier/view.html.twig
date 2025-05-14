@@ -22,7 +22,7 @@
             <tbody>
             {% for item in items %}
                 <tr data-id="{{ item.produit.id }}" data-stock="{{ item.produit.stock }}">
-                    <td><img src="{{ asset('uploads/' ~ item.produit.image) }}" width="50"></td>
+                    <td><img src="{{ asset('http://localhost/uploads/' ~ item.produit.image) }}" width="50"></td>
                     <td>{{ item.produit.nom }}</td>
                     <td>
                         <input type="number"

@@ -6,7 +6,7 @@ enum Statut: string
 {
     case EN_ATTENTE = 'En attente';
     case EN_COURS = 'En cours';
-    case TRAITEE = 'traitee';
+    case TRAITEE = 'Traitée';
 
     public function label(): string
     {

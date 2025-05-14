@@ -17,7 +17,7 @@
 
                 <p><strong>Date :</strong> {{ commande.dateCommande|date('d/m/Y') }}</p>
                 <p><strong>Statut :</strong>
-                    {% if commande.statut == 'Prêt' %}
+                    {% if commande.statut == 'Prête' %}
                         <span class="badge bg-success">Prêt</span>
                     {% elseif commande.statut == 'En attente' %}
                         <span class="badge bg-warning text-dark">En attente</span>
